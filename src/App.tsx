@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import { v4 as uuidv4 } from 'uuid';
+import Multiplication from './multiplication';
+import Users from './users';
 
-function App() {
+export default () => {
+  const [userList, setUserList] = useState<[string, string][]>(JSON.parse(localStorage.getItem('UserList') || '[]'));
+  const [currentUser, setCurrentUser] = useState<string>();
+
+  const createNewUser = (name: string) => {
+    const list: [string, string][] = [...userList, [name, uuidv4()]];
+    setUserList(list);
+    localStorage.setItem('UserList', JSON.stringify(list));
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      { currentUser ?
+        <Multiplication/> :
+        <Users setCurrentUser={setCurrentUser} userList={userList} createNewUser={createNewUser} />
+      }
     </div>
-  );
-}
-
-export default App;
+  )
+};
