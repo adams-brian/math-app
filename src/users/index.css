@@ -1,3 +1,48 @@
+.user-list {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-family: 'Fredoka One';
+  font-size: 30px;
+}
+
 .user {
   margin: 10px;
+  padding: 15px 20px;
+  font-family: 'Fredoka One';
+  font-size: 30px;
+  color: rgb(32, 32, 32);
+  border: 2px solid rgb(68, 68, 68);
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px rgb(150, 150, 150);
+}
+
+.create-user {
+  outline: none;
+  background-color: #0fca15; /* Green */
+  border: 2px solid rgb(68, 68, 68);
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px rgb(150, 150, 150);
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-family: 'Fredoka One';
+  font-size: 30px;
+  padding: 15px 20px;
+}
+
+input[type=text] {
+  margin: 10px;
+  padding: 10px;
+  outline: none;
+  border: 1px solid #cdcdcd;
+  border-radius: 20px;
+  background-color: white;
+  font-family: 'Fredoka One';
+  font-size: 30px;
+}
+
+::placeholder {
+  color: rgb(150, 150, 150);
+  font-style: italic;
 }

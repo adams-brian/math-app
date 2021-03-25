@@ -1,13 +1,8 @@
-.App {
-  background-color: #82c2db;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 
-.user {
-  font-size: xx-large;
-  border: 1px solid black;
+.App {
+  background-color: #a6dcf3;
+  width: 100vw;
+  height: 100vh;
 }
