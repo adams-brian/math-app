@@ -24,35 +24,42 @@ const Game = (props: Props) => {
       <button className="go-back" onClick={props.goBack}><FontAwesomeIcon icon={faArrowLeft}/></button>
       <div className="question">
         { props.formatQuestion(n1, n2) }
-        <input className={
+        <input
+          className={
             !correct && !incorrect ? "answer" :
-            correct ? "answer correct" : "answer incorrect"}
-          type="text" size={2} onBlur={e => {
-          e.preventDefault();
-          const target = e.currentTarget;
-          setTimeout(() => { target.focus(); }, 0);
-        }} autoFocus={true}
-        onChange={e => setAnswer(e.target.value.replace(/\D/g,''))}
-        onAnimationEnd={e => {
-          setCorrect(false);
-          setIncorrect(false);
-        }}
-        onKeyUp={e => {
-          if (e.key === 'Enter') {
-            const answer = Number(e.currentTarget.value);
-            if (Number.isInteger(answer) && props.checkAnswer(n1, n2, answer)) {
-              setCorrect(true);
-              setN1(getNumber());
-              setN2(getNumber());
-              setAnswer('');
-              setScore(score + 1);
-            }
-            else {
-              setIncorrect(true);
-              setScore(score - 1);
-            }
+            correct ? "answer correct" : "answer incorrect"
           }
-        }} value={answer}></input>
+          type="text"
+          size={2}
+          autoFocus={true}
+          onBlur={e => {
+            e.preventDefault();
+            const target = e.currentTarget;
+            setTimeout(() => { target.focus(); }, 0);
+          }}
+          onChange={e => setAnswer(e.target.value.replace(/\D/g,''))}
+          onKeyUp={e => {
+            if (e.key === 'Enter') {
+              const answer = Number(e.currentTarget.value);
+              if (Number.isInteger(answer) && props.checkAnswer(n1, n2, answer)) {
+                setCorrect(true);
+                setN1(getNumber());
+                setN2(getNumber());
+                setAnswer('');
+                setScore(score + 1);
+              }
+              else {
+                setIncorrect(true);
+                setScore(score - 1);
+              }
+            }
+          }}
+          onAnimationEnd={e => {
+            setCorrect(false);
+            setIncorrect(false);
+          }}
+          value={answer}>
+        </input>
       </div>
       <div className="score">Score: {score}</div>
     </div>
