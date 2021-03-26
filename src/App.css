@@ -4,4 +4,35 @@
   background-color: #a6dcf3;
   width: 100vw;
   height: 100vh;
+  font-family: 'Fredoka One';
+  --main-color: rgb(32, 32, 32);
+  --shadow-color: rgb(150, 150, 150);
+  color: var(--main-color);
+}
+
+button {
+  outline: none;
+  padding: 15px 20px;
+  font-family: 'Fredoka One';
+  font-size: 30px;
+  background-color: white;
+  border: 1px solid var(--main-color);
+  border-radius: 20px;
+  box-shadow: 0px 0px 5px var(--shadow-color);
+}
+
+input[type="text"] {
+  outline: none;
+  padding: 10px;
+  font-family: 'Fredoka One';
+  font-size: 30px;
+  background-color: white;
+  border: 1px solid #cdcdcd;
+  border-radius: 20px;
+  box-shadow: 0px 0px 5px var(--shadow-color);
+}
+
+::placeholder {
+  color: rgb(150, 150, 150);
+  font-style: italic;
 }

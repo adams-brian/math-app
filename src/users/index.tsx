@@ -29,7 +29,7 @@ export default (props: UsersProps) => {
 
   return (
     <div className="user-list">
-      { props.userList.map(u => (<div className="user" key={u[1]} id={u[1]} onClick={userClicked}>{u[0]}</div>)) }
+      { props.userList.map(u => (<button className="user" key={u[1]} id={u[1]} onClick={userClicked}>{u[0]}</button>)) }
       <form onSubmit={handleSubmit}>
         <input className="username" type="text" name="username" onChange={handleInputChange} value={username} placeholder="New User" required />
         <button className="create-user" type="submit">Create</button>

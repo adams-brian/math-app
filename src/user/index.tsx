@@ -1,6 +1,5 @@
 import React, { useState, MouseEvent } from 'react';
-import Multiplication from '../multiplication';
-import Division from '../division';
+import Game from '../game';
 import './index.css';
 
 interface UserProps {
@@ -10,6 +9,8 @@ interface UserProps {
 
 export enum Mode {
   None,
+  Addition,
+  Subtraction,
   Multiplication,
   Division
 }
@@ -21,18 +22,49 @@ export default (props: UserProps) => {
   const goBack = () => setMode(Mode.None);
 
   switch (mode) {
+    case Mode.Addition:
+      return (
+        <Game
+          formatQuestion={(n1, n2) => `${n1} + ${n2} = `}
+          checkAnswer={(n1, n2, a) => n1 + n2 === a}
+          goBack={goBack}
+        />
+      );
+    case Mode.Subtraction:
+      return (
+        <Game
+          formatQuestion={(n1, n2) => `${n1 + n2} - ${n1} = `}
+          checkAnswer={(n1, n2, a) => n2 === a}
+          goBack={goBack}
+        />
+      );
     case Mode.Multiplication:
-      return <Multiplication goBack={goBack} />
+      return (
+        <Game
+          formatQuestion={(n1, n2) => `${n1} x ${n2} = `}
+          checkAnswer={(n1, n2, a) => n1 * n2 === a}
+          goBack={goBack}
+        />
+      );
     case Mode.Division:
-      return <Division goBack={goBack} />
+      return (
+        <Game
+          formatQuestion={(n1, n2) => `${n1 * n2} ÷ ${n1} = `}
+          checkAnswer={(n1, n2, a) => n2 === a}
+          goBack={goBack}
+        />
+      );
     default:
       return (
         <div className="user-main">
           <div className="welcome">Welcome {props.userName}!</div>
           <div className="modes">
-            <div className="mode multiplication" onClick={() => setMode(Mode.Multiplication)}>Multiplication</div>
-            <div className="mode division" onClick={() => setMode(Mode.Division)}>Division</div>
+            <button className="mode" onClick={() => setMode(Mode.Addition)}>Addition</button>
+            <button className="mode" onClick={() => setMode(Mode.Subtraction)}>Subtraction</button>
+            <button className="mode" onClick={() => setMode(Mode.Multiplication)}>Multiplication</button>
+            <button className="mode" onClick={() => setMode(Mode.Division)}>Division</button>
           </div>
+          { props.userName === "Snappy_Snappy" ? <div className="easter-egg"> CodingStuffs_Yea=Snappy_Snappy idk;what:im.doing</div> : null }
         </div>
       );
   }
