@@ -1,20 +1,20 @@
 import React, { useState, MouseEvent, FormEvent, ChangeEvent } from 'react';
 import './index.css';
 
-interface UsersProps {
+interface Props {
     userList: [string, string][],
-    setCurrentUser: React.Dispatch<React.SetStateAction<string | undefined>>,
+    selectUser: (userName: string) => void,
     createNewUser: (name: string) => void
 }
 
-const Users = (props: UsersProps) => {
+const Users = (props: Props) => {
 
   const [username, setUsername] = useState<string>('');
 
   const userClicked = (e: MouseEvent) => {
     e.preventDefault();
     console.log(e.currentTarget.id);
-    props.setCurrentUser(e.currentTarget.id);
+    props.selectUser(e.currentTarget.id);
   }
 
   const handleSubmit = (e: FormEvent) => {

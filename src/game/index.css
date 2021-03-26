@@ -35,3 +35,17 @@ input[type="text"].answer {
 .score {
   font-size: 50px;
 }
+
+.status {
+  margin: 40px;
+  height: 50px;
+  background-color: white;
+  border: 1px solid var(--main-color);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 50px;
+  background-color: #61df65;
+}

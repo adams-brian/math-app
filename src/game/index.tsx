@@ -3,27 +3,44 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import './index.css';
 
-const getNumber = () => Math.floor((Math.random() * 10) + 1);
+const getRandom = (max: number) => Math.floor(Math.random() * (max + 1));
+
+const generatePairs = (max: number) => {
+  const result: number[][] = [];
+  for (let i = 1; i <= max; i++) {
+    for (let j = 1; j <= max; j++) {
+      result.push([i, j, getRandom(1000)]);
+    }
+  }
+  result.sort((a, b) => a[2] - b[2]);
+  return result.map(v => [v[0], v[1]]);
+}
 
 interface Props {
-  goBack: () => void;
-  formatQuestion: (n1: number, n2: number) => string;
-  checkAnswer: (n1: number, n2: number, a: number) => boolean;
+  goBack: () => void,
+  formatQuestion: (n1: number, n2: number) => string,
+  checkAnswer: (n1: number, n2: number, a: number) => boolean,
+  logAnswer: (question: string, startTime: number, endTime: number, incorrectCount: number) => void
 }
 
 const Game = (props: Props) => {
-  const [n1, setN1] = useState(getNumber());
-  const [n2, setN2] = useState(getNumber());
+  const [inputs] = useState(generatePairs(12));
+  const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState('');
-  const [score, setScore] = useState(0);
   const [correct, setCorrect] = useState(false);
   const [incorrect, setIncorrect] = useState(false);
+  const [incorrectCount, setIncorrectCount] = useState(0);
+  const [startTime, setStartTime] = useState(Date.now());
+
+  const n1 = inputs[index][0];
+  const n2 = inputs[index][1];
+  const question = props.formatQuestion(n1, n2);
 
   return (
     <div className="container">
       <button className="go-back" onClick={props.goBack}><FontAwesomeIcon icon={faArrowLeft}/></button>
       <div className="question">
-        { props.formatQuestion(n1, n2) }
+        { question }
         <input
           className={
             !correct && !incorrect ? "answer" :
@@ -42,15 +59,16 @@ const Game = (props: Props) => {
             if (e.key === 'Enter') {
               const answer = Number(e.currentTarget.value);
               if (Number.isInteger(answer) && props.checkAnswer(n1, n2, answer)) {
+                props.logAnswer(question, startTime, Date.now(), incorrectCount);
                 setCorrect(true);
-                setN1(getNumber());
-                setN2(getNumber());
+                setIndex((index + 1) % inputs.length);
                 setAnswer('');
-                setScore(score + 1);
+                setIncorrectCount(0);
+                setStartTime(Date.now());
               }
               else {
                 setIncorrect(true);
-                setScore(score - 1);
+                setIncorrectCount(incorrectCount + 1);
               }
             }
           }}
@@ -61,7 +79,7 @@ const Game = (props: Props) => {
           value={answer}>
         </input>
       </div>
-      <div className="score">Score: {score}</div>
+      <div className="status"><div className="progress" style={{ width: (100 * index / inputs.length) + "%"}}></div></div>
     </div>
   );
 }

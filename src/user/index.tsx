@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import Game from '../game';
 import './index.css';
 
-interface UserProps {
+interface Props {
   userId: string,
-  userName: string
+  userName: string,
+  logAnswer: (question: string, startTime: number, endTime: number, incorrectCount: number) => void
 }
 
 export enum Mode {
@@ -15,7 +16,7 @@ export enum Mode {
   Division
 }
 
-const User = (props: UserProps) => {
+const User = (props: Props) => {
 
   const [mode, setMode] = useState<Mode>(Mode.None);
 
@@ -28,6 +29,7 @@ const User = (props: UserProps) => {
           formatQuestion={(n1, n2) => `${n1} + ${n2} = `}
           checkAnswer={(n1, n2, a) => n1 + n2 === a}
           goBack={goBack}
+          logAnswer={props.logAnswer}
         />
       );
     case Mode.Subtraction:
@@ -36,6 +38,7 @@ const User = (props: UserProps) => {
           formatQuestion={(n1, n2) => `${n1 + n2} - ${n1} = `}
           checkAnswer={(n1, n2, a) => n2 === a}
           goBack={goBack}
+          logAnswer={props.logAnswer}
         />
       );
     case Mode.Multiplication:
@@ -44,6 +47,7 @@ const User = (props: UserProps) => {
           formatQuestion={(n1, n2) => `${n1} x ${n2} = `}
           checkAnswer={(n1, n2, a) => n1 * n2 === a}
           goBack={goBack}
+          logAnswer={props.logAnswer}
         />
       );
     case Mode.Division:
@@ -52,6 +56,7 @@ const User = (props: UserProps) => {
           formatQuestion={(n1, n2) => `${n1 * n2} ÷ ${n1} = `}
           checkAnswer={(n1, n2, a) => n2 === a}
           goBack={goBack}
+          logAnswer={props.logAnswer}
         />
       );
     default:
