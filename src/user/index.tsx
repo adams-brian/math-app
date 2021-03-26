@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { useState } from 'react';
 import Game from '../game';
 import './index.css';
 
@@ -15,7 +15,7 @@ export enum Mode {
   Division
 }
 
-export default (props: UserProps) => {
+const User = (props: UserProps) => {
 
   const [mode, setMode] = useState<Mode>(Mode.None);
 
@@ -69,3 +69,5 @@ export default (props: UserProps) => {
       );
   }
 };
+
+export default User;

@@ -1,6 +1,5 @@
 import React, { useState, MouseEvent, FormEvent, ChangeEvent } from 'react';
 import './index.css';
-import { v4 as uuidv4 } from 'uuid';
 
 interface UsersProps {
     userList: [string, string][],
@@ -8,7 +7,7 @@ interface UsersProps {
     createNewUser: (name: string) => void
 }
 
-export default (props: UsersProps) => {
+const Users = (props: UsersProps) => {
 
   const [username, setUsername] = useState<string>('');
 
@@ -37,3 +36,5 @@ export default (props: UsersProps) => {
     </div>
   )
 };
+
+export default Users;

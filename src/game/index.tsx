@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import './index.css';
 
 const getNumber = () => Math.floor((Math.random() * 10) + 1);
@@ -9,7 +11,7 @@ interface Props {
   checkAnswer: (n1: number, n2: number, a: number) => boolean;
 }
 
-export default (props: Props) => {
+const Game = (props: Props) => {
   const [n1, setN1] = useState(getNumber());
   const [n2, setN2] = useState(getNumber());
   const [answer, setAnswer] = useState('');
@@ -19,7 +21,7 @@ export default (props: Props) => {
 
   return (
     <div className="container">
-      <div className="go-back" onClick={props.goBack}>Go back</div>
+      <button className="go-back" onClick={props.goBack}><FontAwesomeIcon icon={faArrowLeft}/></button>
       <div className="question">
         { props.formatQuestion(n1, n2) }
         <input className={
@@ -56,3 +58,5 @@ export default (props: Props) => {
     </div>
   );
 }
+
+export default Game;

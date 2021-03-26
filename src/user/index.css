@@ -4,6 +4,13 @@
   flex-direction: column;
 }
 
+.go-back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 10px;
+}
+
 .welcome {
   margin: 50px;
   font-size: 70px;

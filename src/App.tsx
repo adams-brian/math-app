@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Users from './users';
 import User from './user';
 
-export default () => {
+const App = () => {
   const [userList, setUserList] = useState<[string, string][]>(JSON.parse(localStorage.getItem('UserList') || '[]'));
   const [currentUser, setCurrentUser] = useState<string>();
 
@@ -23,3 +23,5 @@ export default () => {
     </div>
   )
 };
+
+export default App;
