@@ -4,14 +4,42 @@
 }
 
 .question {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 100px;
+  font-family: 'Fredoka One';
+  font-size: 120px;
   margin: 50px;
 }
 
+.answer {
+  margin: 30px;
+  padding: 10px;
+  outline: none;
+  border: 1px solid #cdcdcd;
+  border-radius: 20px;
+  background-color: white;
+  font-family: 'Fredoka One';
+  font-size: 120px;
+}
+
+
+@keyframes correct-animation {
+  from { box-shadow: 0px 0px 10px 10px #61df65; }
+  to { box-shadow: none; }
+}
+.correct {
+  animation: 1s ease-out correct-animation;
+}
+
+@keyframes incorrect-animation {
+  from { box-shadow: 0px 0px 10px 10px #fd5f5f; }
+  to { box-shadow: none; }
+}
+.incorrect {
+  animation: 1s ease-out incorrect-animation;
+}
+
 .status {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 50px;
+  font-family: 'Fredoka One';
+  font-size: 30px;
   margin: 50px;
 }
 

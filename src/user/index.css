@@ -1,0 +1,27 @@
+.user-main {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-family: 'Fredoka One';
+  font-size: 30px;
+}
+
+.welcome {
+  margin: 50px;
+  font-size: 50px;
+}
+
+.modes {
+  display: flex;
+}
+
+.mode {
+  margin: 20px;
+  padding: 15px 20px;
+  font-family: 'Fredoka One';
+  font-size: 30px;
+  color: rgb(32, 32, 32);
+  border: 2px solid rgb(68, 68, 68);
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px rgb(150, 150, 150);
+}

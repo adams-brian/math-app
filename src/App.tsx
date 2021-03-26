@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './App.css';
 import { v4 as uuidv4 } from 'uuid';
-import Multiplication from './multiplication';
 import Users from './users';
+import User from './user';
 
 export default () => {
   const [userList, setUserList] = useState<[string, string][]>(JSON.parse(localStorage.getItem('UserList') || '[]'));
@@ -17,8 +17,8 @@ export default () => {
   return (
     <div className="App">
       { currentUser ?
-        <Multiplication/> :
-        <Users setCurrentUser={setCurrentUser} userList={userList} createNewUser={createNewUser} />
+          <User userId={currentUser} userName={(userList.find(u => u[1] === currentUser) || [])[0] || 'error'} /> :
+          <Users setCurrentUser={setCurrentUser} userList={userList} createNewUser={createNewUser} />
       }
     </div>
   )
