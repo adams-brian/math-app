@@ -1,21 +1,14 @@
-import React, { useState, MouseEvent, FormEvent, ChangeEvent } from 'react';
+import React, { useState, FormEvent, ChangeEvent } from 'react';
+import { Link } from "react-router-dom";
 import './index.css';
 
 interface Props {
-    userList: [string, string][],
-    selectUser: (userName: string) => void,
+    userList: [string, string][]
     createNewUser: (name: string) => void
 }
 
 const Users = (props: Props) => {
-
   const [username, setUsername] = useState<string>('');
-
-  const userClicked = (e: MouseEvent) => {
-    e.preventDefault();
-    console.log(e.currentTarget.id);
-    props.selectUser(e.currentTarget.id);
-  }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -28,7 +21,7 @@ const Users = (props: Props) => {
 
   return (
     <div className="user-list">
-      { props.userList.map(u => (<button className="user" key={u[1]} id={u[1]} onClick={userClicked}>{u[0]}</button>)) }
+      { props.userList.map(u => (<Link className="user link-button" key={u[1]} to={`user/${u[1]}/home`}>{u[0]}</Link>)) }
       <form onSubmit={handleSubmit}>
         <input className="username" type="text" name="username" onChange={handleInputChange} value={username} placeholder="New User" required />
         <button className="create-user" type="submit">Create</button>

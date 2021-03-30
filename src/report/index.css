@@ -1,0 +1,12 @@
+.report-grid {
+  display: grid;
+  grid-template-rows: repeat(12, 1fr);
+  grid-template-columns: repeat(12, 1fr);
+  justify-items: center;
+  align-items: center;
+}
+
+.item-summary {
+  margin: 5px;
+  padding: 5px;
+}

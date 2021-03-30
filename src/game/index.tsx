@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { useParams } from "react-router-dom";
 import './index.css';
 
 const getRandom = (max: number) => Math.floor(Math.random() * (max + 1));
@@ -17,13 +16,14 @@ const generatePairs = (max: number) => {
 }
 
 interface Props {
-  goBack: () => void,
   formatQuestion: (n1: number, n2: number) => string,
   checkAnswer: (n1: number, n2: number, a: number) => boolean,
-  logAnswer: (question: string, startTime: number, endTime: number, incorrectCount: number) => void
+  logAnswer: (userId: string, question: string, startTime: number, endTime: number, incorrectCount: number) => void
 }
 
 const Game = (props: Props) => {
+  const { userId } = useParams<{ userId: string }>();
+
   const [inputs] = useState(generatePairs(12));
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState('');
@@ -38,9 +38,8 @@ const Game = (props: Props) => {
 
   return (
     <div className="container">
-      <button className="go-back" onClick={props.goBack}><FontAwesomeIcon icon={faArrowLeft}/></button>
       <div className="question">
-        { question }
+        { question } =
         <input
           className={
             !correct && !incorrect ? "answer" :
@@ -59,7 +58,7 @@ const Game = (props: Props) => {
             if (e.key === 'Enter') {
               const answer = Number(e.currentTarget.value);
               if (Number.isInteger(answer) && props.checkAnswer(n1, n2, answer)) {
-                props.logAnswer(question, startTime, Date.now(), incorrectCount);
+                props.logAnswer(userId, question, startTime, Date.now(), incorrectCount);
                 setCorrect(true);
                 setIndex((index + 1) % inputs.length);
                 setAnswer('');
