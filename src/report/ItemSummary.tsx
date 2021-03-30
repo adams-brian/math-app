@@ -1,17 +1,14 @@
 import React from 'react';
-//import ItemDetails from './ItemDetails';
+import { Link } from "react-router-dom";
 
 interface Props {
   question: string
-  data: object[]
   color: string
 }
 
 const ItemSummary = (props: Props) => {
   return (
-    <div className="item-summary" style={{backgroundColor: props.color}}>
-      {props.question}
-    </div>
+    <Link className="link-button item-summary" style={{backgroundColor: props.color}} to={`details/${props.question}`}>{props.question}</Link>
   );
 }
 

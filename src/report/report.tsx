@@ -1,9 +1,10 @@
 import React from 'react';
-import { useParams } from "react-router-dom";
+import { Switch, Route, useParams, useRouteMatch } from "react-router-dom";
 import ItemSummary from './ItemSummary';
+import ItemDetails from './ItemDetails';
 import { formatters, Mode } from '../user';
 
-type ResponseData = {
+export type ResponseData = {
   t: number,
   i: number,
   e: number
@@ -19,6 +20,7 @@ const getWeightedData = (data: ResponseData[]) => {
 }
 
 const Report = () => {
+  const { path } = useRouteMatch();
   const params = useParams<{ userId: string, mode: string }>();
   const { userId } = params;
   const mode = params.mode ? Mode[params.mode as keyof typeof Mode] : Mode.addition;
@@ -49,14 +51,22 @@ const Report = () => {
   for (let i = 1; i <= 12; i++) {
     for (let j = 1; j <= 12; j++) {
       const q = formatters[mode](i, j);
-      summaryList.push(<ItemSummary key={q} question={q} data={data[q]} color={analyze(data[q])} />);
+      summaryList.push(<ItemSummary key={q} question={q} color={analyze(data[q])} />);
     }
   }
 
   return (
-    <section className="report-grid">
-      { summaryList }
-    </section>
+    <Switch>
+      <Route exact path={`${path}/home`}>
+        <section className="report-grid">
+          { summaryList }
+        </section>
+      </Route>
+      <Route path={`${path}/details/:question`}>
+        <ItemDetails />
+      </Route>
+    </Switch>
+    
   );
 }
 

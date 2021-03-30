@@ -15,8 +15,8 @@ input[type="text"].answer {
 }
 
 @keyframes correct-animation {
-  from { box-shadow: 0px 0px 10px 10px #61df65; }
-  50% { box-shadow: 0px 0px 10px 0px #61df65; }
+  from { box-shadow: 0px 0px 10px 10px var(--green); }
+  50% { box-shadow: 0px 0px 10px 0px var(--green); }
   to { box-shadow: 0px 0px 5px var(--shadow-color); }
 }
 .correct {
@@ -24,8 +24,8 @@ input[type="text"].answer {
 }
 
 @keyframes incorrect-animation {
-  from { box-shadow: 0px 0px 10px 10px #fd5f5f; }
-  50% { box-shadow: 0px 0px 10px 0px #fd5f5f; }
+  from { box-shadow: 0px 0px 10px 10px var(--red); }
+  50% { box-shadow: 0px 0px 10px 0px var(--red); }
   to { box-shadow: 0px 0px 5px var(--shadow-color); }
 }
 .incorrect {
@@ -47,5 +47,5 @@ input[type="text"].answer {
 
 .progress {
   height: 50px;
-  background-color: #61df65;
+  background-color: var(--green);
 }

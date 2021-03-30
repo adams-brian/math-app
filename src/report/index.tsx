@@ -4,15 +4,15 @@ import './index.css';
 import Report from './report';
 
 const Home = () => {
-  let { path, url } = useRouteMatch();
+  const { path, url } = useRouteMatch();
   return (
     <Switch>
       <Route exact path={`${path}/home`}>
         <div className="modes">
-          <Link className="mode link-button" to={`${url}/addition`}>Addition</Link>
-          <Link className="mode link-button" to={`${url}/subtraction`}>Subtraction</Link>
-          <Link className="mode link-button" to={`${url}/multiplication`}>Multiplication</Link>
-          <Link className="mode link-button" to={`${url}/division`}>Division</Link>
+          <Link className="mode link-button" to={`${url}/addition/home`}>Addition</Link>
+          <Link className="mode link-button" to={`${url}/subtraction/home`}>Subtraction</Link>
+          <Link className="mode link-button" to={`${url}/multiplication/home`}>Multiplication</Link>
+          <Link className="mode link-button" to={`${url}/division/home`}>Division</Link>
         </div>
       </Route>
       <Route path={`${path}/:mode`}>

@@ -10,6 +10,8 @@ body {
   font-family: 'Fredoka One';
   --main-color: rgb(32, 32, 32);
   --shadow-color: rgb(150, 150, 150);
+  --green: #61df65;
+  --red: #fd5f5f;
   color: var(--main-color);
 }
 
