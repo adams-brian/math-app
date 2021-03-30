@@ -21,11 +21,11 @@ const App = () => {
   }
   const getUserName = (id: string) => (userList.find(u => u[1] === id) || [])[0] || 'error retrieving username';
 
-  const logAnswer = (userId: string, question: string, startTime: number, endTime: number, incorrectCount: number) => {
+  const logAnswer = (userId: string, question: string, startTime: number, endTime: number, incorrectAnswers: object[]) => {
     const key = `${userId} ${question}`;
     const data = JSON.parse(localStorage.getItem(key) || '[]');
     localStorage.setItem(key, JSON.stringify([
-      { t: endTime, i: incorrectCount, e: endTime - startTime },
+      { t: endTime, i: incorrectAnswers, e: endTime - startTime },
       ...data.slice(0, 19)
     ]));
   }

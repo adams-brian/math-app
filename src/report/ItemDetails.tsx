@@ -21,7 +21,7 @@ const LineChart = () => {
       },
       {
         label: 'Incorrect',
-        data: d.map(r => r.i),
+        data: d.map(r => r.i.length),
         fill: false,
         backgroundColor: 'rgb(253, 95, 95)',
         borderColor: 'rgba(253, 95, 95)',

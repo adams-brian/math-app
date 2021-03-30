@@ -4,17 +4,22 @@ import ItemSummary from './ItemSummary';
 import ItemDetails from './ItemDetails';
 import { formatters, Mode } from '../user';
 
+type IncorrectResponseData = {
+  a: number;
+  e: number;
+}
+
 export type ResponseData = {
-  t: number,
-  i: number,
-  e: number
+  t: number;
+  i: IncorrectResponseData[];
+  e: number;
 }
 
 const getWeightedData = (data: ResponseData[]) => {
   let weightedElapsed = 0, weightedIncorrect = 0, totalWeights = 0;
   for (let i = data.length - 1, w = 1; i >= 0; totalWeights += w, w *= 2, i--) {
     weightedElapsed += data[i].e * w;
-    weightedIncorrect += (data[i].i > 0 ? 1 : 0) * w;
+    weightedIncorrect += (data[i].i.length > 0 ? 1 : 0) * w;
   }
   return totalWeights > 0 ? [weightedElapsed / totalWeights, weightedIncorrect / totalWeights] : [0, 0];
 }

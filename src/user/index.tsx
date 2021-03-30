@@ -6,7 +6,7 @@ import './index.css';
 
 interface Props {
   getUserName: (id: string) => string;
-  logAnswer: (userId: string, question: string, startTime: number, endTime: number, incorrectCount: number) => void;
+  logAnswer: (userId: string, question: string, startTime: number, endTime: number, incorrectAnswers: object[]) => void;
 }
 
 export enum Mode {

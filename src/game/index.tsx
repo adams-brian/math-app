@@ -18,7 +18,7 @@ const generatePairs = (max: number) => {
 interface Props {
   formatQuestion: (n1: number, n2: number) => string,
   checkAnswer: (n1: number, n2: number, a: number) => boolean,
-  logAnswer: (userId: string, question: string, startTime: number, endTime: number, incorrectCount: number) => void
+  logAnswer: (userId: string, question: string, startTime: number, endTime: number, incorrectAnswers: object[]) => void
 }
 
 const Game = (props: Props) => {
@@ -29,7 +29,7 @@ const Game = (props: Props) => {
   const [answer, setAnswer] = useState('');
   const [correct, setCorrect] = useState(false);
   const [incorrect, setIncorrect] = useState(false);
-  const [incorrectCount, setIncorrectCount] = useState(0);
+  const [incorrectResponses, setIncorrectResponses] = useState<object[]>([]);
   const [startTime, setStartTime] = useState(Date.now());
 
   const n1 = inputs[index][0];
@@ -56,18 +56,20 @@ const Game = (props: Props) => {
           onChange={e => setAnswer(e.target.value.replace(/\D/g,''))}
           onKeyUp={e => {
             if (e.key === 'Enter') {
-              const answer = Number(e.currentTarget.value);
-              if (Number.isInteger(answer) && props.checkAnswer(n1, n2, answer)) {
-                props.logAnswer(userId, question, startTime, Date.now(), incorrectCount);
-                setCorrect(true);
-                setIndex((index + 1) % inputs.length);
-                setAnswer('');
-                setIncorrectCount(0);
-                setStartTime(Date.now());
-              }
-              else {
-                setIncorrect(true);
-                setIncorrectCount(incorrectCount + 1);
+              if (e.currentTarget.value.length > 0) {
+                const answer = Number(e.currentTarget.value);
+                if (props.checkAnswer(n1, n2, answer)) {
+                  props.logAnswer(userId, question, startTime, Date.now(), incorrectResponses);
+                  setCorrect(true);
+                  setIndex((index + 1) % inputs.length);
+                  setAnswer('');
+                  setIncorrectResponses([]);
+                  setStartTime(Date.now());
+                }
+                else {
+                  setIncorrect(true);
+                  setIncorrectResponses([{ a: answer, e: Date.now() - startTime }, ...incorrectResponses]);
+                }
               }
             }
           }}
