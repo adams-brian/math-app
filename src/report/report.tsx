@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route, useParams, useRouteMatch } from "react-router-dom";
 import ItemSummary from './ItemSummary';
 import ItemDetails from './ItemDetails';
-import { formatters, Mode } from '../user';
+import { formatters, Mode } from '../modes';
 
 type IncorrectResponseData = {
   a: number;
@@ -26,9 +26,7 @@ const getWeightedData = (data: ResponseData[]) => {
 
 const Report = () => {
   const { path } = useRouteMatch();
-  const params = useParams<{ userId: string, mode: string }>();
-  const { userId } = params;
-  const mode = params.mode ? Mode[params.mode as keyof typeof Mode] : Mode.addition;
+  const { userId, mode } = useParams<{ userId: string, mode: keyof typeof Mode }>();
 
   const data: { [key: string]: ResponseData[] } = {};
 

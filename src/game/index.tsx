@@ -3,6 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import './index.css';
 import { DataStoreContext } from '../dataStore';
 import { ConfettiContext } from '../confetti';
+import { Mode, formatters, checkers } from '../modes';
 
 const getRandom = (max: number) => Math.floor(Math.random() * (max + 1));
 
@@ -17,13 +18,8 @@ const generatePairs = (max: number) => {
   return result.map(v => [v[0], v[1]]);
 }
 
-interface Props {
-  formatQuestion: (n1: number, n2: number) => string,
-  checkAnswer: (n1: number, n2: number, a: number) => boolean
-}
-
-const Game = (props: Props) => {
-  const { userId } = useParams<{ userId: string }>();
+const Game = () => {
+  const { userId, mode } = useParams<{ userId: string, mode: keyof typeof Mode }>();
 
   const [inputs] = useState(generatePairs(12));
   const [index, setIndex] = useState(0);
@@ -38,7 +34,7 @@ const Game = (props: Props) => {
 
   const n1 = inputs[index][0];
   const n2 = inputs[index][1];
-  const question = props.formatQuestion(n1, n2);
+  const question = formatters[mode](n1, n2);
 
   return (
     <div className="container">
@@ -62,12 +58,12 @@ const Game = (props: Props) => {
             if (e.key === 'Enter') {
               if (e.currentTarget.value.length > 0) {
                 const answer = Number(e.currentTarget.value);
-                if (props.checkAnswer(n1, n2, answer)) {
+                if (checkers[mode](n1, n2, answer)) {
                   logAnswer(userId, question, startTime, Date.now(), incorrectResponses);
                   setCorrect(true);
                   if (index + 1 >= inputs.length) {
                     launchConfetti();
-                    history.push('../report/addition/home');
+                    history.push(`../report/${mode}/home`);
                   }
                   setIndex((index + 1) % inputs.length);
                   setAnswer('');

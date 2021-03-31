@@ -5,22 +5,6 @@ import Game from '../game';
 import Report from '../report';
 import './index.css';
 
-export enum Mode {
-  none = 'none',
-  addition = 'addition',
-  subtraction = 'subtraction',
-  multiplication = 'multiplication',
-  division = 'division'
-}
-
-export const formatters: { [key in Mode]: (n1: number, n2: number) => string } = {
-  [Mode.none]: (n1, n2) => { throw new Error('formatter called on mode None') },
-  [Mode.addition]: (n1, n2) => `${n1} + ${n2}`,
-  [Mode.subtraction]: (n1, n2) => `${n1 + n2} - ${n1}`,
-  [Mode.multiplication]: (n1, n2) => `${n1} x ${n2}`,
-  [Mode.division]: (n1, n2) => `${n1 * n2} ÷ ${n1}`
-};
-
 const User = () => {
   const { userId } = useParams<{ userId: string }>();
   let { path, url } = useRouteMatch();
@@ -31,29 +15,8 @@ const User = () => {
     <div className="user-main">
       <div className="welcome">Welcome {userName}!</div>
       <Switch>
-        <Route path={`${path}/game/addition`}>
-          <Game
-            formatQuestion={formatters[Mode.addition]}
-            checkAnswer={(n1, n2, a) => n1 + n2 === a}
-          />
-        </Route>
-        <Route path={`${path}/game/subtraction`}>
-          <Game
-            formatQuestion={formatters[Mode.subtraction]}
-            checkAnswer={(n1, n2, a) => n2 === a}
-          />
-        </Route>
-        <Route path={`${path}/game/multiplication`}>
-          <Game
-            formatQuestion={formatters[Mode.multiplication]}
-            checkAnswer={(n1, n2, a) => n1 * n2 === a}
-          />
-        </Route>
-        <Route path={`${path}/game/division`}>
-          <Game
-            formatQuestion={formatters[Mode.division]}
-            checkAnswer={(n1, n2, a) => n2 === a}
-          />
+        <Route path={`${path}/game/:mode`}>
+          <Game />
         </Route>
         <Route path={`${path}/report`}>
           <Report />
