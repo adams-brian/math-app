@@ -1,16 +1,15 @@
 .container {
-  display: grid;
-  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .question {
-  margin: 50px;
-  margin-top: 100px;
   font-size: 120px;
 }
 
 input[type="text"].answer {
-  margin: 30px;
+  margin-left: 30px;
   font-size: 120px;
 }
 
@@ -32,13 +31,10 @@ input[type="text"].answer {
   animation: 1s ease-out incorrect-animation;
 }
 
-.score {
-  font-size: 50px;
-}
-
 .status {
-  margin: 40px;
+  width: 500px;
   height: 50px;
+  margin-top: 50px;
   background-color: white;
   border: 1px solid rgb(var(--main-color));
   border-radius: 20px;
