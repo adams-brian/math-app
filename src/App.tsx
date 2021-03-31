@@ -3,6 +3,7 @@ import './App.css';
 import { v4 as uuidv4 } from 'uuid';
 import Users from './users';
 import User from './user';
+import Confetti from './confetti';
 import {
   BrowserRouter as Router,
   Switch,
@@ -32,17 +33,19 @@ const App = () => {
 
   return (
     <div className="App">
-      <Router>
-        <Switch>
-          <Route path={'/user/:userId'}>
-            <User getUserName={getUserName} logAnswer={logAnswer} />
-          </Route>
-          <Route path="/users">
-            <Users userList={userList} createNewUser={createNewUser} />
-          </Route>
-          <Redirect to="/users" />
-        </Switch>
-      </Router>
+      <Confetti>
+        <Router>
+          <Switch>
+            <Route path={'/user/:userId'}>
+              <User getUserName={getUserName} logAnswer={logAnswer} />
+            </Route>
+            <Route path="/users">
+              <Users userList={userList} createNewUser={createNewUser} />
+            </Route>
+            <Redirect to="/users" />
+          </Switch>
+        </Router>
+      </Confetti>
     </div>
   )
 };

@@ -15,18 +15,18 @@ input[type="text"].answer {
 }
 
 @keyframes correct-animation {
-  from { box-shadow: 0px 0px 10px 10px var(--green); }
-  50% { box-shadow: 0px 0px 10px 0px var(--green); }
-  to { box-shadow: 0px 0px 5px var(--shadow-color); }
+  from { box-shadow: 0px 0px 10px 10px rgb(var(--green)); }
+  50% { box-shadow: 0px 0px 10px 0px rgb(var(--green)); }
+  to { box-shadow: 0px 0px 5px rgb(var(--shadow-color)); }
 }
 .correct {
   animation: 1s ease-out correct-animation;
 }
 
 @keyframes incorrect-animation {
-  from { box-shadow: 0px 0px 10px 10px var(--red); }
-  50% { box-shadow: 0px 0px 10px 0px var(--red); }
-  to { box-shadow: 0px 0px 5px var(--shadow-color); }
+  from { box-shadow: 0px 0px 10px 10px rgb(var(--red)); }
+  50% { box-shadow: 0px 0px 10px 0px rgb(var(--red)); }
+  to { box-shadow: 0px 0px 5px rgb(var(--shadow-color)); }
 }
 .incorrect {
   animation: 1s ease-out incorrect-animation;
@@ -40,12 +40,12 @@ input[type="text"].answer {
   margin: 40px;
   height: 50px;
   background-color: white;
-  border: 1px solid var(--main-color);
+  border: 1px solid rgb(var(--main-color));
   border-radius: 20px;
   overflow: hidden;
 }
 
 .progress {
   height: 50px;
-  background-color: var(--green);
+  background-color: rgb(var(--green));
 }

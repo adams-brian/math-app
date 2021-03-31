@@ -8,11 +8,11 @@ body {
   width: 100vw;
   height: 100vh;
   font-family: 'Fredoka One';
-  --main-color: rgb(32, 32, 32);
-  --shadow-color: rgb(150, 150, 150);
-  --green: #61df65;
-  --red: #fd5f5f;
-  color: var(--main-color);
+  --main-color: 32, 32, 32;
+  --shadow-color: 150, 150, 150;
+  --green: 97, 223, 101;
+  --red: 253, 95, 95;
+  color: rbg(var(--main-color));
 }
 
 .link-button, button {
@@ -21,14 +21,14 @@ body {
   font-family: 'Fredoka One';
   font-size: 30px;
   background-color: white;
-  border: 1px solid var(--main-color);
+  border: 1px solid rgb(var(--main-color));
   border-radius: 20px;
-  box-shadow: 0px 0px 5px var(--shadow-color);
+  box-shadow: 0px 0px 5px rgb(var(--shadow-color));
 }
 
 .link-button, .link-button:link, .link-button:visited, .link-button:hover, .link-button:focus, .link-button:active{
   text-decoration: none;
-  color: var(--main-color);
+  color: rgb(var(--main-color));
 }
 
 input[type="text"] {
@@ -39,10 +39,10 @@ input[type="text"] {
   background-color: white;
   border: 1px solid #cdcdcd;
   border-radius: 20px;
-  box-shadow: 0px 0px 5px var(--shadow-color);
+  box-shadow: 0px 0px 5px rgb(var(--shadow-color));
 }
 
 ::placeholder {
-  color: rgb(150, 150, 150);
+  color: rgb(var(--shadow-color));
   font-style: italic;
 }

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { useParams } from "react-router-dom";
+import React, { useContext, useState } from 'react';
+import { useParams, useHistory } from "react-router-dom";
 import './index.css';
+import { ConfettiContext } from '../confetti';
 
 const getRandom = (max: number) => Math.floor(Math.random() * (max + 1));
 
@@ -31,6 +32,8 @@ const Game = (props: Props) => {
   const [incorrect, setIncorrect] = useState(false);
   const [incorrectResponses, setIncorrectResponses] = useState<object[]>([]);
   const [startTime, setStartTime] = useState(Date.now());
+  const launchConfetti = useContext(ConfettiContext);
+  const history = useHistory();
 
   const n1 = inputs[index][0];
   const n2 = inputs[index][1];
@@ -61,6 +64,10 @@ const Game = (props: Props) => {
                 if (props.checkAnswer(n1, n2, answer)) {
                   props.logAnswer(userId, question, startTime, Date.now(), incorrectResponses);
                   setCorrect(true);
+                  if (index + 1 >= inputs.length) {
+                    launchConfetti();
+                    history.push('../report/addition/home');
+                  }
                   setIndex((index + 1) % inputs.length);
                   setAnswer('');
                   setIncorrectResponses([]);
@@ -80,7 +87,9 @@ const Game = (props: Props) => {
           value={answer}>
         </input>
       </div>
-      <div className="status"><div className="progress" style={{ width: (100 * index / inputs.length) + "%"}}></div></div>
+      <div className="status">
+        <div className="progress" style={{ width: (100 * index / inputs.length) + "%"}}></div>
+      </div>
     </div>
   );
 }

@@ -9,7 +9,7 @@
 }
 
 .create-user {
-  background-color: #0fca15; /* Green */
+  background-color: rgb(var(--green));
   color: white;
 }
 
