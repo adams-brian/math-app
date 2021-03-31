@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useRef, useState } from 'react';
+import React, { FunctionComponent, useRef, useState, createContext } from 'react';
 import Reward from 'react-rewards';
 import './index.css';
 
@@ -12,7 +12,7 @@ const confettiConfig = {
   elementSize: 14
 };
 
-export const ConfettiContext = React.createContext(() => {});
+export const ConfettiContext = createContext(() => {});
 
 const ConfettiLauncher: FunctionComponent = (props) => {
   const confettiRef = useRef(null);

@@ -1,13 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, Switch, Route, useParams, Redirect, useRouteMatch } from "react-router-dom";
+import { DataStoreContext } from '../dataStore';
 import Game from '../game';
 import Report from '../report';
 import './index.css';
-
-interface Props {
-  getUserName: (id: string) => string;
-  logAnswer: (userId: string, question: string, startTime: number, endTime: number, incorrectAnswers: object[]) => void;
-}
 
 export enum Mode {
   none = 'none',
@@ -25,10 +21,11 @@ export const formatters: { [key in Mode]: (n1: number, n2: number) => string } =
   [Mode.division]: (n1, n2) => `${n1 * n2} ÷ ${n1}`
 };
 
-const User = (props: Props) => {
+const User = () => {
   const { userId } = useParams<{ userId: string }>();
-  const userName = props.getUserName(userId);
   let { path, url } = useRouteMatch();
+  const { getUserName } = useContext(DataStoreContext);
+  const userName = getUserName(userId);
 
   return (
     <div className="user-main">
@@ -38,28 +35,24 @@ const User = (props: Props) => {
           <Game
             formatQuestion={formatters[Mode.addition]}
             checkAnswer={(n1, n2, a) => n1 + n2 === a}
-            logAnswer={props.logAnswer}
           />
         </Route>
         <Route path={`${path}/game/subtraction`}>
           <Game
             formatQuestion={formatters[Mode.subtraction]}
             checkAnswer={(n1, n2, a) => n2 === a}
-            logAnswer={props.logAnswer}
           />
         </Route>
         <Route path={`${path}/game/multiplication`}>
           <Game
             formatQuestion={formatters[Mode.multiplication]}
             checkAnswer={(n1, n2, a) => n1 * n2 === a}
-            logAnswer={props.logAnswer}
           />
         </Route>
         <Route path={`${path}/game/division`}>
           <Game
             formatQuestion={formatters[Mode.division]}
             checkAnswer={(n1, n2, a) => n2 === a}
-            logAnswer={props.logAnswer}
           />
         </Route>
         <Route path={`${path}/report`}>

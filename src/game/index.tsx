@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useParams, useHistory } from "react-router-dom";
 import './index.css';
+import { DataStoreContext } from '../dataStore';
 import { ConfettiContext } from '../confetti';
 
 const getRandom = (max: number) => Math.floor(Math.random() * (max + 1));
@@ -18,8 +19,7 @@ const generatePairs = (max: number) => {
 
 interface Props {
   formatQuestion: (n1: number, n2: number) => string,
-  checkAnswer: (n1: number, n2: number, a: number) => boolean,
-  logAnswer: (userId: string, question: string, startTime: number, endTime: number, incorrectAnswers: object[]) => void
+  checkAnswer: (n1: number, n2: number, a: number) => boolean
 }
 
 const Game = (props: Props) => {
@@ -32,6 +32,7 @@ const Game = (props: Props) => {
   const [incorrect, setIncorrect] = useState(false);
   const [incorrectResponses, setIncorrectResponses] = useState<object[]>([]);
   const [startTime, setStartTime] = useState(Date.now());
+  const { logAnswer } = useContext(DataStoreContext);
   const launchConfetti = useContext(ConfettiContext);
   const history = useHistory();
 
@@ -62,7 +63,7 @@ const Game = (props: Props) => {
               if (e.currentTarget.value.length > 0) {
                 const answer = Number(e.currentTarget.value);
                 if (props.checkAnswer(n1, n2, answer)) {
-                  props.logAnswer(userId, question, startTime, Date.now(), incorrectResponses);
+                  logAnswer(userId, question, startTime, Date.now(), incorrectResponses);
                   setCorrect(true);
                   if (index + 1 >= inputs.length) {
                     launchConfetti();
