@@ -30,7 +30,7 @@ const User = () => {
             <Link className="mode-link multiplication-link link-button" to={`${url}/game/multiplication`}><FontAwesomeIcon icon={faTimes}/></Link>
             <Link className="mode-link division-link link-button" to={`${url}/game/division`}><FontAwesomeIcon icon={faDivide}/></Link>
           </div>
-          <Link className="mode-link report-link link-button" to={`${url}/report/home`}><FontAwesomeIcon icon={faChartLine}/></Link>
+          <Link className="mode-link report-link link-button" to={`${url}/report`}><FontAwesomeIcon icon={faChartLine}/></Link>
           { userName === "Snappy_Snappy" ? <div className="easter-egg">CodingStuffs_Yea=Snappy_Snappy idk;what:im.doing</div> : null }
         </Route>
         <Redirect to={`${path}/home`} />

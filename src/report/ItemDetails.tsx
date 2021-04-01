@@ -1,15 +1,19 @@
 import React from 'react'
 import { Line } from 'react-chartjs-2';
-import { useParams } from "react-router-dom";
 import './ItemDetails.css';
 import { ResponseData } from './report';
 
-const LineChart = () => {
-  const { userId, question } = useParams<{ userId: string, question: string }>();
-  const d: ResponseData[] = JSON.parse(localStorage.getItem(`${userId} ${question}`) || '[]');
+interface Props {
+  question: string;
+  data: ResponseData[];
+  onClick: () => void;
+}
+
+const LineChart = ({ question, data, onClick }: Props) => {
+  const d = [...data];
   d.reverse();
 
-  const data = {
+  const chartData = {
     labels: d.map((r, i) => i + 1),
     datasets: [
       {
@@ -38,15 +42,13 @@ const LineChart = () => {
           },
         },
       ],
-    },
+    }
   }
 
   return (
-    <div>
-      <div className='header'>
-        <h1 className='title'>{question}</h1>
-      </div>
-      <Line data={data} options={options} />
+    <div className="item-details-main" onClick={onClick}>
+      <div className="item-details-header">{question}</div>
+      <Line data={chartData} options={options} />
     </div>
   );
 }

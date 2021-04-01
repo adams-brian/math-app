@@ -1,8 +1,8 @@
 import React from 'react';
 import { useParams } from "react-router-dom";
-import ItemSummary from './ItemSummary';
 import { formatters, Mode } from '../modes';
 import './report.css';
+import ItemDetails from './ItemDetails';
 
 type IncorrectResponseData = {
   a: number;
@@ -26,9 +26,11 @@ const getWeightedData = (data: ResponseData[]) => {
 
 interface Props {
   mode: Mode;
+  question: string | undefined;
+  selectQuestion: (question: string | undefined) => void;
 }
 
-const Report = ({ mode }: Props) => {
+const Report = ({ mode, question, selectQuestion }: Props) => {
   const { userId } = useParams<{ userId: string }>();
 
   const data: { [key: string]: ResponseData[] } = {};
@@ -57,14 +59,22 @@ const Report = ({ mode }: Props) => {
   for (let i = 1; i <= 12; i++) {
     for (let j = 1; j <= 12; j++) {
       const q = formatters[mode](i, j);
-      summaryList.push(<ItemSummary key={q} question={q} color={analyze(data[q])} />);
+      summaryList.push(<button className="report-summary-item" onClick={() => selectQuestion(q)} key={q} style={{ backgroundColor: analyze(data[q]) }}>{q}</button>);
     }
   }
 
   return (
-    <section className={`report-grid report-grid-${mode}`}>
-      { summaryList }
-    </section>
+    <div className={`report-body report-body-${mode}`}>
+      { 
+        question ? (
+          <ItemDetails question={question} data={data[question]} onClick={() => selectQuestion(undefined)}/>
+        ) : (
+          <section className="report-grid">
+            { summaryList }
+          </section>
+        )
+      }
+    </div>
   );
 }
 
