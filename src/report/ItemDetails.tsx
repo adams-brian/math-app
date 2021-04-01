@@ -1,11 +1,16 @@
 import React, { useContext } from 'react'
 import { useParams, useHistory } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
+import { useSpring, animated } from 'react-spring';
 import './ItemDetails.css';
 import { ResponseData } from './report';
 import { UserBaseUrlContext } from '../user';
 
-const LineChart = () => {
+interface Props {
+  clickCoords: number[];
+}
+
+const LineChart = ({ clickCoords }: Props) => {
   const { userId, question, mode } = useParams<{ userId: string, question: string, mode: string }>();
   const userBaseUrl = useContext(UserBaseUrlContext);
   const history = useHistory();
@@ -45,11 +50,26 @@ const LineChart = () => {
     }
   }
 
+  const props = useSpring({
+    from: {
+      transform: 'translate(-50%, -50%) scale(0)',
+      top: ((clickCoords[1] * 100) / window.innerHeight) + 'vh',
+      left: ((clickCoords[0] * 100) / window.innerWidth) + 'vw'
+    },
+    to: {
+      transform: 'translate(-50%, -50%) scale(1)',
+      top: '50vh',
+      left: '50vw'
+    }
+  });
+
   return (
-    <div className="item-details-main" onClick={() => history.replace(`${userBaseUrl}/report/${mode}`)}>
+    <animated.div
+      style={props}
+      className={`item-details-main item-details-main-${mode}`} onClick={() => history.replace(`${userBaseUrl}/report/${mode}`)}>
       <div className="item-details-header">{question}</div>
       <Line data={chartData} options={options} />
-    </div>
+    </animated.div>
   );
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Switch, Route, Link, useParams, useRouteMatch } from "react-router-dom";
 import { formatters, Mode } from '../modes';
 import './report.css';
@@ -26,7 +26,8 @@ const getWeightedData = (data: ResponseData[]) => {
 
 const Report = () => {
   const { userId, mode } = useParams<{ userId: string, mode: keyof typeof Mode }>();
-  let { path, url } = useRouteMatch();
+  const { path, url } = useRouteMatch();
+  const [ clickCoords, setClickCoords ] = useState([0, 0]);
 
   const data: { [key: string]: ResponseData[] } = {};
 
@@ -59,15 +60,13 @@ const Report = () => {
   }
 
   return (
-    <div className={`report-body report-body-${mode}`}>
+    <div className={`report-body report-body-${mode}`} onClick={e => setClickCoords([e.clientX, e.clientY])}>
+      <section className="report-grid">
+        { summaryList }
+      </section>
       <Switch>
-        <Route exact path={`${path}`}>
-          <section className="report-grid">
-              { summaryList }
-            </section>
-        </Route>
         <Route path={`${path}/:question`}>
-          <ItemDetails />
+          <ItemDetails clickCoords={clickCoords} />
         </Route>
       </Switch>
     </div>
