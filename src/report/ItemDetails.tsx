@@ -3,11 +3,11 @@ import { useParams, useHistory } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 import './ItemDetails.css';
 import { ResponseData } from './report';
-import { ReportBaseUrl } from '.';
+import { UserBaseUrlContext } from '../user';
 
 const LineChart = () => {
   const { userId, question, mode } = useParams<{ userId: string, question: string, mode: string }>();
-  const baseUrl = useContext(ReportBaseUrl);
+  const userBaseUrl = useContext(UserBaseUrlContext);
   const history = useHistory();
 
   const data: ResponseData[] = JSON.parse(localStorage.getItem(`${userId} ${question}`) || '[]');
@@ -46,7 +46,7 @@ const LineChart = () => {
   }
 
   return (
-    <div className="item-details-main" onClick={() => history.replace(`${baseUrl}/${mode}`)}>
+    <div className="item-details-main" onClick={() => history.replace(`${userBaseUrl}/report/${mode}`)}>
       <div className="item-details-header">{question}</div>
       <Line data={chartData} options={options} />
     </div>

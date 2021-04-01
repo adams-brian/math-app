@@ -4,6 +4,7 @@ import './index.css';
 import { DataStoreContext } from '../dataStore';
 import { ConfettiContext } from '../confetti';
 import { Mode, formatters, checkers } from '../modes';
+import { UserBaseUrlContext } from '../user';
 
 const getRandom = (max: number) => Math.floor(Math.random() * (max + 1));
 
@@ -30,6 +31,7 @@ const Game = () => {
   const [startTime, setStartTime] = useState(Date.now());
   const { logAnswer } = useContext(DataStoreContext);
   const launchConfetti = useContext(ConfettiContext);
+  const userBaseUrl = useContext(UserBaseUrlContext);
   const history = useHistory();
 
   const n1 = inputs[index][0];
@@ -63,7 +65,7 @@ const Game = () => {
                   setCorrect(true);
                   if (index + 1 >= inputs.length) {
                     launchConfetti();
-                    history.push(`../report/${mode}/home`);
+                    history.replace(`${userBaseUrl}/report/${mode}`);
                   }
                   setIndex((index + 1) % inputs.length);
                   setAnswer('');
