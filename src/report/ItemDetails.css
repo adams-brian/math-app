@@ -1,4 +1,6 @@
 .item-details-main {
+  width: 400px;
+  height: 300px;
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -27,4 +29,21 @@
 
 .item-details {
   margin: 10px;
+}
+
+.item-details-close {
+  box-shadow: 0px 0px 5px rgba(var(--shadow-color), 0.5);
+  border: 1px solid rgba(var(--main-color), 0.5);
+  color: rgba(var(--main-color), 0.5);
+  border-radius: 10px;
+  padding: 9px 13px;
+  font-size: 18px;
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  transition: transform 0.2s ease-out;
+}
+
+.item-details-close:hover {
+  transform: scale(1.1);
 }

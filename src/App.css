@@ -34,7 +34,7 @@
   transform: scale(1.1);
 }
 button {
-  transition: transform 0.2 ease-out;
+  transition: transform 0.2s ease-out;
 }
 button:hover {
   transform: scale(1.1);

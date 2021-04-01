@@ -2,6 +2,8 @@ import React, { useContext } from 'react'
 import { useParams, useHistory } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 import { useSpring, animated } from 'react-spring';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import './ItemDetails.css';
 import { ResponseData } from './report';
 import { UserBaseUrlContext } from '../user';
@@ -69,6 +71,7 @@ const LineChart = ({ clickCoords }: Props) => {
       className={`item-details-main item-details-main-${mode}`} onClick={() => history.replace(`${userBaseUrl}/report/${mode}`)}>
       <div className="item-details-header">{question}</div>
       <Line data={chartData} options={options} />
+      <div className="item-details-close"><FontAwesomeIcon icon={faTimes}/></div>
     </animated.div>
   );
 }
