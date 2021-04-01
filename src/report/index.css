@@ -1,12 +1,33 @@
-.report-grid {
-  display: grid;
-  grid-template-rows: repeat(12, 1fr);
-  grid-template-columns: repeat(12, 1fr);
-  justify-items: center;
-  align-items: center;
+.report-tabs {
+  display: flex;
+  justify-content: center;
 }
 
-.item-summary {
-  margin: 5px;
-  padding: 5px;
+.report-tab {
+  margin: 40px;
+  padding: 8px 18px;
+  font-size: 50px;
+  transition: transform 0.2s ease-out;
+}
+.report-tab-multiplication {
+  padding: 8px 24px;
+}
+.report-tab-active {
+  transform: scale(1.5);
+}
+.report-tab-active:hover {
+  transform: scale(1.5);
+}
+
+.report-tab-addition {
+  background-color: hsl(var(--addition-hue), var(--mode-normal));
+}
+.report-tab-subtraction {
+  background-color: hsl(var(--subtraction-hue), var(--mode-normal));
+}
+.report-tab-multiplication {
+  background-color: hsl(var(--multiplication-hue), var(--mode-normal));
+}
+.report-tab-division {
+  background-color: hsl(var(--division-hue), var(--mode-normal));
 }

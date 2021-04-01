@@ -8,7 +8,7 @@ interface Props {
 
 const ItemSummary = (props: Props) => {
   return (
-    <Link className="link-button item-summary" style={{backgroundColor: props.color}} to={`details/${props.question}`}>{props.question}</Link>
+    <Link className="link-button report-summary-item" style={{backgroundColor: props.color}} to={`details/${props.question}`}>{props.question}</Link>
   );
 }
 

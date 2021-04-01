@@ -37,13 +37,13 @@ const Game = () => {
   const question = formatters[mode](n1, n2);
 
   return (
-    <div className="container">
-      <div className="question">
+    <div className={`game-container game-${mode}`}>
+      <div className="game-question">
         { question } =
         <input
           className={
-            !correct && !incorrect ? "answer" :
-            correct ? "answer correct" : "answer incorrect"
+            !correct && !incorrect ? "game-answer" :
+            correct ? "game-answer correct-answer" : "game-answer incorrect-answer"
           }
           type="text"
           size={2}
@@ -84,8 +84,8 @@ const Game = () => {
           value={answer}>
         </input>
       </div>
-      <div className="status">
-        <div className="progress" style={{ width: (100 * index / inputs.length) + "%"}}></div>
+      <div className="game-status">
+        <div className="game-progress" style={{ width: (100 * index / inputs.length) + "%"}}></div>
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Switch, Route, useParams, useRouteMatch } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ItemSummary from './ItemSummary';
-import ItemDetails from './ItemDetails';
 import { formatters, Mode } from '../modes';
+import './report.css';
 
 type IncorrectResponseData = {
   a: number;
@@ -24,9 +24,12 @@ const getWeightedData = (data: ResponseData[]) => {
   return totalWeights > 0 ? [weightedElapsed / totalWeights, weightedIncorrect / totalWeights] : [0, 0];
 }
 
-const Report = () => {
-  const { path } = useRouteMatch();
-  const { userId, mode } = useParams<{ userId: string, mode: keyof typeof Mode }>();
+interface Props {
+  mode: Mode;
+}
+
+const Report = ({ mode }: Props) => {
+  const { userId } = useParams<{ userId: string }>();
 
   const data: { [key: string]: ResponseData[] } = {};
 
@@ -59,17 +62,9 @@ const Report = () => {
   }
 
   return (
-    <Switch>
-      <Route exact path={`${path}/home`}>
-        <section className="report-grid">
-          { summaryList }
-        </section>
-      </Route>
-      <Route path={`${path}/details/:question`}>
-        <ItemDetails />
-      </Route>
-    </Switch>
-    
+    <section className={`report-grid report-grid-${mode}`}>
+      { summaryList }
+    </section>
   );
 }
 

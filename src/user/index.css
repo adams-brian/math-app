@@ -4,17 +4,41 @@
   flex-direction: column;
 }
 
-.welcome {
+.user-header {
   margin: 50px;
-  font-size: 70px;
+  font-size: 100px;
 }
 
-.modes {
-  display: flex;
+.mode-link-list {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
 }
 
-.mode {
-  margin: 10px;
+.mode-link {
+  margin: 13px;
+  padding: 15px 36px;
+  text-align: center;
+  font-size: 120px;
+  border-radius: 35px;
+}
+
+.addition-link {
+  background-color: hsl(var(--addition-hue), var(--mode-normal));
+}
+.subtraction-link {
+  background-color: hsl(var(--subtraction-hue), var(--mode-normal));
+}
+.multiplication-link {
+  background-color: hsl(var(--multiplication-hue), var(--mode-normal));
+}
+.division-link {
+  background-color: hsl(var(--division-hue), var(--mode-normal));
+}
+
+.report-link {
+  margin-top: 50px;
+  background-color: white;
 }
 
 .easter-egg {

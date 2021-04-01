@@ -27,7 +27,7 @@ const ConfettiLauncher: FunctionComponent = (props) => {
     <ConfettiContext.Provider value={launchConfetti}>
       { props.children }
       <div className="confetti-launcher">
-        <Reward ref={confettiRef} type="confetti" config={confettiConfig}><span className="placeholder"></span></Reward>
+        <Reward ref={confettiRef} type="confetti" config={confettiConfig}><span></span></Reward>
         <div className="great-work"
           style={{ display: show ? 'block' : 'none'}}
           onAnimationEnd={e => {

@@ -1,15 +1,35 @@
-.container {
+.game-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: absolute;
+  top: 48vh;
+  transform: translate(0%, -50%);
+  padding: 80px;
+  border-radius: 40px;
+  border: 3px solid hsl(0, 0%, 100%);
 }
 
-.question {
+.game-addition {
+  background-color: hsl(var(--addition-hue), var(--mode-light));
+}
+.game-subtraction {
+  background-color: hsl(var(--subtraction-hue), var(--mode-light));
+}
+.game-multiplication {
+  background-color: hsl(var(--multiplication-hue), var(--mode-light));
+}
+.game-division {
+  background-color: hsl(var(--division-hue), var(--mode-light));
+}
+
+.game-question {
   font-size: 120px;
 }
 
-input[type="text"].answer {
+.game-answer {
   margin-left: 30px;
+  padding: 10px 20px;
   font-size: 120px;
 }
 
@@ -18,7 +38,7 @@ input[type="text"].answer {
   50% { box-shadow: 0px 0px 10px 0px rgb(var(--green)); }
   to { box-shadow: 0px 0px 5px rgb(var(--shadow-color)); }
 }
-.correct {
+.correct-answer {
   animation: 1s ease-out correct-animation;
 }
 
@@ -27,11 +47,11 @@ input[type="text"].answer {
   50% { box-shadow: 0px 0px 10px 0px rgb(var(--red)); }
   to { box-shadow: 0px 0px 5px rgb(var(--shadow-color)); }
 }
-.incorrect {
+.incorrect-answer {
   animation: 1s ease-out incorrect-animation;
 }
 
-.status {
+.game-status {
   width: 500px;
   height: 50px;
   margin-top: 50px;
@@ -41,7 +61,8 @@ input[type="text"].answer {
   overflow: hidden;
 }
 
-.progress {
+.game-progress {
   height: 50px;
   background-color: rgb(var(--green));
+  transition: width 0.2s ease-out;
 }

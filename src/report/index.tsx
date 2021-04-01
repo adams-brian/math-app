@@ -1,24 +1,22 @@
-import React from 'react';
-import { Link, Switch, Route, useRouteMatch } from "react-router-dom";
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus, faMinus, faTimes, faDivide } from '@fortawesome/free-solid-svg-icons'
 import './index.css';
 import Report from './report';
+import { Mode } from '../modes';
 
 const Home = () => {
-  const { path, url } = useRouteMatch();
+  const [ mode, setMode ] = useState(Mode.addition);
   return (
-    <Switch>
-      <Route exact path={`${path}/home`}>
-        <div className="modes">
-          <Link className="mode link-button" to={`${url}/addition/home`}>Addition</Link>
-          <Link className="mode link-button" to={`${url}/subtraction/home`}>Subtraction</Link>
-          <Link className="mode link-button" to={`${url}/multiplication/home`}>Multiplication</Link>
-          <Link className="mode link-button" to={`${url}/division/home`}>Division</Link>
-        </div>
-      </Route>
-      <Route path={`${path}/:mode`}>
-        <Report />
-      </Route>
-    </Switch>
+    <div className="report-main">
+      <div className="report-tabs">
+        <button className={`report-tab report-tab-addition report-tab-${mode === Mode.addition ? 'active' : 'inactive'}`} onClick={() => setMode(Mode.addition)}><FontAwesomeIcon icon={faPlus}/></button>
+        <button className={`report-tab report-tab-subtraction report-tab-${mode === Mode.subtraction ? 'active' : 'inactive'}`} onClick={() => setMode(Mode.subtraction)}><FontAwesomeIcon icon={faMinus}/></button>
+        <button className={`report-tab report-tab-multiplication report-tab-${mode === Mode.multiplication ? 'active' : 'inactive'}`} onClick={() => setMode(Mode.multiplication)}><FontAwesomeIcon icon={faTimes}/></button>
+        <button className={`report-tab report-tab-division report-tab-${mode === Mode.division ? 'active' : 'inactive'}`} onClick={() => setMode(Mode.division)}><FontAwesomeIcon icon={faDivide}/></button>
+      </div>
+      <Report mode={mode} />
+    </div>
   );
 }
 
