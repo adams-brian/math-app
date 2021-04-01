@@ -1,31 +1,31 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { useParams, useHistory } from 'react-router-dom';
 import { Line } from 'react-chartjs-2';
 import './ItemDetails.css';
 import { ResponseData } from './report';
+import { ReportBaseUrl } from '.';
 
-interface Props {
-  question: string;
-  data: ResponseData[];
-  onClick: () => void;
-}
+const LineChart = () => {
+  const { userId, question, mode } = useParams<{ userId: string, question: string, mode: string }>();
+  const baseUrl = useContext(ReportBaseUrl);
+  const history = useHistory();
 
-const LineChart = ({ question, data, onClick }: Props) => {
-  const d = [...data];
-  d.reverse();
+  const data: ResponseData[] = JSON.parse(localStorage.getItem(`${userId} ${question}`) || '[]');
+  data.reverse();
 
   const chartData = {
-    labels: d.map((r, i) => i + 1),
+    labels: data.map((r, i) => i + 1),
     datasets: [
       {
         label: 'Time',
-        data: d.map(r => r.e / 1000),
+        data: data.map(r => r.e / 1000),
         fill: false,
         backgroundColor: 'rgb(97, 223, 101)',
         borderColor: 'rgba(97, 223, 101)',
       },
       {
         label: 'Incorrect',
-        data: d.map(r => r.i.length),
+        data: data.map(r => r.i.length),
         fill: false,
         backgroundColor: 'rgb(253, 95, 95)',
         borderColor: 'rgba(253, 95, 95)',
@@ -46,7 +46,7 @@ const LineChart = ({ question, data, onClick }: Props) => {
   }
 
   return (
-    <div className="item-details-main" onClick={onClick}>
+    <div className="item-details-main" onClick={() => history.replace(`${baseUrl}/${mode}`)}>
       <div className="item-details-header">{question}</div>
       <Line data={chartData} options={options} />
     </div>

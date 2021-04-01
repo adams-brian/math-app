@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from "react-router-dom";
+import { Switch, Route, Link, useParams, useRouteMatch } from "react-router-dom";
 import { formatters, Mode } from '../modes';
 import './report.css';
 import ItemDetails from './ItemDetails';
@@ -24,14 +24,9 @@ const getWeightedData = (data: ResponseData[]) => {
   return totalWeights > 0 ? [weightedElapsed / totalWeights, weightedIncorrect / totalWeights] : [0, 0];
 }
 
-interface Props {
-  mode: Mode;
-  question: string | undefined;
-  selectQuestion: (question: string | undefined) => void;
-}
-
-const Report = ({ mode, question, selectQuestion }: Props) => {
-  const { userId } = useParams<{ userId: string }>();
+const Report = () => {
+  const { userId, mode } = useParams<{ userId: string, mode: keyof typeof Mode }>();
+  let { path, url } = useRouteMatch();
 
   const data: { [key: string]: ResponseData[] } = {};
 
@@ -59,21 +54,22 @@ const Report = ({ mode, question, selectQuestion }: Props) => {
   for (let i = 1; i <= 12; i++) {
     for (let j = 1; j <= 12; j++) {
       const q = formatters[mode](i, j);
-      summaryList.push(<button className="report-summary-item" onClick={() => selectQuestion(q)} key={q} style={{ backgroundColor: analyze(data[q]) }}>{q}</button>);
+      summaryList.push(<Link className="link-button report-summary-item" to={`${url}/${q}`} key={q} style={{ backgroundColor: analyze(data[q]) }} replace>{q}</Link>);
     }
   }
 
   return (
     <div className={`report-body report-body-${mode}`}>
-      { 
-        question ? (
-          <ItemDetails question={question} data={data[question]} onClick={() => selectQuestion(undefined)}/>
-        ) : (
+      <Switch>
+        <Route exact path={`${path}`}>
           <section className="report-grid">
-            { summaryList }
-          </section>
-        )
-      }
+              { summaryList }
+            </section>
+        </Route>
+        <Route path={`${path}/:question`}>
+          <ItemDetails />
+        </Route>
+      </Switch>
     </div>
   );
 }
