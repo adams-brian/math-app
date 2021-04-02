@@ -24,6 +24,8 @@ const getWeightedData = (data: ResponseData[]) => {
   return totalWeights > 0 ? [weightedElapsed / totalWeights, weightedIncorrect / totalWeights] : [0, 0];
 }
 
+const getColorFromScore = (score: number) => `rgb(${97 + (253 - 97) * score}, ${223 + (95 - 223) * score}, ${101 + (95 - 101) * score})`;
+
 const Report = () => {
   const { userId, mode } = useParams<{ userId: string, mode: keyof typeof Mode }>();
   const { path, url } = useRouteMatch();
@@ -43,24 +45,33 @@ const Report = () => {
   const fastest = allResponseTimes[0];
   const slowest = allResponseTimes[allResponseTimes.length - 1];
 
-  const analyze = (data: ResponseData[]) => {
+  const getScore = (data: ResponseData[]) => {
     const [weightedElapsed, weightedIncorrect] = getWeightedData(data);
     const relativeElapsed = ((weightedElapsed | fastest) - fastest) / ((slowest - fastest) | 1);
     const overallElapsed = allResponseTimes.findIndex(e => e >= weightedElapsed) / allResponseTimes.length;
-    const score = (relativeElapsed + overallElapsed + weightedIncorrect) / 3;
-    return `rgb(${97 + (253 - 97) * score}, ${223 + (95 - 223) * score}, ${101 + (95 - 101) * score})`;
+    return (relativeElapsed + overallElapsed + weightedIncorrect) / 3;
   }
-  
+
   const summaryList = [];
+  const questionAndScore: [string, number][] = [];
   for (let i = 1; i <= 12; i++) {
     for (let j = 1; j <= 12; j++) {
       const q = formatters[mode](i, j);
-      summaryList.push(<Link className="link-button report-summary-item" to={`${url}/${q}`} key={q} style={{ backgroundColor: analyze(data[q]) }} replace>{q}</Link>);
+      const score = getScore(data[q]);
+      questionAndScore.push([q, score]);
+      summaryList.push(<Link className="link-button report-summary-item" to={`${url}/${q}`} key={q} style={{ backgroundColor: getColorFromScore(score) }} replace>{q}</Link>);
     }
   }
+  questionAndScore.sort((a, b) => a[1] - b[1]);
+  const top10 = questionAndScore.slice(0, 10).map(([q, score]) =>
+    <Link className="link-button report-summary-item" to={`${url}/${q}`} key={q} style={{ backgroundColor: getColorFromScore(score) }} replace>{q}</Link>);
+  const bottom10 = questionAndScore.slice(-10).map(([q, score]) =>
+    <Link className="link-button report-summary-item" to={`${url}/${q}`} key={q} style={{ backgroundColor: getColorFromScore(score) }} replace>{q}</Link>);
 
   return (
     <div className={`report-body report-body-${mode}`} onClick={e => setClickCoords([e.clientX, e.clientY])}>
+      <section className="leaderboard">{ top10 }</section>
+      <section className="leaderboard">{ bottom10 }</section>
       <section className="report-grid">
         { summaryList }
       </section>
