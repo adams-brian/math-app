@@ -5,7 +5,7 @@ import { useSpring, animated } from 'react-spring';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import './ItemDetails.css';
-import { ResponseData } from './report';
+import { ResponseData } from '../dataStore';
 import { UserBaseUrlContext } from '../user';
 
 interface Props {

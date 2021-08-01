@@ -6,6 +6,11 @@ export enum Mode {
   division = 'division'
 }
 
+export enum QuestionSet {
+  all = 'all',
+  targeted = 'targeted'
+}
+
 export const formatters: { [key in Mode]: (n1: number, n2: number) => string } = {
   [Mode.none]: (n1, n2) => { throw new Error('formatter called on mode None') },
   [Mode.addition]: (n1, n2) => `${n1} + ${n2}`,

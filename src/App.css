@@ -20,6 +20,7 @@
 .link-button, button {
   outline: none;
   font-family: 'Fredoka One';
+  display: inline-block;
   border: 1px solid rgb(var(--main-color));
   border-radius: 20px;
   box-shadow: 0px 0px 5px rgb(var(--shadow-color));

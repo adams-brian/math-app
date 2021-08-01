@@ -19,7 +19,7 @@ const User = () => {
     <div className="user-main">
       <UserBaseUrlContext.Provider value={url}>
         <Switch>
-          <Route path={`${path}/game/:mode`}>
+          <Route path={`${path}/game/:mode/:questionset`}>
             <Game />
           </Route>
           <Route path={`${path}/report`}>
@@ -28,10 +28,10 @@ const User = () => {
           <Route path={`${path}/home`}>
             <div className="user-header">{userName}</div>
             <div className="mode-link-list">
-              <Link className="mode-link addition-link link-button" to={`${url}/game/addition`}><FontAwesomeIcon icon={faPlus}/></Link>
-              <Link className="mode-link subtraction-link link-button" to={`${url}/game/subtraction`}><FontAwesomeIcon icon={faMinus}/></Link>
-              <Link className="mode-link multiplication-link link-button" to={`${url}/game/multiplication`}><FontAwesomeIcon icon={faTimes}/></Link>
-              <Link className="mode-link division-link link-button" to={`${url}/game/division`}><FontAwesomeIcon icon={faDivide}/></Link>
+              <Link className="mode-link addition-link link-button" to={`${url}/game/addition/all`}><FontAwesomeIcon icon={faPlus}/></Link>
+              <Link className="mode-link subtraction-link link-button" to={`${url}/game/subtraction/all`}><FontAwesomeIcon icon={faMinus}/></Link>
+              <Link className="mode-link multiplication-link link-button" to={`${url}/game/multiplication/all`}><FontAwesomeIcon icon={faTimes}/></Link>
+              <Link className="mode-link division-link link-button" to={`${url}/game/division/all`}><FontAwesomeIcon icon={faDivide}/></Link>
             </div>
             <Link className="mode-link report-link link-button" to={`${url}/report`}><FontAwesomeIcon icon={faChartLine}/></Link>
             { userName === "Snappy_Snappy" ? <div className="easter-egg">CodingStuffs_Yea=Snappy_Snappy idk;what:im.doing</div> : null }
