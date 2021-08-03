@@ -14,13 +14,15 @@ export type ResponseData = {
 }
 
 const logAnswer = (userId: string, question: string, startTime: number, endTime: number, incorrectAnswers: object[]) => {
-  const key = `${userId} ${question}`;
-  const data = JSON.parse(localStorage.getItem(key) || '[]');
-  localStorage.setItem(key, JSON.stringify([
+  const data = getQuestionResponseData(userId, question);
+  localStorage.setItem(`${userId} ${question}`, JSON.stringify([
     { t: endTime, i: incorrectAnswers, e: endTime - startTime },
     ...data.slice(0, 19)
   ]));
 }
+
+const getQuestionResponseData = (userId: string, question: string) =>
+  JSON.parse(localStorage.getItem(`${userId} ${question}`) || '[]');
 
 const getReport = (userId: string, mode: Mode) => {
   const data: { [key: string]: ResponseData[] } = {};
@@ -29,7 +31,7 @@ const getReport = (userId: string, mode: Mode) => {
   for (let i = 1; i <= 12; i++) {
     for (let j = 1; j <= 12; j++) {
       const q = formatters[mode](i, j);
-      data[q] = JSON.parse(localStorage.getItem(`${userId} ${q}`) || '[]');
+      data[q] = getQuestionResponseData(userId, q);
       data[q].forEach(o => allResponseTimes.push(o.e));
     }
   }
@@ -66,12 +68,14 @@ const getReport = (userId: string, mode: Mode) => {
 
 export const DataStoreContext = createContext<{
   logAnswer: (userId: string, question: string, startTime: number, endTime: number, incorrectAnswers: object[]) => void,
+  getQuestionResponseData: (userId: string, question: string) => ResponseData[],
   getUserName: (id: string) => string,
   createNewUser: (name: string) => void,
   userList: [string, string][],
   getReport: (userId: string, mode: Mode) => [number, number, string, number][]
 }>({
   logAnswer: () => {},
+  getQuestionResponseData: () => [],
   getUserName: () => '',
   createNewUser: () => {},
   userList: [],
@@ -93,6 +97,7 @@ const DataStore: FunctionComponent = (props) => {
   return (
     <DataStoreContext.Provider value={{
       logAnswer,
+      getQuestionResponseData,
       getUserName,
       createNewUser,
       userList,

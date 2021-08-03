@@ -5,7 +5,7 @@ import { useSpring, animated } from 'react-spring';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import './ItemDetails.css';
-import { ResponseData } from '../dataStore';
+import { ResponseData, DataStoreContext } from '../dataStore';
 import { UserBaseUrlContext } from '../user';
 
 interface Props {
@@ -15,9 +15,10 @@ interface Props {
 const LineChart = ({ clickCoords }: Props) => {
   const { userId, question, mode } = useParams<{ userId: string, question: string, mode: string }>();
   const userBaseUrl = useContext(UserBaseUrlContext);
+  const { getQuestionResponseData } = useContext(DataStoreContext);
   const history = useHistory();
 
-  const data: ResponseData[] = JSON.parse(localStorage.getItem(`${userId} ${question}`) || '[]');
+  const data: ResponseData[] = getQuestionResponseData(userId, question);
   data.reverse();
 
   const chartData = {
