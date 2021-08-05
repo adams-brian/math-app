@@ -9,18 +9,6 @@
   border-radius: 50px;
   border: 3px solid white;
 }
-.item-details-main-addition {
-  background-color: hsl(var(--addition-hue), var(--mode-light));
-}
-.item-details-main-subtraction {
-  background-color: hsl(var(--subtraction-hue), var(--mode-light));
-}
-.item-details-main-multiplication {
-  background-color: hsl(var(--multiplication-hue), var(--mode-light));
-}
-.item-details-main-division {
-  background-color: hsl(var(--division-hue), var(--mode-light));
-}
 
 .item-details-header {
   font-size: 50px;

@@ -10,17 +10,11 @@
   border: 3px solid hsl(0, 0%, 100%);
 }
 
-.game-addition {
-  background-color: hsl(var(--addition-hue), var(--mode-light));
-}
-.game-subtraction {
-  background-color: hsl(var(--subtraction-hue), var(--mode-light));
-}
-.game-multiplication {
-  background-color: hsl(var(--multiplication-hue), var(--mode-light));
-}
-.game-division {
-  background-color: hsl(var(--division-hue), var(--mode-light));
+.game-home {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 12px;
 }
 
 .game-question {

@@ -1,0 +1,26 @@
+.report-tabs {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.report-tab {
+  margin: 40px;
+  padding: 8px 0;
+  width: 80px;
+  text-align: center;
+  font-size: 50px;
+  transition: transform 0.2s ease-out;
+}
+.report-tab-active {
+  transform: scale(1.5);
+}
+.report-tab-active:hover {
+  transform: scale(1.5);
+}
+
+.report-home {
+  position: absolute;
+  top: 20px;
+  left: 0;
+}

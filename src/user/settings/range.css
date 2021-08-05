@@ -1,0 +1,34 @@
+.user-settings-range {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+ }
+
+.user-settings-range-outer {
+  height: 50px;
+  display: flex;
+  width: 100%;
+}
+
+.user-settings-range-inner {
+  height: 5px;
+  width: 100%;
+  border-radius: 4px;
+  background: hsl(0, 0%, 100%);
+  align-self: center;
+  border: 1px solid rgba(var(--shadow-color), 0.5);
+}
+
+.user-settings-range-thumb {
+  font-size: 25px;
+  height: 50px;
+  width: 50px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  background: #FFF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid rgba(var(--shadow-color), 0.8);
+}

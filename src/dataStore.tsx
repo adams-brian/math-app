@@ -13,6 +13,25 @@ export type ResponseData = {
   e: number;
 }
 
+export type Ranges = {
+  n1: [number, number];
+  n2: [number, number];
+}
+
+export type UserSettings = {
+  a: Ranges;
+  s: Ranges;
+  m: Ranges;
+  d: Ranges;
+}
+
+const defaultSettings: UserSettings = {
+  a: { n1: [1, 12], n2: [1, 12] },
+  s: { n1: [1, 12], n2: [1, 12] },
+  m: { n1: [1, 12], n2: [1, 12] },
+  d: { n1: [1, 12], n2: [1, 12] }
+};
+
 const logAnswer = (userId: string, question: string, startTime: number, endTime: number, incorrectAnswers: object[]) => {
   const data = getQuestionResponseData(userId, question);
   localStorage.setItem(`${userId} ${question}`, JSON.stringify([
@@ -72,14 +91,18 @@ export const DataStoreContext = createContext<{
   getUserName: (id: string) => string,
   createNewUser: (name: string) => void,
   userList: [string, string][],
-  getReport: (userId: string, mode: Mode) => [number, number, string, number][]
+  getReport: (userId: string, mode: Mode) => [number, number, string, number][],
+  getUserSettings: (id: string) => UserSettings,
+  setUserSettings: (id: string, settings: UserSettings) => void
 }>({
   logAnswer: () => {},
   getQuestionResponseData: () => [],
   getUserName: () => '',
   createNewUser: () => {},
   userList: [],
-  getReport: () => []
+  getReport: () => [],
+  getUserSettings: () => defaultSettings,
+  setUserSettings: () => {}
 });
 
 const DataStore: FunctionComponent = (props) => {
@@ -94,6 +117,13 @@ const DataStore: FunctionComponent = (props) => {
 
   const getUserName = (id: string) => (userList.find(u => u[1] === id) || [])[0] || 'error retrieving username';
 
+  const getUserSettings = (id: string) =>
+    JSON.parse(localStorage.getItem(`${id}-settings`) || JSON.stringify(defaultSettings));
+
+  const setUserSettings = (id: string, settings: UserSettings) => {
+    localStorage.setItem(`${id}-settings`, JSON.stringify(settings));
+  }
+
   return (
     <DataStoreContext.Provider value={{
       logAnswer,
@@ -101,7 +131,9 @@ const DataStore: FunctionComponent = (props) => {
       getUserName,
       createNewUser,
       userList,
-      getReport
+      getReport,
+      getUserSettings,
+      setUserSettings
     }}>
       { props.children }
     </DataStoreContext.Provider>

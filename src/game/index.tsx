@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react';
-import { useParams, useHistory, useRouteMatch } from "react-router-dom";
+import { Link, useParams, useHistory, useRouteMatch } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome } from '@fortawesome/free-solid-svg-icons'
 import './index.css';
 import { DataStoreContext } from '../dataStore';
 import { ConfettiContext } from '../confetti';
@@ -52,7 +54,8 @@ const Game = () => {
   const question = formatters[mode](n1, n2);
 
   return (
-    <div className={`game-container game-${mode}`}>
+    <div className={`game-container background-light-${mode}`}>
+      <Link className={`link-button system-button game-home`} to={`${userBaseUrl}/home`}><FontAwesomeIcon icon={faHome}/></Link>
       <div className="game-question">
         { question } =
         <input

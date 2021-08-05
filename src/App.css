@@ -41,6 +41,11 @@ button:hover {
   transform: scale(1.1);
 }
 
+.system-button {
+  font-size: 23px;
+  padding: 10px;
+}
+
 input[type="text"] {
   outline: none;
   font-family: 'Fredoka One';
@@ -52,4 +57,30 @@ input[type="text"] {
 ::placeholder {
   color: rgb(var(--shadow-color));
   font-style: italic;
+}
+
+.background-addition {
+  background-color: hsl(var(--addition-hue), var(--mode-normal));
+}
+.background-subtraction {
+  background-color: hsl(var(--subtraction-hue), var(--mode-normal));
+}
+.background-multiplication {
+  background-color: hsl(var(--multiplication-hue), var(--mode-normal));
+}
+.background-division {
+  background-color: hsl(var(--division-hue), var(--mode-normal));
+}
+
+.background-light-addition {
+  background-color: hsl(var(--addition-hue), var(--mode-light));
+}
+.background-light-subtraction {
+  background-color: hsl(var(--subtraction-hue), var(--mode-light));
+}
+.background-light-multiplication {
+  background-color: hsl(var(--multiplication-hue), var(--mode-light));
+}
+.background-light-division {
+  background-color: hsl(var(--division-hue), var(--mode-light));
 }

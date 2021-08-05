@@ -1,17 +1,20 @@
 import React, { useContext, createContext } from 'react';
 import { Link, Switch, Route, useParams, Redirect, useRouteMatch } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faMinus, faTimes, faDivide, faChartLine } from '@fortawesome/free-solid-svg-icons'
+import { faChartLine, faUserCog } from '@fortawesome/free-solid-svg-icons'
 import { DataStoreContext } from '../dataStore';
 import Game from '../game';
 import Report from '../report';
+import Settings from './settings';
+import ModeLinks from './modeLinks';
+import { Mode } from '../modes';
 import './index.css';
 
 export const UserBaseUrlContext = createContext('');
 
 const User = () => {
   const { userId } = useParams<{ userId: string }>();
-  let { path, url } = useRouteMatch();
+  const { path, url } = useRouteMatch();
   const { getUserName } = useContext(DataStoreContext);
   const userName = getUserName(userId);
 
@@ -25,13 +28,16 @@ const User = () => {
           <Route path={`${path}/report`}>
             <Report />
           </Route>
+          <Route path={`${path}/settings`}>
+            <Settings />
+          </Route>
           <Route path={`${path}/home`}>
-            <div className="user-header">{userName}</div>
+            <div className="user-header">
+              <div className="user-greeting">Welcome {userName}!</div>
+              <Link className="link-button system-button" to={`${url}/settings`}><FontAwesomeIcon icon={faUserCog}/></Link>
+            </div>
             <div className="mode-link-list">
-              <Link className="mode-link addition-link link-button" to={`${url}/game/addition/all`}><FontAwesomeIcon icon={faPlus}/></Link>
-              <Link className="mode-link subtraction-link link-button" to={`${url}/game/subtraction/all`}><FontAwesomeIcon icon={faMinus}/></Link>
-              <Link className="mode-link multiplication-link link-button" to={`${url}/game/multiplication/all`}><FontAwesomeIcon icon={faTimes}/></Link>
-              <Link className="mode-link division-link link-button" to={`${url}/game/division/all`}><FontAwesomeIcon icon={faDivide}/></Link>
+              { (Object.keys(Mode) as (keyof typeof Mode)[]).filter(m => m !== Mode.none).map(m => (<ModeLinks key={m} mode={m} />))}
             </div>
             <Link className="mode-link report-link link-button" to={`${url}/report`}><FontAwesomeIcon icon={faChartLine}/></Link>
             { userName === "Snappy_Snappy" ? <div className="easter-egg">CodingStuffs_Yea=Snappy_Snappy idk;what:im.doing</div> : null }

@@ -1,0 +1,25 @@
+.mode-links {
+  display: flex;
+}
+
+.mode-targeted {
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.mode-targeted-hidden {
+  display: none;
+}
+
+.mode-targeted-link {
+  padding: 10px 0;
+  width: 70px;
+  text-align: center;
+  font-size: 22px;
+}
+
+.mode-targeted-count {
+  margin-left: 5px;
+}
