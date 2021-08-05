@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Switch, Route, Link, useParams, useRouteMatch } from "react-router-dom";
-import { Mode } from '../modes';
-import { DataStoreContext } from '../dataStore';
+import { Mode } from '../../modes';
+import { DataStoreContext } from '../../dataStore';
 import './report.css';
 import ItemDetails from './ItemDetails';
 

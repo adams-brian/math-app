@@ -1,5 +1,4 @@
 import React from 'react';
-import './index.css';
 import Nav from './nav';
 import Report from './report';
 import { Route, Redirect, Switch, useRouteMatch } from 'react-router-dom';

@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faTimes, faDivide, faHome } from '@fortawesome/free-solid-svg-icons'
-import { UserBaseUrlContext } from '../user';
-import { Mode } from '../modes';
+import { UserBaseUrlContext } from '..';
+import { Mode } from '../../modes';
 import './nav.css';
 
 const Nav = () => {

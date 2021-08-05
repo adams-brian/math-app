@@ -5,8 +5,8 @@ import { useSpring, animated } from 'react-spring';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import './ItemDetails.css';
-import { ResponseData, DataStoreContext } from '../dataStore';
-import { UserBaseUrlContext } from '../user';
+import { ResponseData, DataStoreContext } from '../../dataStore';
+import { UserBaseUrlContext } from '..';
 
 interface Props {
   clickCoords: number[];

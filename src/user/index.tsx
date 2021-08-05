@@ -3,8 +3,8 @@ import { Link, Switch, Route, useParams, Redirect, useRouteMatch } from "react-r
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChartLine, faUserCog } from '@fortawesome/free-solid-svg-icons'
 import { DataStoreContext } from '../dataStore';
-import Game from '../game';
-import Report from '../report';
+import Game from './game';
+import Report from './report';
 import Settings from './settings';
 import ModeLinks from './modeLinks';
 import { Mode } from '../modes';

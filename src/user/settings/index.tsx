@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faArrowsAltH } from '@fortawesome/free-solid-svg-icons'
 import { DataStoreContext } from '../../dataStore';
 import { UserBaseUrlContext } from '../';
 import Range from './range';
@@ -42,7 +42,7 @@ const Settings = () => {
         <Range values={an2} setValues={setan2} />
         <div className="user-settings-question-range">
           <div>{ formatters[Mode.addition](an1[0], an2[0]) } = { an1[0] + an2[0] }</div>
-          <div>&#8594;</div>
+          <div><FontAwesomeIcon icon={faArrowsAltH} /></div>
           <div>{ formatters[Mode.addition](an1[1], an2[1]) } = { an1[1] + an2[1] }</div>
         </div>
       </div>
@@ -51,7 +51,7 @@ const Settings = () => {
         <Range values={sn2} setValues={setsn2} />
         <div className="user-settings-question-range">
           <div>{ formatters[Mode.subtraction](sn1[0], sn2[0]) } = { sn2[0] }</div>
-          <div>&#8594;</div>
+          <div><FontAwesomeIcon icon={faArrowsAltH} /></div>
           <div>{ formatters[Mode.subtraction](sn1[1], sn2[1]) } = { sn2[1] }</div>
         </div>
       </div>
@@ -60,7 +60,7 @@ const Settings = () => {
         <Range values={mn2} setValues={setmn2} />
         <div className="user-settings-question-range">
           <div>{ formatters[Mode.multiplication](mn1[0], mn2[0]) } = { mn1[0] * mn2[0] }</div>
-          <div>&#8594;</div>
+          <div><FontAwesomeIcon icon={faArrowsAltH} /></div>
           <div>{ formatters[Mode.multiplication](mn1[1], mn2[1]) } = { mn1[1] * mn2[1] }</div>
         </div>
       </div>
@@ -69,7 +69,7 @@ const Settings = () => {
         <Range values={dn2} setValues={setdn2} />
         <div className="user-settings-question-range">
           <div>{ formatters[Mode.division](dn1[0], dn2[0]) } = { dn2[0] }</div>
-          <div>&#8594;</div>
+          <div><FontAwesomeIcon icon={faArrowsAltH} /></div>
           <div>{ formatters[Mode.division](dn1[1], dn2[1]) } = { dn2[1] }</div>
         </div>
       </div>
