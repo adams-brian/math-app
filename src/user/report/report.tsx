@@ -10,12 +10,14 @@ const getColorFromScore = (score: number) => `rgb(${97 + (253 - 97) * score}, ${
 const Report = () => {
   const { userId, mode } = useParams<{ userId: string, mode: keyof typeof Mode }>();
   const { path, url } = useRouteMatch();
-  const { getReport } = useContext(DataStoreContext);
+  const { getReport, getUserRanges } = useContext(DataStoreContext);
   const [ clickCoords, setClickCoords ] = useState([0, 0]);
 
   const questionAndScore = getReport(userId, Mode[mode]);
   const sorted = [...questionAndScore];
   sorted.sort((a, b) => a[3] - b[3]);
+
+  const ranges = getUserRanges(userId, Mode[mode]);
 
   const top10 = sorted.slice(0, 10).map(([n1, n2, q, score]) =>
     <Link className="link-button report-summary-item" to={`${url}/${q}`} key={q} style={{ backgroundColor: getColorFromScore(score) }} replace>{q}</Link>);
@@ -26,7 +28,7 @@ const Report = () => {
     <div className={`report-body background-light-${mode}`} onClick={e => setClickCoords([e.clientX, e.clientY])}>
       <section className="leaderboard">{ top10 }</section>
       <section className="leaderboard">{ bottom10 }</section>
-      <section className="report-grid">
+      <section className="report-grid" style={{ gridTemplateRows: `repeat(${ranges.n1[1] - ranges.n1[0] + 1}, auto)`, gridTemplateColumns: `repeat(${ranges.n2[1] - ranges.n2[0] + 1}, auto)` }}>
         { questionAndScore.map(([n1, n2, q, score]) => (<Link className="link-button report-summary-item" to={`${url}/${q}`} key={q} style={{ backgroundColor: getColorFromScore(score) }} replace>{q}</Link>)) }
       </section>
       <Switch>

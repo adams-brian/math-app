@@ -2,15 +2,15 @@ import React, { FunctionComponent } from 'react';
 import { Range } from 'react-range';
 import './range.css';
 
-const RangeComponent: FunctionComponent<{ values: [number, number], setValues: (values: [number, number]) => void }> = ({ values, setValues }) => {
+const RangeComponent: FunctionComponent<{ range: [number, number], values: [number, number], setValues: (values: [number, number]) => void }> = ({ range, values, setValues }) => {
   return (
     <div className="user-settings-range">
         <Range
           allowOverlap={false}
           values={values}
           step={1}
-          min={1}
-          max={12}
+          min={range[0]}
+          max={range[1]}
           onChange={(values) => setValues([values[0], values[1]])}
           renderTrack={({ props, children }) => (
             <div

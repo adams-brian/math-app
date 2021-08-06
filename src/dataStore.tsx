@@ -25,11 +25,14 @@ export type UserSettings = {
   d: Ranges;
 }
 
-const defaultSettings: UserSettings = {
-  a: { n1: [1, 12], n2: [1, 12] },
-  s: { n1: [1, 12], n2: [1, 12] },
-  m: { n1: [1, 12], n2: [1, 12] },
-  d: { n1: [1, 12], n2: [1, 12] }
+const defaultRange: [number, number] = [0, 12];
+const defaultRanges: Ranges = { n1: [...defaultRange], n2: [...defaultRange] };
+
+export const defaultSettings: UserSettings = {
+  a: { ...defaultRanges },
+  s: { ...defaultRanges },
+  m: { ...defaultRanges },
+  d: { n1: [1, 12], n2: [...defaultRange] }
 };
 
 const logAnswer = (userId: string, question: string, startTime: number, endTime: number, incorrectAnswers: object[]) => {
@@ -46,9 +49,11 @@ const getQuestionResponseData = (userId: string, question: string) =>
 const getReport = (userId: string, mode: Mode) => {
   const data: { [key: string]: ResponseData[] } = {};
 
+  const ranges = getUserRanges(userId, Mode[mode]);
+
   const allResponseTimes: number[] = [];
-  for (let i = 1; i <= 12; i++) {
-    for (let j = 1; j <= 12; j++) {
+  for (let i = ranges.n1[0]; i <= ranges.n1[1]; i++) {
+    for (let j = ranges.n2[0]; j <= ranges.n2[1]; j++) {
       const q = formatters[mode](i, j);
       data[q] = getQuestionResponseData(userId, q);
       data[q].forEach(o => allResponseTimes.push(o.e));
@@ -75,14 +80,36 @@ const getReport = (userId: string, mode: Mode) => {
   }
 
   const n1n2QuestionScore: [number, number, string, number][] = [];
-  for (let i = 1; i <= 12; i++) {
-    for (let j = 1; j <= 12; j++) {
+  for (let i = ranges.n1[0]; i <= ranges.n1[1]; i++) {
+    for (let j = ranges.n2[0]; j <= ranges.n2[1]; j++) {
       const q = formatters[mode](i, j);
       const score = getScore(data[q]);
       n1n2QuestionScore.push([i, j, q, score]);
     }
   }
   return n1n2QuestionScore;
+}
+
+const getUserSettings: (id: string) => UserSettings = (id: string) =>
+  JSON.parse(localStorage.getItem(`${id}-settings`) || JSON.stringify(defaultSettings));
+
+const getUserRanges: (id: string, mode: Mode) => Ranges = (id: string, mode: Mode) => {
+  switch (mode) {
+    case Mode.addition:
+      return getUserSettings(id).a;
+    case Mode.subtraction:
+      return getUserSettings(id).s;
+    case Mode.multiplication:
+      return getUserSettings(id).m;
+    case Mode.division:
+      return getUserSettings(id).d;
+  }
+  console.error('Mode not recognized in getUserRanges');
+  return { ...defaultRanges };
+}
+
+const setUserSettings = (id: string, settings: UserSettings) => {
+  localStorage.setItem(`${id}-settings`, JSON.stringify(settings));
 }
 
 export const DataStoreContext = createContext<{
@@ -93,6 +120,7 @@ export const DataStoreContext = createContext<{
   userList: [string, string][],
   getReport: (userId: string, mode: Mode) => [number, number, string, number][],
   getUserSettings: (id: string) => UserSettings,
+  getUserRanges: (id: string, mode: Mode) => Ranges,
   setUserSettings: (id: string, settings: UserSettings) => void
 }>({
   logAnswer: () => {},
@@ -102,6 +130,7 @@ export const DataStoreContext = createContext<{
   userList: [],
   getReport: () => [],
   getUserSettings: () => defaultSettings,
+  getUserRanges: () => ({ ...defaultRanges }),
   setUserSettings: () => {}
 });
 
@@ -117,13 +146,6 @@ const DataStore: FunctionComponent = (props) => {
 
   const getUserName = (id: string) => (userList.find(u => u[1] === id) || [])[0] || 'error retrieving username';
 
-  const getUserSettings = (id: string) =>
-    JSON.parse(localStorage.getItem(`${id}-settings`) || JSON.stringify(defaultSettings));
-
-  const setUserSettings = (id: string, settings: UserSettings) => {
-    localStorage.setItem(`${id}-settings`, JSON.stringify(settings));
-  }
-
   return (
     <DataStoreContext.Provider value={{
       logAnswer,
@@ -133,6 +155,7 @@ const DataStore: FunctionComponent = (props) => {
       userList,
       getReport,
       getUserSettings,
+      getUserRanges,
       setUserSettings
     }}>
       { props.children }

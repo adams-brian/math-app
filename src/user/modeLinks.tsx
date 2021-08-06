@@ -13,7 +13,9 @@ const ModeLinks: FunctionComponent<{ mode: keyof typeof Mode }> = ({ mode }) => 
 
   const { userId } = useParams<{ userId: string }>();
   const userBaseUrl = useContext(UserBaseUrlContext);
-  const { getQuestionResponseData } = useContext(DataStoreContext);
+  const { getQuestionResponseData, getUserRanges } = useContext(DataStoreContext);
+
+  const ranges = getUserRanges(userId, Mode[mode]);
 
   let icon = faPlus;
   switch (mode) {
@@ -32,12 +34,11 @@ const ModeLinks: FunctionComponent<{ mode: keyof typeof Mode }> = ({ mode }) => 
   }
 
   let min = THRESHOLD;
-  for (let i = 1; i <= 12; i++) {
-    for (let j = 1; j <= 12; j++) {
+  for (let i = ranges.n1[0]; i <= ranges.n1[1]; i++) {
+    for (let j = ranges.n2[0]; j <= ranges.n2[1]; j++) {
       min = Math.min(min, getQuestionResponseData(userId, formatters[mode](i, j)).length);
     }
   }
-  console.log(min);
 
   return (
     <div className="mode-links">

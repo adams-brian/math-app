@@ -4,6 +4,7 @@
   align-items: center;
   border-radius: 50px;
   border: 3px solid white;
+  min-width: 900px;
 }
 
 .leaderboard {
@@ -19,8 +20,6 @@
   margin: 25px;
   padding: 15px;
   display: grid;
-  grid-template-rows: repeat(12, 1fr);
-  grid-template-columns: repeat(12, 1fr);
   justify-items: center;
   align-items: center;
   border: 3px solid white;
@@ -30,7 +29,7 @@
 .report-summary-item {
   margin: 5px;
   padding: 5px;
-  font-size: 22px;
+  font-size: 20px;
   border-radius: 12px;
 }
 .report-summary-item:hover {

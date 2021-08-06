@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons'
-import { DataStoreContext } from '../../dataStore';
+import { DataStoreContext, defaultSettings } from '../../dataStore';
 import { UserBaseUrlContext } from '../';
 import Range from './range';
 import { Mode, formatters } from '../../modes';
@@ -39,8 +39,8 @@ const Settings = () => {
       <Link className={`link-button system-button user-settings-home`} to={`${userBaseUrl}/home`}><FontAwesomeIcon icon={faHome}/></Link>
       <div className="user-settings-header">Settings for {userName}</div>
       <div className="user-settings-section background-light-addition">
-        <Range values={an1} setValues={setan1} />
-        <Range values={an2} setValues={setan2} />
+        <Range range={defaultSettings.a.n1} values={an1} setValues={setan1} />
+        <Range range={defaultSettings.a.n2} values={an2} setValues={setan2} />
         <div className="user-settings-question-range">
           <div>{ formatters[Mode.addition](an1[0], an2[0]) } = { an1[0] + an2[0] }</div>
           <div><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
@@ -48,8 +48,8 @@ const Settings = () => {
         </div>
       </div>
       <div className="user-settings-section background-light-subtraction">
-        <Range values={sn1} setValues={setsn1} />
-        <Range values={sn2} setValues={setsn2} />
+        <Range range={defaultSettings.s.n1} values={sn1} setValues={setsn1} />
+        <Range range={defaultSettings.s.n2} values={sn2} setValues={setsn2} />
         <div className="user-settings-question-range">
           <div>{ formatters[Mode.subtraction](sn1[0], sn2[0]) } = { sn2[0] }</div>
           <div><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
@@ -57,8 +57,8 @@ const Settings = () => {
         </div>
       </div>
       <div className="user-settings-section background-light-multiplication">
-        <Range values={mn1} setValues={setmn1} />
-        <Range values={mn2} setValues={setmn2} />
+        <Range range={defaultSettings.m.n1} values={mn1} setValues={setmn1} />
+        <Range range={defaultSettings.m.n2} values={mn2} setValues={setmn2} />
         <div className="user-settings-question-range">
           <div>{ formatters[Mode.multiplication](mn1[0], mn2[0]) } = { mn1[0] * mn2[0] }</div>
           <div><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
@@ -66,8 +66,8 @@ const Settings = () => {
         </div>
       </div>
       <div className="user-settings-section background-light-division">
-        <Range values={dn1} setValues={setdn1} />
-        <Range values={dn2} setValues={setdn2} />
+        <Range range={defaultSettings.d.n1} values={dn1} setValues={setdn1} />
+        <Range range={defaultSettings.d.n2} values={dn2} setValues={setdn2} />
         <div className="user-settings-question-range">
           <div>{ formatters[Mode.division](dn1[0], dn2[0]) } = { dn2[0] }</div>
           <div><FontAwesomeIcon icon={faLongArrowAltRight} /></div>

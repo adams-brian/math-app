@@ -35,17 +35,18 @@ const Game = () => {
   const [incorrect, setIncorrect] = useState(false);
   const [incorrectResponses, setIncorrectResponses] = useState<object[]>([]);
   const [startTime, setStartTime] = useState(Date.now());
-  const { logAnswer, getReport } = useContext(DataStoreContext);
+  const { logAnswer, getReport, getUserRanges } = useContext(DataStoreContext);
   const launchConfetti = useContext(ConfettiContext);
   const userBaseUrl = useContext(UserBaseUrlContext);
   const history = useHistory();
   const targetedCount = Number(useRouteMatch<{ count: string }>(`${userBaseUrl}/game/:mode/targeted/:count`)?.params?.count || '10');
+  const ranges = getUserRanges(userId, Mode[mode]);
 
   const [inputs] = useState(
     randomize(
       questionset === QuestionSet.targeted ?
         getReport(userId, Mode[mode]).sort((a, b) => b[3] - a[3]).slice(0, targetedCount).map(v => [v[0], v[1]]) :
-        generatePairs(1, 12, 1, 12)
+        generatePairs(ranges.n1[0], ranges.n1[1], ranges.n2[0], ranges.n2[1])
     )
   );
 
