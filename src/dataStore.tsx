@@ -60,19 +60,25 @@ const getReport = (userId: string, mode: Mode) => {
     }
   }
   allResponseTimes.sort((a, b) => a - b);
-  const fastest = allResponseTimes[0];
-  const slowest = allResponseTimes[allResponseTimes.length - 1];
+  const fastest = allResponseTimes.length > 0 ? allResponseTimes[0] : 0;
+  const slowest = allResponseTimes.length > 0 ? allResponseTimes[allResponseTimes.length - 1] : 0;
 
   const getWeightedData = (data: ResponseData[]) => {
+    if (data.length === 0) {
+      return [0, 0];
+    }
     let weightedElapsed = 0, weightedIncorrect = 0, totalWeights = 0;
     for (let i = data.length - 1, w = 1; i >= 0; totalWeights += w, w *= 2, i--) {
       weightedElapsed += data[i].e * w;
       weightedIncorrect += (data[i].i.length > 0 ? 1 : 0) * w;
     }
-    return totalWeights > 0 ? [weightedElapsed / totalWeights, weightedIncorrect / totalWeights] : [0, 0];
+    return [weightedElapsed / totalWeights, weightedIncorrect / totalWeights];
   }
 
   const getScore = (data: ResponseData[]) => {
+    if (data.length === 0) {
+      return -1;
+    }
     const [weightedElapsed, weightedIncorrect] = getWeightedData(data);
     const relativeElapsed = ((weightedElapsed | fastest) - fastest) / ((slowest - fastest) | 1);
     const overallElapsed = allResponseTimes.findIndex(e => e >= weightedElapsed) / allResponseTimes.length;

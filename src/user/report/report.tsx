@@ -5,7 +5,9 @@ import { DataStoreContext } from '../../dataStore';
 import './report.css';
 import ItemDetails from './ItemDetails';
 
-const getColorFromScore = (score: number) => `rgb(${97 + (253 - 97) * score}, ${223 + (95 - 223) * score}, ${101 + (95 - 101) * score})`;
+const getColorFromScore = (score: number) => score >= 0 ?
+  `rgb(${97 + (253 - 97) * score}, ${223 + (95 - 223) * score}, ${101 + (95 - 101) * score})`
+  : 'transparent';
 
 const Report = () => {
   const { userId, mode } = useParams<{ userId: string, mode: keyof typeof Mode }>();
@@ -16,12 +18,14 @@ const Report = () => {
   const questionAndScore = getReport(userId, Mode[mode]);
   const sorted = [...questionAndScore];
   sorted.sort((a, b) => a[3] - b[3]);
+  let firstAnsweredIndex = sorted.findIndex(q => q[3] >= 0);
+  if (firstAnsweredIndex === -1) firstAnsweredIndex = 0;
 
   const ranges = getUserRanges(userId, Mode[mode]);
 
-  const top10 = sorted.slice(0, 10).map(([n1, n2, q, score]) =>
+  const top10 = sorted.slice(firstAnsweredIndex, firstAnsweredIndex + 10).map(([n1, n2, q, score]) =>
     <Link className="link-button report-summary-item" to={`${url}/${q}`} key={q} style={{ backgroundColor: getColorFromScore(score) }} replace>{q}</Link>);
-  const bottom10 = sorted.slice(-10).map(([n1, n2, q, score]) =>
+  const bottom10 = sorted.slice(-10).filter(q => q[3] >= 0).map(([n1, n2, q, score]) =>
     <Link className="link-button report-summary-item" to={`${url}/${q}`} key={q} style={{ backgroundColor: getColorFromScore(score) }} replace>{q}</Link>);
 
   return (
