@@ -16,6 +16,10 @@
   border-radius: 20px;
 }
 
+.leaderboards-empty {
+  display: none;
+}
+
 .report-grid {
   margin: 25px;
   padding: 15px;

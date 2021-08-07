@@ -18,20 +18,22 @@ const Report = () => {
   const questionAndScore = getReport(userId, Mode[mode]);
   const sorted = [...questionAndScore];
   sorted.sort((a, b) => a[3] - b[3]);
-  let firstAnsweredIndex = sorted.findIndex(q => q[3] >= 0);
-  if (firstAnsweredIndex === -1) firstAnsweredIndex = 0;
+  const firstAnsweredIndex = sorted.findIndex(q => q[3] >= 0);
+  const top10Start = Math.max(firstAnsweredIndex, 0);
 
   const ranges = getUserRanges(userId, Mode[mode]);
 
-  const top10 = sorted.slice(firstAnsweredIndex, firstAnsweredIndex + 10).map(([n1, n2, q, score]) =>
+  const top10 = sorted.slice(top10Start, top10Start + 10).map(([n1, n2, q, score]) =>
     <Link className="link-button report-summary-item" to={`${url}/${q}`} key={q} style={{ backgroundColor: getColorFromScore(score) }} replace>{q}</Link>);
   const bottom10 = sorted.slice(-10).filter(q => q[3] >= 0).map(([n1, n2, q, score]) =>
     <Link className="link-button report-summary-item" to={`${url}/${q}`} key={q} style={{ backgroundColor: getColorFromScore(score) }} replace>{q}</Link>);
 
   return (
     <div className={`report-body background-light-${mode}`} onClick={e => setClickCoords([e.clientX, e.clientY])}>
-      <section className="leaderboard">{ top10 }</section>
-      <section className="leaderboard">{ bottom10 }</section>
+      <div className={`leaderboards${firstAnsweredIndex < 0 ? ' leaderboards-empty' : ''}`}>
+        <section className="leaderboard">{ top10 }</section>
+        <section className="leaderboard">{ bottom10 }</section>
+      </div>
       <section className="report-grid" style={{ gridTemplateRows: `repeat(${ranges.n1[1] - ranges.n1[0] + 1}, auto)`, gridTemplateColumns: `repeat(${ranges.n2[1] - ranges.n2[0] + 1}, auto)` }}>
         { questionAndScore.map(([n1, n2, q, score]) => (<Link className="link-button report-summary-item" to={`${url}/${q}`} key={q} style={{ backgroundColor: getColorFromScore(score) }} replace>{q}</Link>)) }
       </section>
