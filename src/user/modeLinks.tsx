@@ -7,7 +7,7 @@ import { DataStoreContext } from '../dataStore';
 import { Mode, formatters } from '../modes';
 import './modeLinks.css';
 
-const THRESHOLD = 3;
+const THRESHOLD = 1;
 
 const ModeLinks: FunctionComponent<{ mode: keyof typeof Mode }> = ({ mode }) => {
 
