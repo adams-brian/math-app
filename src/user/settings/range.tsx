@@ -17,11 +17,11 @@ const RangeComponent: FunctionComponent<{ range: [number, number], values: [numb
               onMouseDown={props.onMouseDown}
               onTouchStart={props.onTouchStart}
               style={props.style}
-              className="user-settings-range-outer"
+              className="user-settings-range__outer"
             >
               <div
                 ref={props.ref}
-                className="user-settings-range-inner"
+                className="user-settings-range__inner"
               >
                 {children}
               </div>
@@ -30,7 +30,7 @@ const RangeComponent: FunctionComponent<{ range: [number, number], values: [numb
           renderThumb={({ props, isDragged, index }) => (
             <div
               {...props}
-              className="user-settings-range-thumb"
+              className="user-settings-range__thumb"
             >
               {values[index]}
             </div>

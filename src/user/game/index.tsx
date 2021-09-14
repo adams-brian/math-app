@@ -55,14 +55,14 @@ const Game = () => {
   const question = formatters[mode](n1, n2);
 
   return (
-    <div className={`game-container background-light-${mode}`}>
-      <Link className={`link-button system-button game-home`} to={`${userBaseUrl}/home`}><FontAwesomeIcon icon={faHome}/></Link>
-      <div className="game-question">
+    <div className={`game background-light--${mode}`}>
+      <Link className={`link-button link-button--medium link-button--app game__home`} to={`${userBaseUrl}/home`}><FontAwesomeIcon icon={faHome}/></Link>
+      <div className="game__question">
         { question } =
         <input
           className={
-            !correct && !incorrect ? "game-answer" :
-            correct ? "game-answer correct-answer" : "game-answer incorrect-answer"
+            !correct && !incorrect ? "game__answer" :
+            correct ? "game__answer game__answer--correct" : "game__answer game__answer--incorrect"
           }
           type="text"
           size={2}
@@ -103,8 +103,8 @@ const Game = () => {
           value={answer}>
         </input>
       </div>
-      <div className="game-status">
-        <div className="game-progress" style={{ width: (100 * index / inputs.length) + "%"}}></div>
+      <div className="game__status">
+        <div className="game__progress" style={{ width: (100 * index / inputs.length) + "%"}}></div>
       </div>
     </div>
   );

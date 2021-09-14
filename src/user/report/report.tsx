@@ -1,7 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { Switch, Route, Link, useParams, useRouteMatch } from "react-router-dom";
-import { Mode } from '../../modes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome } from '@fortawesome/free-solid-svg-icons'
+import { Mode, getIcon } from '../../modes';
 import { DataStoreContext } from '../../dataStore';
+import { UserBaseUrlContext } from '../';
 import './report.css';
 import ItemDetails from './ItemDetails';
 
@@ -13,29 +16,67 @@ const Report = () => {
   const { userId, mode } = useParams<{ userId: string, mode: keyof typeof Mode }>();
   const { path, url } = useRouteMatch();
   const { getReport, getUserRanges } = useContext(DataStoreContext);
+  const userBaseUrl = useContext(UserBaseUrlContext);
   const [ clickCoords, setClickCoords ] = useState([0, 0]);
 
   const questionAndScore = getReport(userId, Mode[mode]);
+  const ranges = getUserRanges(userId, Mode[mode]);
+  const lookup = questionAndScore.reduce<{ [key: number]: { [key: number]: [number, number, string, number] } }>((a, c) => {
+    if (!a[c[0]]) a[c[0]] = {};
+    a[c[0]][c[1]] = c;
+    return a;
+  }, {});
   const sorted = [...questionAndScore];
   sorted.sort((a, b) => a[3] - b[3]);
   const firstAnsweredIndex = sorted.findIndex(q => q[3] >= 0);
   const top10Start = Math.max(firstAnsweredIndex, 0);
 
-  const ranges = getUserRanges(userId, Mode[mode]);
-
   const top10 = sorted.slice(top10Start, top10Start + 10).map(([n1, n2, q, score]) =>
-    <Link className="link-button report-summary-item" to={`${url}/${q}`} key={q} style={{ backgroundColor: getColorFromScore(score) }} replace>{q}</Link>);
+    <Link className="link-button link-button--xsmall link-button--report" to={`${url}/${q}`} key={q} style={{ backgroundColor: getColorFromScore(score) }} replace><span>{q}</span></Link>);
   const bottom10 = sorted.slice(-10).filter(q => q[3] >= 0).map(([n1, n2, q, score]) =>
-    <Link className="link-button report-summary-item" to={`${url}/${q}`} key={q} style={{ backgroundColor: getColorFromScore(score) }} replace>{q}</Link>);
+    <Link className="link-button link-button--xsmall link-button--report" to={`${url}/${q}`} key={q} style={{ backgroundColor: getColorFromScore(score) }} replace><span>{q}</span></Link>);
 
-  return (
-    <div className={`report-body background-light-${mode}`} onClick={e => setClickCoords([e.clientX, e.clientY])}>
-      <div className={`leaderboards${firstAnsweredIndex < 0 ? ' leaderboards-empty' : ''}`}>
-        <section className="leaderboard">{ top10 }</section>
-        <section className="leaderboard">{ bottom10 }</section>
+  const reportElements: JSX.Element[] = [];
+  for (let j = ranges.n2[0]; j <= ranges.n2[1]; j++) {
+    const currentSet: JSX.Element[] = [];
+    for (let i = ranges.n1[0]; i <= ranges.n1[1]; i++) {
+      const q = lookup[i][j][2];
+      const score = lookup[i][j][3];
+      currentSet.push(
+        <Link className="link-button link-button--xsmall link-button--report" to={`${url}/${q}`} key={q} style={{ backgroundColor: getColorFromScore(score) }} replace><span>{q}</span></Link>
+      );
+    }
+    reportElements.push(
+      <div className="report__set">
+        { currentSet }
       </div>
-      <section className="report-grid" style={{ gridTemplateRows: `repeat(${ranges.n1[1] - ranges.n1[0] + 1}, auto)`, gridTemplateColumns: `repeat(${ranges.n2[1] - ranges.n2[0] + 1}, auto)` }}>
-        { questionAndScore.map(([n1, n2, q, score]) => (<Link className="link-button report-summary-item" to={`${url}/${q}`} key={q} style={{ backgroundColor: getColorFromScore(score) }} replace>{q}</Link>)) }
+    );
+  }
+  return (
+    <div className={`report background-light--${mode}`} onClick={e => setClickCoords([e.clientX, e.clientY])}>
+      <div className="report__header">
+        <Link className={`link-button link-button--app report__home`} to={`${userBaseUrl}/home`}><FontAwesomeIcon icon={faHome}/></Link>
+        <FontAwesomeIcon icon={getIcon(Mode[mode])}/>
+      </div>
+      <div className={`report__leaderboards${firstAnsweredIndex < 0 ? ' report__leaderboards--empty' : ''}`}>
+        <section className="report__leaderboard">
+          <div className="report__leaderboard-header">Top {top10.length}</div>
+          <div className="report__leaderboard-body">
+            { top10 }
+          </div>
+        </section>
+        <section className="report__leaderboard">
+          <div className="report__leaderboard-header">Bottom {bottom10.length}</div>
+          <div className="report__leaderboard-body">
+            { bottom10 }
+          </div>
+        </section>
+      </div>
+      <section className="report__leaderboard">
+        <div className="report__leaderboard-header">All</div>
+        <div className="report__sets">
+          { reportElements }
+        </div>
       </section>
       <Switch>
         <Route path={`${path}/:question`}>

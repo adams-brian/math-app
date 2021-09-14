@@ -1,3 +1,5 @@
+import { faPlus, faMinus, faTimes, faDivide, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+
 export enum Mode {
   none = 'none',
   addition = 'addition',
@@ -26,3 +28,17 @@ export const checkers: { [key in Mode]: (n1: number, n2: number, a: number) => b
   [Mode.multiplication]: (n1, n2, a) => n1 * n2 === a,
   [Mode.division]: (n1, n2, a) => n2 === a
 };
+
+export const getIcon: (mode: Mode) => IconDefinition = mode => {
+  switch (mode) {
+    case Mode.addition:
+      return faPlus;
+    case Mode.subtraction:
+      return faMinus;
+    case Mode.multiplication:
+      return faTimes;
+    case Mode.division:
+      return faDivide;
+  }
+  return faPlus;
+}

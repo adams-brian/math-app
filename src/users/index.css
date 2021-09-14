@@ -1,30 +1,30 @@
 .user-list {
-  display: flex;
   align-items: center;
+  display: flex;
   flex-direction: column;
 }
 
-.user-link {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 35px;
+.user-list__user {
   background-color: white;
+  font-size: 35px;
+  margin-top: 20px;
+  padding: 10px 20px;
 }
 
-.create-user-form {
+.user-list__form {
   margin-top: 20px;
 }
 
-.create-user {
-  padding: 10px 20px;
-  font-size: 35px;
-  color: white;
+.user-list__create {
   background-color: rgb(var(--green));
+  color: white;
+  font-size: 35px;
+  padding: 10px 20px;
 }
 
-.username-input {
+.user-list__username {
+  font-size: 35px;
   margin: 10px;
   padding: 10px 20px;
-  font-size: 35px;
 }
 

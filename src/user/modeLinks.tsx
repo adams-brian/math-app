@@ -1,10 +1,10 @@
 import React, { FunctionComponent, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faMinus, faTimes, faDivide, faBullseye } from '@fortawesome/free-solid-svg-icons';
+import { faBullseye, faDice, faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { UserBaseUrlContext } from './';
 import { DataStoreContext } from '../dataStore';
-import { Mode, formatters } from '../modes';
+import { Mode, formatters, getIcon } from '../modes';
 import './modeLinks.css';
 
 const THRESHOLD = 1;
@@ -17,22 +17,6 @@ const ModeLinks: FunctionComponent<{ mode: keyof typeof Mode }> = ({ mode }) => 
 
   const ranges = getUserRanges(userId, Mode[mode]);
 
-  let icon = faPlus;
-  switch (mode) {
-    case Mode.addition:
-      icon = faPlus;
-      break;
-    case Mode.subtraction:
-      icon = faMinus;
-      break;
-    case Mode.multiplication:
-      icon = faTimes;
-      break;
-    case Mode.division:
-      icon = faDivide;
-      break;
-  }
-
   let min = THRESHOLD;
   for (let i = ranges.n1[0]; i <= ranges.n1[1]; i++) {
     for (let j = ranges.n2[0]; j <= ranges.n2[1]; j++) {
@@ -41,13 +25,24 @@ const ModeLinks: FunctionComponent<{ mode: keyof typeof Mode }> = ({ mode }) => 
   }
 
   return (
-    <div className="mode-links">
-      <Link className={`mode-link background-${mode} link-button`} to={`${userBaseUrl}/game/${mode}/all`}><FontAwesomeIcon icon={icon}/></Link>
-      <div className={`mode-targeted${min < THRESHOLD ? ' mode-targeted-hidden' : ''}`}>
-        <Link className={`link-button mode-targeted-link background-${mode}`} to={`${userBaseUrl}/game/${mode}/targeted/5`} replace><FontAwesomeIcon icon={faBullseye}/><span className="mode-targeted-count">5</span></Link>
-        <Link className={`link-button mode-targeted-link background-${mode}`} to={`${userBaseUrl}/game/${mode}/targeted/10`} replace><FontAwesomeIcon icon={faBullseye}/><span className="mode-targeted-count">10</span></Link>
-        <Link className={`link-button mode-targeted-link background-${mode}`} to={`${userBaseUrl}/game/${mode}/targeted/25`} replace><FontAwesomeIcon icon={faBullseye}/><span className="mode-targeted-count">25</span></Link>
+    <div className={`mode-links background-light--${mode}`}>
+      <div className="mode-links__header">
+        <FontAwesomeIcon icon={getIcon(Mode[mode])}/>
       </div>
+      <Link className={`link-button link-button--large link-button--${mode}`} to={`${userBaseUrl}/game/${mode}/random/all`}><FontAwesomeIcon icon={faDice}/><span>All</span></Link>
+      <div className="mode-links__subsets">
+        <div className="mode-links__subset">
+          <Link className={`link-button link-button--small link-button--${mode}`} to={`${userBaseUrl}/game/${mode}/random/10`}><FontAwesomeIcon icon={faDice}/><span>10</span></Link>
+          <Link className={`link-button link-button--small link-button--${mode}`} to={`${userBaseUrl}/game/${mode}/random/25`}><FontAwesomeIcon icon={faDice}/><span>25</span></Link>
+          <Link className={`link-button link-button--small link-button--${mode}`} to={`${userBaseUrl}/game/${mode}/random/50`}><FontAwesomeIcon icon={faDice}/><span>50</span></Link>
+        </div>
+        <div className={`mode-links__subset${min < THRESHOLD ? ' mode-links__subset--hidden' : ''}`}>
+          <Link className={`link-button link-button--small link-button--${mode}`} to={`${userBaseUrl}/game/${mode}/targeted/5`}><FontAwesomeIcon icon={faBullseye}/><span>5</span></Link>
+          <Link className={`link-button link-button--small link-button--${mode}`} to={`${userBaseUrl}/game/${mode}/targeted/10`}><FontAwesomeIcon icon={faBullseye}/><span>10</span></Link>
+          <Link className={`link-button link-button--small link-button--${mode}`} to={`${userBaseUrl}/game/${mode}/targeted/25`}><FontAwesomeIcon icon={faBullseye}/><span>25</span></Link>
+        </div>
+      </div>
+      <Link className={`link-button link-button--medium link-button--${mode}`} to={`${userBaseUrl}/report/${mode}`}><FontAwesomeIcon icon={faChartLine}/><span>Report</span></Link>
     </div>
   );
 }

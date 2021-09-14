@@ -69,10 +69,10 @@ const LineChart = ({ clickCoords }: Props) => {
   return (
     <animated.div
       style={props}
-      className={`item-details-main background-light-${mode}`} onClick={() => history.replace(`${userBaseUrl}/report/${mode}`)}>
-      <div className="item-details-header">{question}</div>
+      className={`item-details background-light--${mode}`} onClick={() => history.replace(`${userBaseUrl}/report/${mode}`)}>
+      <div className="item-details__header">{question}</div>
       <Line data={chartData} options={options} />
-      <div className="item-details-close"><FontAwesomeIcon icon={faTimes}/></div>
+      <div className="item-details__close"><FontAwesomeIcon icon={faTimes}/></div>
     </animated.div>
   );
 }

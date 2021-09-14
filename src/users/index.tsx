@@ -18,10 +18,10 @@ const Users = () => {
 
   return (
     <div className="user-list">
-      { userList.map(u => (<Link className="user-link link-button" key={u[1]} to={`user/${u[1]}/home`}>{u[0]}</Link>)) }
-      <form className="create-user-form" onSubmit={handleSubmit}>
-        <input className="username-input" type="text" name="username" onChange={handleInputChange} value={username} placeholder="New User" required />
-        <button className="create-user" type="submit">Create</button>
+      { userList.map(u => (<Link className="user-list__user link-button" key={u[1]} to={`user/${u[1]}/home`}>{u[0]}</Link>)) }
+      <form className="user-list__form" onSubmit={handleSubmit}>
+        <input className="user-list__username" type="text" name="username" onChange={handleInputChange} value={username} placeholder="New User" required />
+        <button className="user-list__create" type="submit">Create</button>
       </form>
     </div>
   )

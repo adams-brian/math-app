@@ -1,62 +1,62 @@
-.game-container {
+.game {
+  align-items: center;
+  border: 3px solid hsl(0, 0%, 100%);
+  border-radius: 40px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  padding: 80px;
   position: absolute;
   top: 48vh;
   transform: translate(0%, -50%);
-  padding: 80px;
-  border-radius: 40px;
-  border: 3px solid hsl(0, 0%, 100%);
 }
 
-.game-home {
-  position: absolute;
-  top: 0;
+.game__home {
   left: 0;
   margin: 12px;
+  position: absolute;
+  top: 0;
 }
 
-.game-question {
+.game__question {
   font-size: 120px;
 }
 
-.game-answer {
+.game__answer {
+  font-size: 120px;
   margin-left: 30px;
   padding: 10px 20px;
-  font-size: 120px;
 }
 
-@keyframes correct-animation {
+@keyframes game__answer--correct-animation {
   from { box-shadow: 0px 0px 10px 10px rgb(var(--green)); }
   50% { box-shadow: 0px 0px 10px 0px rgb(var(--green)); }
   to { box-shadow: 0px 0px 5px rgb(var(--shadow-color)); }
 }
-.correct-answer {
-  animation: 1s ease-out correct-animation;
+.game__answer--correct {
+  animation: 1s ease-out game__answer--correct-animation;
 }
 
-@keyframes incorrect-animation {
+@keyframes game__answer--incorrect-animation {
   from { box-shadow: 0px 0px 10px 10px rgb(var(--red)); }
   50% { box-shadow: 0px 0px 10px 0px rgb(var(--red)); }
   to { box-shadow: 0px 0px 5px rgb(var(--shadow-color)); }
 }
-.incorrect-answer {
-  animation: 1s ease-out incorrect-animation;
+.game__answer--incorrect {
+  animation: 1s ease-out game__answer--incorrect-animation;
 }
 
-.game-status {
-  width: 500px;
-  height: 50px;
-  margin-top: 50px;
+.game__status {
   background-color: white;
   border: 1px solid rgb(var(--main-color));
   border-radius: 20px;
+  height: 50px;
+  margin-top: 50px;
   overflow: hidden;
+  width: 500px;
 }
 
-.game-progress {
-  height: 50px;
+.game__progress {
   background-color: rgb(var(--green));
+  height: 50px;
   transition: width 0.2s ease-out;
 }

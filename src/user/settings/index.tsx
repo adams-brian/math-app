@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons'
+import { faHome, faLongArrowAltDown, faLongArrowAltRight, faPlus, faMinus, faTimes, faDivide } from '@fortawesome/free-solid-svg-icons'
 import { DataStoreContext, defaultSettings } from '../../dataStore';
 import { UserBaseUrlContext } from '../';
 import Range from './range';
@@ -36,42 +36,68 @@ const Settings = () => {
 
   return (
     <div className="user-settings">
-      <Link className={`link-button system-button user-settings-home`} to={`${userBaseUrl}/home`}><FontAwesomeIcon icon={faHome}/></Link>
-      <div className="user-settings-header">Settings for {userName}</div>
-      <div className="user-settings-section background-light-addition">
-        <Range range={defaultSettings.a.n1} values={an1} setValues={setan1} />
-        <Range range={defaultSettings.a.n2} values={an2} setValues={setan2} />
-        <div className="user-settings-question-range">
-          <div>{ formatters[Mode.addition](an1[0], an2[0]) } = { an1[0] + an2[0] }</div>
-          <div><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
-          <div>{ formatters[Mode.addition](an1[1], an2[1]) } = { an1[1] + an2[1] }</div>
+      <div className="user-settings__header">
+        <Link className={`link-button link-button--app user-settings__home`} to={`${userBaseUrl}/home`}><FontAwesomeIcon icon={faHome}/></Link>
+        <span className="user-settings__header-title">Settings for {userName}</span>
+      </div>
+      <div className="user-settings__section background-light--addition">
+        <div className="user-settings__section-header">
+          <FontAwesomeIcon icon={faPlus}/>
+        </div>
+        <div className="user-settings__section-body">
+          <Range range={defaultSettings.a.n1} values={an1} setValues={setan1} />
+          <Range range={defaultSettings.a.n2} values={an2} setValues={setan2} />
+          <div className="user-settings__question-range">
+            <div>{ formatters[Mode.addition](an1[0], an2[0]) } = { an1[0] + an2[0] }</div>
+            <div className="user-settings__right-arrow"><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
+            <div className="user-settings__down-arrow"><FontAwesomeIcon icon={faLongArrowAltDown} /></div>
+            <div>{ formatters[Mode.addition](an1[1], an2[1]) } = { an1[1] + an2[1] }</div>
+          </div>
         </div>
       </div>
-      <div className="user-settings-section background-light-subtraction">
-        <Range range={defaultSettings.s.n1} values={sn1} setValues={setsn1} />
-        <Range range={defaultSettings.s.n2} values={sn2} setValues={setsn2} />
-        <div className="user-settings-question-range">
-          <div>{ formatters[Mode.subtraction](sn1[0], sn2[0]) } = { sn2[0] }</div>
-          <div><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
-          <div>{ formatters[Mode.subtraction](sn1[1], sn2[1]) } = { sn2[1] }</div>
+      <div className="user-settings__section background-light--subtraction">
+        <div className="user-settings__section-header">
+          <FontAwesomeIcon icon={faMinus}/>
+        </div>
+        <div className="user-settings__section-body">
+          <Range range={defaultSettings.s.n1} values={sn1} setValues={setsn1} />
+          <Range range={defaultSettings.s.n2} values={sn2} setValues={setsn2} />
+          <div className="user-settings__question-range">
+            <div>{ formatters[Mode.subtraction](sn1[0], sn2[0]) } = { sn2[0] }</div>
+            <div className="user-settings__right-arrow"><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
+            <div className="user-settings__down-arrow"><FontAwesomeIcon icon={faLongArrowAltDown} /></div>
+            <div>{ formatters[Mode.subtraction](sn1[1], sn2[1]) } = { sn2[1] }</div>
+          </div>
         </div>
       </div>
-      <div className="user-settings-section background-light-multiplication">
-        <Range range={defaultSettings.m.n1} values={mn1} setValues={setmn1} />
-        <Range range={defaultSettings.m.n2} values={mn2} setValues={setmn2} />
-        <div className="user-settings-question-range">
-          <div>{ formatters[Mode.multiplication](mn1[0], mn2[0]) } = { mn1[0] * mn2[0] }</div>
-          <div><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
-          <div>{ formatters[Mode.multiplication](mn1[1], mn2[1]) } = { mn1[1] * mn2[1] }</div>
+      <div className="user-settings__section background-light--multiplication">
+        <div className="user-settings__section-header">
+          <FontAwesomeIcon icon={faTimes}/>
+        </div>
+        <div className="user-settings__section-body">
+          <Range range={defaultSettings.m.n1} values={mn1} setValues={setmn1} />
+          <Range range={defaultSettings.m.n2} values={mn2} setValues={setmn2} />
+          <div className="user-settings__question-range">
+            <div>{ formatters[Mode.multiplication](mn1[0], mn2[0]) } = { mn1[0] * mn2[0] }</div>
+            <div className="user-settings__right-arrow"><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
+            <div className="user-settings__down-arrow"><FontAwesomeIcon icon={faLongArrowAltDown} /></div>
+            <div>{ formatters[Mode.multiplication](mn1[1], mn2[1]) } = { mn1[1] * mn2[1] }</div>
+          </div>
         </div>
       </div>
-      <div className="user-settings-section background-light-division">
-        <Range range={defaultSettings.d.n1} values={dn1} setValues={setdn1} />
-        <Range range={defaultSettings.d.n2} values={dn2} setValues={setdn2} />
-        <div className="user-settings-question-range">
-          <div>{ formatters[Mode.division](dn1[0], dn2[0]) } = { dn2[0] }</div>
-          <div><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
-          <div>{ formatters[Mode.division](dn1[1], dn2[1]) } = { dn2[1] }</div>
+      <div className="user-settings__section background-light--division">
+        <div className="user-settings__section-header">
+          <FontAwesomeIcon icon={faDivide}/>
+        </div>
+        <div className="user-settings__section-body">
+          <Range range={defaultSettings.d.n1} values={dn1} setValues={setdn1} />
+          <Range range={defaultSettings.d.n2} values={dn2} setValues={setdn2} />
+          <div className="user-settings__question-range">
+            <div>{ formatters[Mode.division](dn1[0], dn2[0]) } = { dn2[0] }</div>
+            <div className="user-settings__right-arrow"><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
+            <div className="user-settings__down-arrow"><FontAwesomeIcon icon={faLongArrowAltDown} /></div>
+            <div>{ formatters[Mode.division](dn1[1], dn2[1]) } = { dn2[1] }</div>
+          </div>
         </div>
       </div>
     </div>
