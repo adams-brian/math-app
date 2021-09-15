@@ -59,49 +59,52 @@ const Game = () => {
       <Link className={`link-button link-button--app game__home`} to={`${userBaseUrl}/home`}><FontAwesomeIcon icon={faHome}/></Link>
       <div className="game__question">
         <span>{ question } =</span>
-        <input
-          className={
-            !correct && !incorrect ? "game__answer" :
-            correct ? "game__answer game__answer--correct" : "game__answer game__answer--incorrect"
+        <span className={
+            !correct && !incorrect ? "game__answer-wrapper" :
+            correct ? "game__answer-wrapper game__answer-wrapper--correct" : "game__answer-wrapper game__answer-wrapper--incorrect"
           }
-          type="number"
-          size={2}
-          autoFocus={true}
-          onBlur={e => {
-            e.preventDefault();
-            const target = e.currentTarget;
-            setTimeout(() => { target.focus(); }, 0);
-          }}
-          onChange={e => setAnswer(e.target.value.replace(/\D/g,''))}
-          onKeyUp={e => {
-            if (e.key === 'Enter') {
-              if (e.currentTarget.value.length > 0) {
-                const answer = Number(e.currentTarget.value);
-                if (checkers[mode](n1, n2, answer)) {
-                  logAnswer(userId, question, startTime, Date.now(), incorrectResponses);
-                  setCorrect(true);
-                  if (index + 1 >= inputs.length) {
-                    launchConfetti();
-                    history.replace(`${userBaseUrl}/report/${mode}`);
-                  }
-                  setIndex((index + 1) % inputs.length);
-                  setAnswer('');
-                  setIncorrectResponses([]);
-                  setStartTime(Date.now());
-                }
-                else {
-                  setIncorrect(true);
-                  setIncorrectResponses([{ a: answer, e: Date.now() - startTime }, ...incorrectResponses]);
-                }
-              }
-            }
-          }}
           onAnimationEnd={e => {
             setCorrect(false);
             setIncorrect(false);
           }}
-          value={answer}>
-        </input>
+        >
+          <input
+            className="game__answer"
+            type="number"
+            size={2}
+            autoFocus={true}
+            onBlur={e => {
+              e.preventDefault();
+              const target = e.currentTarget;
+              setTimeout(() => { target.focus(); }, 0);
+            }}
+            onChange={e => setAnswer(e.target.value.replace(/\D/g,''))}
+            onKeyUp={e => {
+              if (e.key === 'Enter') {
+                if (e.currentTarget.value.length > 0) {
+                  const answer = Number(e.currentTarget.value);
+                  if (checkers[mode](n1, n2, answer)) {
+                    logAnswer(userId, question, startTime, Date.now(), incorrectResponses);
+                    setCorrect(true);
+                    if (index + 1 >= inputs.length) {
+                      launchConfetti();
+                      history.replace(`${userBaseUrl}/report/${mode}`);
+                    }
+                    setIndex((index + 1) % inputs.length);
+                    setAnswer('');
+                    setIncorrectResponses([]);
+                    setStartTime(Date.now());
+                  }
+                  else {
+                    setIncorrect(true);
+                    setIncorrectResponses([{ a: answer, e: Date.now() - startTime }, ...incorrectResponses]);
+                  }
+                }
+              }
+            }}
+            value={answer}>
+          </input>
+        </span>
       </div>
       <div className="game__status">
         <div className="game__progress" style={{ width: (100 * index / inputs.length) + "%"}}></div>
