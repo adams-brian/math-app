@@ -5,7 +5,7 @@ import User from './user';
 import Confetti from './confetti';
 import DataStore from './dataStore';
 import {
-  BrowserRouter as Router,
+  HashRouter,
   Switch,
   Route,
   Redirect
@@ -16,7 +16,7 @@ const App = () => {
     <div className="App">
       <Confetti>
         <DataStore>
-          <Router>
+          <HashRouter>
             <Switch>
               <Route path={'/user/:userId'}>
                 <User />
@@ -26,7 +26,7 @@ const App = () => {
               </Route>
               <Redirect to="/users" />
             </Switch>
-          </Router>
+          </HashRouter>
         </DataStore>
       </Confetti>
     </div>

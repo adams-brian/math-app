@@ -5,26 +5,61 @@
 }
 
 .user-list__user {
-  background-color: white;
-  font-size: 35px;
-  margin-top: 20px;
-  padding: 10px 20px;
+  font-size: var(--small);
+  margin-top: 15px;
+  padding: 8px 15px;
+  text-align: center;
 }
 
 .user-list__form {
-  margin-top: 20px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 15px;
 }
 
 .user-list__create {
   background-color: rgb(var(--green));
   color: white;
-  font-size: 35px;
-  padding: 10px 20px;
+  font-size: var(--small);
+  padding: 8px 15px;
 }
 
 .user-list__username {
-  font-size: 35px;
-  margin: 10px;
-  padding: 10px 20px;
+  box-sizing: border-box;
+  font-size: var(--small);
+  margin: 8px;
+  padding: 8px 15px;
+  width: 260px;
 }
 
+@media only screen and (min-width: 500px) {
+
+  .user-list__form {
+    flex-direction: row;
+  }
+
+}
+
+@media only screen and (min-width: 768px) {
+
+  .user-list__user {
+    font-size: var(--medium);
+    margin-top: 20px;
+    padding: 10px 20px;
+  }
+
+  .user-list__create {
+    font-size: var(--medium);
+    padding: 10px 20px;
+  }
+
+  .user-list__username {
+    font-size: var(--medium);
+    margin: 10px;
+    padding: 10px 20px;
+    width: 400px;
+  }
+
+}
