@@ -22,7 +22,7 @@ const User = () => {
     <div className="user">
       <UserBaseUrlContext.Provider value={url}>
         <Switch>
-          <Route path={`${path}/game/:mode/:questionset`}>
+          <Route path={`${path}/game/:mode/:questionset/:count`}>
             <Game />
           </Route>
           <Route path={`${path}/report`}>

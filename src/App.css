@@ -14,7 +14,10 @@
   --xsmall: 14px;
   --small: 22px;
   --medium: 35px;
+  --medium-large: 40px;
   --large: 60px;
+  --xlarge: 100px;
+  --xxlarge: 130px;
   color: rbg(var(--main-color));
   font-family: 'Fredoka One';
   height: calc(100vh - 30px);
@@ -102,7 +105,7 @@
   background-color: #cccccc;
 }
 
-input[type="text"] {
+input[type="text"], input[type="number"] {
   background-color: white;
   border: 1px solid #cdcdcd;
   border-radius: 20px;

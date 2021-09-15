@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useParams, useHistory, useRouteMatch } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons'
 import './index.css';
@@ -11,7 +11,7 @@ import { UserBaseUrlContext } from '..';
 const getRandom = (max: number) => Math.floor(Math.random() * (max + 1));
 
 const generatePairs = (min1: number, max1: number, min2: number, max2: number) => {
-  const result: number[][] = [];
+  const result: [number, number][] = [];
   for (let i = min1; i <= max1; i++) {
     for (let j = min2; j <= max2; j++) {
       result.push([i, j]);
@@ -20,14 +20,16 @@ const generatePairs = (min1: number, max1: number, min2: number, max2: number) =
   return result;
 }
 
-const randomize = (questions: number[][]) => {
+const randomize: (questions: [number, number][]) => [number, number][] = questions => {
   const result = questions.map(q => [...q, getRandom(1000)]);
   result.sort((a, b) => a[2] - b[2]);
   return result.map(v => [v[0], v[1]]);
 }
 
+const digitRegex = /^\d+$/;
+
 const Game = () => {
-  const { userId, mode, questionset } = useParams<{ userId: string, mode: keyof typeof Mode, questionset: keyof typeof QuestionSet }>();
+  const { userId, mode, questionset, count: countString } = useParams<{ userId: string, mode: keyof typeof Mode, questionset: keyof typeof QuestionSet, count: string }>();
 
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState('');
@@ -39,15 +41,13 @@ const Game = () => {
   const launchConfetti = useContext(ConfettiContext);
   const userBaseUrl = useContext(UserBaseUrlContext);
   const history = useHistory();
-  const targetedCount = Number(useRouteMatch<{ count: string }>(`${userBaseUrl}/game/:mode/targeted/:count`)?.params?.count || '10');
   const ranges = getUserRanges(userId, Mode[mode]);
+  const count = digitRegex.test(countString) ? +countString : (ranges.n1[1] - ranges.n1[0] + 1) * (ranges.n2[1] - ranges.n2[0] + 1);
 
   const [inputs] = useState(
-    randomize(
-      questionset === QuestionSet.targeted ?
-        getReport(userId, Mode[mode]).sort((a, b) => b[3] - a[3]).slice(0, targetedCount).map(v => [v[0], v[1]]) :
-        generatePairs(ranges.n1[0], ranges.n1[1], ranges.n2[0], ranges.n2[1])
-    )
+    questionset === QuestionSet.targeted ?
+      randomize(getReport(userId, Mode[mode]).sort((a, b) => b[3] - a[3]).slice(0, count).map(v => [v[0], v[1]])) :
+      randomize(generatePairs(ranges.n1[0], ranges.n1[1], ranges.n2[0], ranges.n2[1])).slice(0, count)
   );
 
   const n1 = inputs[index][0];
@@ -56,15 +56,15 @@ const Game = () => {
 
   return (
     <div className={`game background-light--${mode}`}>
-      <Link className={`link-button link-button--medium link-button--app game__home`} to={`${userBaseUrl}/home`}><FontAwesomeIcon icon={faHome}/></Link>
+      <Link className={`link-button link-button--app game__home`} to={`${userBaseUrl}/home`}><FontAwesomeIcon icon={faHome}/></Link>
       <div className="game__question">
-        { question } =
+        <span>{ question } =</span>
         <input
           className={
             !correct && !incorrect ? "game__answer" :
             correct ? "game__answer game__answer--correct" : "game__answer game__answer--incorrect"
           }
-          type="text"
+          type="number"
           size={2}
           autoFocus={true}
           onBlur={e => {

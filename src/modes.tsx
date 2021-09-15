@@ -9,7 +9,7 @@ export enum Mode {
 }
 
 export enum QuestionSet {
-  all = 'all',
+  random = 'random',
   targeted = 'targeted'
 }
 

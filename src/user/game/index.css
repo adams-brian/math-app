@@ -1,30 +1,36 @@
 .game {
   align-items: center;
   border: 3px solid hsl(0, 0%, 100%);
-  border-radius: 40px;
+  border-radius: 20px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  padding: 80px;
-  position: absolute;
-  top: 48vh;
-  transform: translate(0%, -50%);
+  padding: 40px 20px 30px 20px;
+  position: relative;
+  width: 280px;
 }
 
 .game__home {
+  font-size: var(--small);
   left: 0;
-  margin: 12px;
   position: absolute;
   top: 0;
 }
 
 .game__question {
-  font-size: 120px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: var(--medium-large);
+  justify-content: center;
 }
 
 .game__answer {
-  font-size: 120px;
-  margin-left: 30px;
-  padding: 10px 20px;
+  font-size: var(--medium-large);
+  margin-top: 10px;
+  padding: 5px 10px;
+  text-align: center;
+  width: 100px;
 }
 
 @keyframes game__answer--correct-animation {
@@ -49,14 +55,99 @@
   background-color: white;
   border: 1px solid rgb(var(--main-color));
   border-radius: 20px;
-  height: 50px;
-  margin-top: 50px;
+  height: 25px;
+  margin-top: 30px;
   overflow: hidden;
-  width: 500px;
+  width: 100%;
 }
 
 .game__progress {
   background-color: rgb(var(--green));
-  height: 50px;
+  height: 25px;
   transition: width 0.2s ease-out;
+}
+
+@media only screen and (min-width: 500px) {
+  .game {
+    padding: 40px 20px 40px 20px;
+    width: 450px;
+  }
+
+  .game__question {
+    font-size: var(--large);
+  }
+
+  .game__answer {
+    font-size: var(--large);
+    padding: 6px 12px;
+    width: 130px;
+  }
+
+  .game__status {
+    margin-top: 50px;
+  }
+
+}
+
+@media only screen and (min-width: 800px) {
+  .game {
+    width: 740px;
+    padding: 60px 20px 50px 20px;
+  }
+
+  .game__question {
+    flex-direction: row;
+    font-size: var(--xlarge);
+  }
+
+  .game__answer {
+    font-size: var(--xlarge);
+    padding: 7px 15px;
+    margin-left: 30px;
+    text-align: initial;
+    width: 200px;
+  }
+
+  .game__status {
+    height: 50px;
+    margin-top: 60px;
+    width: 550px;
+  }
+
+  .game__progress {
+    height: 50px;
+  }
+}
+
+@media only screen and (min-width: 1100px) and (min-height: 800px) {
+  .game {
+    border-radius: 40px;
+    padding: 120px 20px 80px 20px;
+    position: absolute;
+    top: 48vh;
+    transform: translate(0, -50%);
+    width: 1000px;
+  }
+
+  .game__home {
+    font-size: var(--medium);
+    left: 5px;
+    top: 5px;
+  }
+
+  .game__question {
+    font-size: var(--xxlarge);
+  }
+
+  .game__answer {
+    font-size: var(--xxlarge);
+    margin-left: 45px;
+    padding: 10px 20px;
+    width: 260px;
+  }
+
+  .game__status {
+    margin-top: 100px;
+    width: 800px;
+  }
 }
