@@ -59,15 +59,23 @@ const Game = () => {
       <Link className={`link-button link-button--app game__home`} to={`${userBaseUrl}/home`}><FontAwesomeIcon icon={faHome}/></Link>
       <div className="game__question">
         <span>{ question } =</span>
-        <span className={
-            !correct && !incorrect ? "game__answer-wrapper" :
-            correct ? "game__answer-wrapper game__answer-wrapper--correct" : "game__answer-wrapper game__answer-wrapper--incorrect"
+        <span className="game__answer-wrapper">
+          { !correct ? <></> :
+            <span className="game__answer-correct"
+              onAnimationEnd={e => {
+                setCorrect(false);
+                setIncorrect(false);
+              }}>
+            </span>
           }
-          onAnimationEnd={e => {
-            setCorrect(false);
-            setIncorrect(false);
-          }}
-        >
+          { !incorrect ? <></> :
+            <span className="game__answer-incorrect"
+              onAnimationEnd={e => {
+                setCorrect(false);
+                setIncorrect(false);
+              }}>
+            </span>
+          }
           <input
             className="game__answer"
             type="number"
