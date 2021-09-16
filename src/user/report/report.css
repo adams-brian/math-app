@@ -21,10 +21,10 @@
 }
 
 .report__home {
-  font-size: var(--small);
-  left: 5px;
+  font-size: var(--xsmall);
+  left: 8px;
   position: absolute;
-  top: 5px;
+  top: 8px;
 }
 
 .report__leaderboard {
@@ -79,6 +79,7 @@
   }
 
   .report__home {
+    font-size: var(--small);
     left: 20px;
     top: 10px;
   }
