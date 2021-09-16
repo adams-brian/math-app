@@ -20,16 +20,16 @@
   --xxlarge: 130px;
   color: rbg(var(--main-color));
   font-family: 'Fredoka One';
-  height: calc(100vh - 14px);
-  padding: 7px;
-  width: calc(100vw - 14px);
+  height: calc(100vh - 20px);
+  padding: 10px;
+  width: calc(100vw - 20px);
 }
 
 @media only screen and (min-width: 500px) {
   .App {
-    height: calc(100vh - 20px);
-    padding: 10px;
-    width: calc(100vw - 20px);
+    height: calc(100vh - 40px);
+    padding: 20px;
+    width: calc(100vw - 40px);
   }
 }
 
