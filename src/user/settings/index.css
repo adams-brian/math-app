@@ -8,9 +8,8 @@
 }
 
 .user-settings__header {
-  align-items: center;
+  align-items: start;
   display: grid;
-  font-size: 25px;
   grid-template-columns: auto 1fr;
   grid-template-rows: auto;
   justify-items: center;
@@ -19,9 +18,10 @@
 }
 
 .user-settings__header-title {
+  font-size: var(--medium);
   grid-column: 1 / span 2;
   grid-row: 1;
-  margin: 0 60px;
+  margin: 0 40px;
   text-align: center;
 }
 
@@ -63,9 +63,10 @@
 }
 
 .user-settings__home {
-  font-size: var(--small);
+  font-size: var(--xsmall);
   grid-column: 1;
   grid-row: 1;
+  margin-top: 7px;
 }
 
 @media only screen and (min-width: 768px) {
@@ -75,7 +76,6 @@
   }
 
   .user-settings__header {
-    font-size: 50px;
     margin-bottom: 40px;
   }
 
@@ -84,7 +84,8 @@
   }
 
   .user-settings__header-title {
-    margin: 0 85px;
+    font-size: var(--large);
+    margin: 0 58px;
   }
   
   .user-settings__question-range {
@@ -102,7 +103,8 @@
   }
 
   .user-settings__home {
-    font-size: var(--medium);
+    font-size: var(--small);
+    margin-top: 10px;
   }
 
 }

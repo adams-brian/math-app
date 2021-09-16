@@ -1,7 +1,7 @@
 import React, { useContext, createContext } from 'react';
 import { Link, Switch, Route, useParams, Redirect, useRouteMatch } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCog } from '@fortawesome/free-solid-svg-icons'
+import { faUserCog, faUsers } from '@fortawesome/free-solid-svg-icons'
 import { DataStoreContext } from '../dataStore';
 import Game from './game';
 import Report from './report';
@@ -32,7 +32,10 @@ const User = () => {
             <Settings />
           </Route>
           <Route path={`${path}/home`}>
-            <div className="user__greeting">Welcome {userName}!</div>
+            <div className="user__header">
+              <Link className={`link-button link-button--app user__user-list`} to="/users"><FontAwesomeIcon icon={faUsers}/></Link>
+              <span className="user__greeting">Welcome {userName}!</span>
+            </div>
             <div className="user__mode-list">
               { (Object.keys(Mode) as (keyof typeof Mode)[]).filter(m => m !== Mode.none).map(m => (<ModeLinks key={m} mode={m} />))}
             </div>

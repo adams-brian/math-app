@@ -4,9 +4,27 @@
   flex-direction: column;
 }
 
+.user__header {
+  align-items: start;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto;
+  justify-items: center;
+  width: 296px;
+}
+
+.user__user-list {
+  font-size: var(--xsmall);
+  grid-column: 1;
+  grid-row: 1;
+  margin-top: 7px;
+}
+
 .user__greeting {
-  font-size: var(--small);
-  max-width: 280px;
+  font-size: var(--medium);
+  grid-column: 1 / span 2;
+  grid-row: 1;
+  margin: 0 40px;
   text-align: center;
 }
 
@@ -21,17 +39,23 @@
 .easter-egg {
   font-size: 10px;
   margin: 10px;
+  text-align: center;
 }
 
 @media only screen and (min-width: 768px) {
 
   .user__header {
-    max-width: 600px;
+    width: 620px;
+  }
+
+  .user__user-list {
+    font-size: var(--small);
+    margin-top: 10px;
   }
 
   .user__greeting {
     font-size: var(--large);
-    max-width: 600px;
+    margin: 0 58px;
   }
 
   .user__mode-list {
