@@ -58,7 +58,7 @@ const Game = () => {
     <div className={`game background-light--${mode}`}>
       <Link className={`link-button link-button--app game__home`} to={`${userBaseUrl}/home`}><FontAwesomeIcon icon={faHome}/></Link>
       <div className="game__question">
-        <span>{ question } =</span>
+        <span>{ question }<span className="game__question-equals"> =</span></span>
         <span className="game__answer-wrapper">
           { !correct ? <></> :
             <span className="game__answer-correct"
