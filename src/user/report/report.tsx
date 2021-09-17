@@ -47,7 +47,7 @@ const Report = () => {
       );
     }
     reportElements.push(
-      <div className="report__set">
+      <div className="report__set" key={j}>
         { currentSet }
       </div>
     );

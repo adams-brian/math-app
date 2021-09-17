@@ -23,6 +23,7 @@ export type UserSettings = {
   s: Ranges;
   m: Ranges;
   d: Ranges;
+  pa?: number;
 }
 
 const defaultRange: [number, number] = [0, 12];

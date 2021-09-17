@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faLongArrowAltDown, faLongArrowAltRight, faPlus, faMinus, faTimes, faDivide } from '@fortawesome/free-solid-svg-icons'
@@ -24,6 +24,8 @@ const Settings = () => {
   const [mn2, setmn2] = useState(settings.m.n2);
   const [dn1, setdn1] = useState(settings.d.n1);
   const [dn2, setdn2] = useState(settings.d.n2);
+
+  const paRef = useRef(settings.pa);
   
   useEffect(() => {
     setUserSettings(userId, {
@@ -31,6 +33,7 @@ const Settings = () => {
       s: { n1: sn1, n2: sn2 },
       m: { n1: mn1, n2: mn2 },
       d: { n1: dn1, n2: dn2 },
+      pa: paRef.current
     })
   }, [an1, an2, sn1, sn2, mn1, mn2, dn1, dn2, userId, setUserSettings])
 

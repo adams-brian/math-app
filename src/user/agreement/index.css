@@ -1,0 +1,28 @@
+.agreement {
+  align-items: center;
+  background-color: #eeeeee;
+  border: 3px solid white;
+  border-radius: 30px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  padding-bottom: 20px;
+  position: relative;
+  text-align: center;
+  width: 100%;
+}
+
+.agreement__header {
+  border-bottom: 3px solid white;
+  box-sizing: border-box;
+  font-size: var(--medium);
+  padding-bottom: 20px;
+  width: 100%;
+}
+
+.agreement > * {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
+}
