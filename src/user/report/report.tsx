@@ -15,12 +15,12 @@ const getColorFromScore = (score: number) => score >= 0 ?
 const Report = () => {
   const { userId, mode } = useParams<{ userId: string, mode: keyof typeof Mode }>();
   const { path, url } = useRouteMatch();
-  const { getReport, getUserRanges } = useContext(DataStoreContext);
+  const { getReport, getUserModeSettings } = useContext(DataStoreContext);
   const userBaseUrl = useContext(UserBaseUrlContext);
   const [ clickCoords, setClickCoords ] = useState([0, 0]);
 
   const questionAndScore = getReport(userId, Mode[mode]);
-  const ranges = getUserRanges(userId, Mode[mode]);
+  const modeSettings = getUserModeSettings(userId, Mode[mode]);
   const lookup = questionAndScore.reduce<{ [key: number]: { [key: number]: [number, number, string, number] } }>((a, c) => {
     if (!a[c[0]]) a[c[0]] = {};
     a[c[0]][c[1]] = c;
@@ -37,9 +37,9 @@ const Report = () => {
     <Link className="link-button link-button--xsmall link-button--report" to={`${url}/${q}`} key={q} style={{ backgroundColor: getColorFromScore(score) }} replace><span>{q}</span></Link>);
 
   const reportElements: JSX.Element[] = [];
-  for (let j = ranges.n2[0]; j <= ranges.n2[1]; j++) {
+  for (let j = modeSettings.n2[0]; j <= modeSettings.n2[1]; j++) {
     const currentSet: JSX.Element[] = [];
-    for (let i = ranges.n1[0]; i <= ranges.n1[1]; i++) {
+    for (let i = modeSettings.n1[0]; i <= modeSettings.n1[1]; i++) {
       const q = lookup[i][j][2];
       const score = lookup[i][j][3];
       currentSet.push(

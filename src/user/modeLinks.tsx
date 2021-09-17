@@ -13,13 +13,13 @@ const ModeLinks: FunctionComponent<{ mode: keyof typeof Mode }> = ({ mode }) => 
 
   const { userId } = useParams<{ userId: string }>();
   const userBaseUrl = useContext(UserBaseUrlContext);
-  const { getQuestionResponseData, getUserRanges } = useContext(DataStoreContext);
+  const { getQuestionResponseData, getUserModeSettings } = useContext(DataStoreContext);
 
-  const ranges = getUserRanges(userId, Mode[mode]);
+  const modeSettings = getUserModeSettings(userId, Mode[mode]);
 
   let min = THRESHOLD;
-  for (let i = ranges.n1[0]; i <= ranges.n1[1]; i++) {
-    for (let j = ranges.n2[0]; j <= ranges.n2[1]; j++) {
+  for (let i = modeSettings.n1[0]; i <= modeSettings.n1[1]; i++) {
+    for (let j = modeSettings.n2[0]; j <= modeSettings.n2[1]; j++) {
       min = Math.min(min, getQuestionResponseData(userId, formatters[mode](i, j)).length);
     }
   }

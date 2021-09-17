@@ -13,27 +13,28 @@ export type ResponseData = {
   e: number;
 }
 
-export type Ranges = {
+export type ModeSettings = {
+  m: number,
   n1: [number, number];
   n2: [number, number];
 }
 
 export type UserSettings = {
-  a: Ranges;
-  s: Ranges;
-  m: Ranges;
-  d: Ranges;
+  a: ModeSettings;
+  s: ModeSettings;
+  m: ModeSettings;
+  d: ModeSettings;
   pa?: number;
 }
 
 const defaultRange: [number, number] = [0, 12];
-const defaultRanges: Ranges = { n1: [...defaultRange], n2: [...defaultRange] };
+const defaultModeSettings: ModeSettings = { m: 0, n1: [...defaultRange], n2: [...defaultRange] };
 
 export const defaultSettings: UserSettings = {
-  a: { ...defaultRanges },
-  s: { ...defaultRanges },
-  m: { ...defaultRanges },
-  d: { n1: [1, 12], n2: [...defaultRange] }
+  a: { ...defaultModeSettings },
+  s: { ...defaultModeSettings },
+  m: { ...defaultModeSettings },
+  d: { m: 0, n1: [1, 12], n2: [...defaultRange] }
 };
 
 const logAnswer = (userId: string, question: string, startTime: number, endTime: number, incorrectAnswers: object[]) => {
@@ -50,11 +51,11 @@ const getQuestionResponseData = (userId: string, question: string) =>
 const getReport = (userId: string, mode: Mode) => {
   const data: { [key: string]: ResponseData[] } = {};
 
-  const ranges = getUserRanges(userId, Mode[mode]);
+  const modeSettings = getUserModeSettings(userId, Mode[mode]);
 
   const allResponseTimes: number[] = [];
-  for (let i = ranges.n1[0]; i <= ranges.n1[1]; i++) {
-    for (let j = ranges.n2[0]; j <= ranges.n2[1]; j++) {
+  for (let i = modeSettings.n1[0]; i <= modeSettings.n1[1]; i++) {
+    for (let j = modeSettings.n2[0]; j <= modeSettings.n2[1]; j++) {
       const q = formatters[mode](i, j);
       data[q] = getQuestionResponseData(userId, q);
       data[q].forEach(o => allResponseTimes.push(o.e));
@@ -87,8 +88,8 @@ const getReport = (userId: string, mode: Mode) => {
   }
 
   const n1n2QuestionScore: [number, number, string, number][] = [];
-  for (let i = ranges.n1[0]; i <= ranges.n1[1]; i++) {
-    for (let j = ranges.n2[0]; j <= ranges.n2[1]; j++) {
+  for (let i = modeSettings.n1[0]; i <= modeSettings.n1[1]; i++) {
+    for (let j = modeSettings.n2[0]; j <= modeSettings.n2[1]; j++) {
       const q = formatters[mode](i, j);
       const score = getScore(data[q]);
       n1n2QuestionScore.push([i, j, q, score]);
@@ -100,7 +101,7 @@ const getReport = (userId: string, mode: Mode) => {
 const getUserSettings: (id: string) => UserSettings = (id: string) =>
   JSON.parse(localStorage.getItem(`${id}-settings`) || JSON.stringify(defaultSettings));
 
-const getUserRanges: (id: string, mode: Mode) => Ranges = (id: string, mode: Mode) => {
+const getUserModeSettings: (id: string, mode: Mode) => ModeSettings = (id: string, mode: Mode) => {
   switch (mode) {
     case Mode.addition:
       return getUserSettings(id).a;
@@ -111,8 +112,8 @@ const getUserRanges: (id: string, mode: Mode) => Ranges = (id: string, mode: Mod
     case Mode.division:
       return getUserSettings(id).d;
   }
-  console.error('Mode not recognized in getUserRanges');
-  return { ...defaultRanges };
+  console.error('Mode not recognized in getUserModeSettings');
+  return { ...defaultModeSettings };
 }
 
 const setUserSettings = (id: string, settings: UserSettings) => {
@@ -127,7 +128,7 @@ export const DataStoreContext = createContext<{
   userList: [string, string][],
   getReport: (userId: string, mode: Mode) => [number, number, string, number][],
   getUserSettings: (id: string) => UserSettings,
-  getUserRanges: (id: string, mode: Mode) => Ranges,
+  getUserModeSettings: (id: string, mode: Mode) => ModeSettings,
   setUserSettings: (id: string, settings: UserSettings) => void
 }>({
   logAnswer: () => {},
@@ -137,7 +138,7 @@ export const DataStoreContext = createContext<{
   userList: [],
   getReport: () => [],
   getUserSettings: () => defaultSettings,
-  getUserRanges: () => ({ ...defaultRanges }),
+  getUserModeSettings: () => ({ ...defaultModeSettings }),
   setUserSettings: () => {}
 });
 
@@ -162,7 +163,7 @@ const DataStore: FunctionComponent = (props) => {
       userList,
       getReport,
       getUserSettings,
-      getUserRanges,
+      getUserModeSettings,
       setUserSettings
     }}>
       { props.children }

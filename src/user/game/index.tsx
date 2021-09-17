@@ -37,17 +37,17 @@ const Game = () => {
   const [incorrect, setIncorrect] = useState(false);
   const [incorrectResponses, setIncorrectResponses] = useState<object[]>([]);
   const [startTime, setStartTime] = useState(Date.now());
-  const { logAnswer, getReport, getUserRanges } = useContext(DataStoreContext);
+  const { logAnswer, getReport, getUserModeSettings } = useContext(DataStoreContext);
   const launchConfetti = useContext(ConfettiContext);
   const userBaseUrl = useContext(UserBaseUrlContext);
   const history = useHistory();
-  const ranges = getUserRanges(userId, Mode[mode]);
-  const count = digitRegex.test(countString) ? +countString : (ranges.n1[1] - ranges.n1[0] + 1) * (ranges.n2[1] - ranges.n2[0] + 1);
+  const modeSettings = getUserModeSettings(userId, Mode[mode]);
+  const count = digitRegex.test(countString) ? +countString : (modeSettings.n1[1] - modeSettings.n1[0] + 1) * (modeSettings.n2[1] - modeSettings.n2[0] + 1);
 
   const [inputs] = useState(
     questionset === QuestionSet.targeted ?
       randomize(getReport(userId, Mode[mode]).sort((a, b) => b[3] - a[3]).slice(0, count).map(v => [v[0], v[1]])) :
-      randomize(generatePairs(ranges.n1[0], ranges.n1[1], ranges.n2[0], ranges.n2[1])).slice(0, count)
+      randomize(generatePairs(modeSettings.n1[0], modeSettings.n1[1], modeSettings.n2[0], modeSettings.n2[1])).slice(0, count)
   );
 
   const n1 = inputs[index][0];
