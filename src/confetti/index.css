@@ -1,5 +1,6 @@
 .confetti-launcher {
   left: 50vw;
+  pointer-events: none;
   position: absolute;
   top: 30vh;
 }

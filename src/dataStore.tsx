@@ -28,16 +28,16 @@ export type UserSettings = {
 }
 
 const defaultRange: [number, number] = [0, 12];
-const defaultModeSettings: ModeSettings = { m: 0, n1: [...defaultRange], n2: [...defaultRange] };
+const defaultModeSettings: ModeSettings = { m: 1, n1: [...defaultRange], n2: [...defaultRange] };
 
 export const defaultSettings: UserSettings = {
   a: { ...defaultModeSettings },
   s: { ...defaultModeSettings },
   m: { ...defaultModeSettings },
-  d: { m: 0, n1: [1, 12], n2: [...defaultRange] }
+  d: { m: 1, n1: [1, 12], n2: [...defaultRange] }
 };
 
-const logAnswer = (userId: string, question: string, startTime: number, endTime: number, incorrectAnswers: object[]) => {
+const logAnswer = (userId: string, question: string, startTime: number, endTime: number, incorrectAnswers: IncorrectResponseData[]) => {
   const data = getQuestionResponseData(userId, question);
   localStorage.setItem(`${userId} ${question}`, JSON.stringify([
     { t: endTime, i: incorrectAnswers, e: endTime - startTime },
@@ -121,7 +121,7 @@ const setUserSettings = (id: string, settings: UserSettings) => {
 }
 
 export const DataStoreContext = createContext<{
-  logAnswer: (userId: string, question: string, startTime: number, endTime: number, incorrectAnswers: object[]) => void,
+  logAnswer: (userId: string, question: string, startTime: number, endTime: number, incorrectAnswers: IncorrectResponseData[]) => void,
   getQuestionResponseData: (userId: string, question: string) => ResponseData[],
   getUserName: (id: string) => string,
   createNewUser: (name: string) => void,

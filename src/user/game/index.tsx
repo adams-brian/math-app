@@ -3,10 +3,12 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons'
 import './index.css';
-import { DataStoreContext } from '../../dataStore';
+import { DataStoreContext, IncorrectResponseData } from '../../dataStore';
 import { ConfettiContext } from '../../confetti';
 import { Mode, QuestionSet, formatters, checkers } from '../../modes';
 import { UserBaseUrlContext } from '..';
+import Text from './text';
+import MultipleChoice from './multipleChoice';
 
 const getRandom = (max: number) => Math.floor(Math.random() * (max + 1));
 
@@ -32,11 +34,8 @@ const Game = () => {
   const { userId, mode, questionset, count: countString } = useParams<{ userId: string, mode: keyof typeof Mode, questionset: keyof typeof QuestionSet, count: string }>();
 
   const [index, setIndex] = useState(0);
-  const [answer, setAnswer] = useState('');
-  const [correct, setCorrect] = useState(false);
-  const [incorrect, setIncorrect] = useState(false);
-  const [incorrectResponses, setIncorrectResponses] = useState<object[]>([]);
   const [startTime, setStartTime] = useState(Date.now());
+  const [incorrectResponses, setIncorrectResponses] = useState<IncorrectResponseData[]>([]);
   const { logAnswer, getReport, getUserModeSettings } = useContext(DataStoreContext);
   const launchConfetti = useContext(ConfettiContext);
   const userBaseUrl = useContext(UserBaseUrlContext);
@@ -54,65 +53,33 @@ const Game = () => {
   const n2 = inputs[index][1];
   const question = formatters[mode](n1, n2);
 
+  const checkAnswer = (answer: number) => {
+    if (checkers[mode](n1, n2, answer)) {
+      logAnswer(userId, question, startTime, Date.now(), incorrectResponses);
+      if (index + 1 >= inputs.length) {
+        launchConfetti();
+        history.replace(`${userBaseUrl}/report/${mode}`);
+      }
+      setIndex((index + 1) % inputs.length);
+      setIncorrectResponses([]);
+      setStartTime(Date.now());
+      return true;
+    } else {
+      setIncorrectResponses([{ a: answer, e: Date.now() - startTime }, ...incorrectResponses]);
+      return false;
+    }
+  }
+
   return (
     <div className={`game background-light--${mode}`}>
       <Link className={`link-button link-button--app game__home`} to={`${userBaseUrl}/home`}><FontAwesomeIcon icon={faHome}/></Link>
       <div className="game__question">
         <span>{ question }<span className="game__question-equals"> =</span></span>
-        <span className="game__answer-wrapper">
-          { !correct ? <></> :
-            <span className="game__answer-correct"
-              onAnimationEnd={e => {
-                setCorrect(false);
-                setIncorrect(false);
-              }}>
-            </span>
-          }
-          { !incorrect ? <></> :
-            <span className="game__answer-incorrect"
-              onAnimationEnd={e => {
-                setCorrect(false);
-                setIncorrect(false);
-              }}>
-            </span>
-          }
-          <input
-            className="game__answer"
-            type="number"
-            size={2}
-            autoFocus={true}
-            onBlur={e => {
-              e.preventDefault();
-              const target = e.currentTarget;
-              setTimeout(() => { target.focus(); }, 0);
-            }}
-            onChange={e => setAnswer(e.target.value.replace(/\D/g,''))}
-            onKeyUp={e => {
-              if (e.key === 'Enter') {
-                if (e.currentTarget.value.length > 0) {
-                  const answer = Number(e.currentTarget.value);
-                  if (checkers[mode](n1, n2, answer)) {
-                    logAnswer(userId, question, startTime, Date.now(), incorrectResponses);
-                    setCorrect(true);
-                    if (index + 1 >= inputs.length) {
-                      launchConfetti();
-                      history.replace(`${userBaseUrl}/report/${mode}`);
-                    }
-                    setIndex((index + 1) % inputs.length);
-                    setAnswer('');
-                    setIncorrectResponses([]);
-                    setStartTime(Date.now());
-                  }
-                  else {
-                    setIncorrect(true);
-                    setIncorrectResponses([{ a: answer, e: Date.now() - startTime }, ...incorrectResponses]);
-                  }
-                }
-              }
-            }}
-            value={answer}>
-          </input>
-        </span>
+        { modeSettings.m === 0 ?
+          <Text checkAnswer={checkAnswer} />
+          :
+          <MultipleChoice checkAnswer={checkAnswer} n1={n1} n2={n2} mode={mode} incorrectResponses={incorrectResponses.map(r => r.a)} />
+        }
       </div>
       <div className="game__status">
         <div className="game__progress" style={{ width: (100 * index / inputs.length) + "%"}}></div>

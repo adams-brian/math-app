@@ -110,6 +110,9 @@ const Instructions = () => {
         <div className="instructions__section-header"><FontAwesomeIcon icon={faUserCog}/> Settings</div>
       </section>
       <section className="instructions__section">
+        <div>Select between multiple choice and short answer</div>
+      </section>
+      <section className="instructions__section">
         <div>Adjust the range of questions to practice</div>
       </section>
       <section className="instructions__section">

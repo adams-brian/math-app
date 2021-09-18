@@ -58,7 +58,7 @@ const Settings = () => {
             <div>
               <div className="user-settings__mode" onClick={() => setam(0)}>
                 <FontAwesomeIcon icon={am === 0 ? faCheckSquare : faSquare } />
-                <span>Text</span>
+                <span>Short Answer</span>
               </div>
               <div className="user-settings__mode" onClick={() => setam(1)}>
               <FontAwesomeIcon icon={am === 1 ? faCheckSquare : faSquare } />
@@ -91,7 +91,7 @@ const Settings = () => {
             <div>
               <div className="user-settings__mode" onClick={() => setsm(0)}>
                 <FontAwesomeIcon icon={sm === 0 ? faCheckSquare : faSquare } />
-                <span>Text</span>
+                <span>Short Answer</span>
               </div>
               <div className="user-settings__mode" onClick={() => setsm(1)}>
               <FontAwesomeIcon icon={sm === 1 ? faCheckSquare : faSquare } />
@@ -124,7 +124,7 @@ const Settings = () => {
             <div>
               <div className="user-settings__mode" onClick={() => setmm(0)}>
                 <FontAwesomeIcon icon={mm === 0 ? faCheckSquare : faSquare } />
-                <span>Text</span>
+                <span>Short Answer</span>
               </div>
               <div className="user-settings__mode" onClick={() => setmm(1)}>
               <FontAwesomeIcon icon={mm === 1 ? faCheckSquare : faSquare } />
@@ -157,7 +157,7 @@ const Settings = () => {
             <div>
               <div className="user-settings__mode" onClick={() => setdm(0)}>
                 <FontAwesomeIcon icon={dm === 0 ? faCheckSquare : faSquare } />
-                <span>Text</span>
+                <span>Short Answer</span>
               </div>
               <div className="user-settings__mode" onClick={() => setdm(1)}>
               <FontAwesomeIcon icon={dm === 1 ? faCheckSquare : faSquare } />
