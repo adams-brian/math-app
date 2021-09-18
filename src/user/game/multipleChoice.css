@@ -24,6 +24,10 @@
   z-index: 1000;
 }
 
+.multiple-choice__answer:hover {
+  transform: none;
+}
+
 .multiple-choice__answer--incorrect {
   box-shadow: 0px 0px 10px 5px rgba(var(--red), 70%);
 }
@@ -73,6 +77,10 @@
 
   .multiple-choice__grid {
     margin: 0 0 0 20px;
+  }
+
+  .multiple-choice__answer:hover {
+    transform: scale(1.1);
   }
 
 }
