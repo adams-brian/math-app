@@ -1374,6 +1374,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@fontsource/fredoka-one@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/fredoka-one/-/fredoka-one-4.5.0.tgz#a90c734850f7e818c29552ce62728ec39ba98797"
+  integrity sha512-/KhzS7GfsC8kkq1bcAMhq/ZuikfYZ+bFAXROl+hKGZC/dpBrh7oM5y4w8Ih6/09imyfkVHvIzw+t8vaFFgxaQA==
+
 "@fortawesome/fontawesome-common-types@^0.2.35":
   version "0.2.35"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.35.tgz#01dd3d054da07a00b764d78748df20daf2b317e9"

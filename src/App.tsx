@@ -10,6 +10,7 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
+import '@fontsource/fredoka-one';
 
 const App = () => {
   return (

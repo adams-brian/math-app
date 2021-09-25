@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://adams-brian.github.io/math-app",
   "dependencies": {
+    "@fontsource/fredoka-one": "^4.5.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-regular-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
