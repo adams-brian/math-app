@@ -1,6 +1,62 @@
-body {
-  margin: 0;
-  background-color: #a6dcf3;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  button, input[type='text'] {
+    @apply focus:outline-none focus:shadow-focus;
+  }
+}
+
+@layer utilities {
+  .btn {
+    @apply border border-gray-900 border-solid inline-flex items-center justify-center shadow-md text-center focus:outline-none focus:shadow-focus;
+  }
+  .btn-app {
+    @apply bg-white active:bg-gray-200;
+  }
+  .btn-addition {
+    @apply bg-addition-400 active:bg-gray-200;
+  }
+  .btn-subtraction {
+    @apply bg-subtraction-400 active:bg-gray-200;
+  }
+  .btn-multiplication {
+    @apply bg-multiplication-400 active:bg-gray-200;
+  }
+  .btn-division {
+    @apply bg-division-400 active:bg-gray-200;
+  }
+  .btn-report {
+    @apply active:bg-gray-200 !important;
+  }
+  .panel {
+    @apply bg-white border-2 border-white flex flex-col gap-1 mx-auto overflow-hidden rounded-3xl text-center;
+  }
+  @variants responsive {
+    .btn-xs {
+      @apply gap-0.5 rounded-lg text-sm p-0.5 px-1;
+    }
+    .btn-xs-fw {
+      @apply btn-xs h-6 w-6;
+    }
+    .btn-sm {
+      @apply gap-1 rounded-xl text-lg p-1 px-2;
+    }
+    .btn-sm-fw {
+      @apply btn-sm h-9 w-9;
+    }
+    .btn-md {
+      @apply gap-1.5 rounded-xl text-xl p-1.5 px-3;
+    }
+    .btn-md-fw {
+      @apply btn-md h-10 w-10;
+    }
+    .btn-lg {
+      @apply gap-3 rounded-3xl text-4xl p-3.5 px-5;
+    }
+    .btn-xl {
+      @apply gap-5 rounded-3xl text-6xl p-5 px-6;
+    }
+  }
 }

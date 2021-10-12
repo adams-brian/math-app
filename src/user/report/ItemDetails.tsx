@@ -4,16 +4,16 @@ import { Line } from 'react-chartjs-2';
 import { useSpring, animated } from 'react-spring';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import './ItemDetails.css';
 import { ResponseData, DataStoreContext } from '../../dataStore';
 import { UserBaseUrlContext } from '..';
+import { Mode, getBg } from '../../modes';
 
 interface Props {
   clickCoords: number[];
 }
 
 const LineChart = ({ clickCoords }: Props) => {
-  const { userId, question, mode } = useParams<{ userId: string, question: string, mode: string }>();
+  const { userId, question, mode } = useParams<{ userId: string, question: string, mode: keyof typeof Mode }>();
   const userBaseUrl = useContext(UserBaseUrlContext);
   const { getQuestionResponseData } = useContext(DataStoreContext);
   const history = useHistory();
@@ -69,10 +69,12 @@ const LineChart = ({ clickCoords }: Props) => {
   return (
     <animated.div
       style={props}
-      className={`item-details background-light--${mode}`} onClick={() => history.replace(`${userBaseUrl}/report/${mode}`)}>
-      <div className="item-details__header">{question}</div>
-      <Line data={chartData} options={options} />
-      <div className="item-details__close"><FontAwesomeIcon icon={faTimes}/></div>
+      className={`fixed h-56 panel w-72 md:h-96 md:w-144`} onClick={() => history.replace(`${userBaseUrl}/report/${mode}`)}>
+        <div className={`${getBg(Mode[mode])} flex flex-col h-full items-center justify-between p-1.5 md:p-5`}>
+          <div className="text-4xl mt-4 md:text-5xl md:mt-1">{question}</div>
+          <Line data={chartData} options={options} />
+          <div className="absolute btn btn-xs-fw btn-app right-3 top-3 md:btn-sm-fw"><FontAwesomeIcon icon={faTimes}/></div>
+        </div>
     </animated.div>
   );
 }

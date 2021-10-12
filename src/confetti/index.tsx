@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useRef, useState, createContext } from 'react';
 import Reward from 'react-rewards';
-import './index.css';
 
 const confettiConfig = {
   lifetime: 360,
@@ -26,9 +25,9 @@ const ConfettiLauncher: FunctionComponent = (props) => {
   return (
     <ConfettiContext.Provider value={launchConfetti}>
       { props.children }
-      <div className="confetti-launcher">
+      <div className="absolute left-50vw pointer-events-none top-30vh">
         <Reward ref={confettiRef} type="confetti" config={confettiConfig}><span></span></Reward>
-        <div className="confetti-launcher__message"
+        <div className="animate-great-work leading-tight p-10 rounded-2xl text-6xl text-center transform -translate-x-1/2 -translate-y-10vh md:p-20 md:rounded-3xl md:text-9xl"
           style={{ display: show ? 'block' : 'none'}}
           onAnimationEnd={e => {
             setShow(false);

@@ -10,7 +10,6 @@ import Report from './report';
 import Settings from './settings';
 import ModeLinks from './modeLinks';
 import { Mode } from '../modes';
-import './index.css';
 
 export const UserBaseUrlContext = createContext('');
 
@@ -27,7 +26,7 @@ const User = () => {
   }
 
   return (
-    <div className="user">
+    <div className="flex flex-col items-center">
       <UserBaseUrlContext.Provider value={url}>
         <Switch>
           <Route path={`${path}/agreement`}>
@@ -46,16 +45,20 @@ const User = () => {
             <Settings />
           </Route>
           <Route path={`${path}/home`}>
-            <div className="user__header">
-              <Link className={`link-button link-button--app user__user-list`} to="/users"><FontAwesomeIcon icon={faUsers}/></Link>
-              <span className="user__greeting">Welcome {userName}!</span>
-              <Link className={`link-button link-button--app user__instructions`} to={`${url}/instructions`}><FontAwesomeIcon icon={faQuestion}/></Link>
-            </div>
-            <div className="user__mode-list">
+            <div className="gap-4 grid grid-cols-1 w-72 md:grid-cols-2 md:w-144 xl:gap-8">
+              <div className="col-span-full flex gap-2 items-start justify-center">
+                <Link className={`btn btn-md-fw btn-app flex-none`} to="/users"><FontAwesomeIcon icon={faUsers}/></Link>
+                <span className="flex-auto text-center text-xl md:text-3xl xl:text-5xl">Welcome {userName}!</span>
+                <Link className={`btn btn-md-fw btn-app flex-none`} to={`${url}/instructions`}><FontAwesomeIcon icon={faQuestion}/></Link>
+              </div>
               { (Object.keys(Mode) as (keyof typeof Mode)[]).filter(m => m !== Mode.none).map(m => (<ModeLinks key={m} mode={m} />))}
+              <div className="col-span-full flex items-center justify-center">
+                <Link className="btn btn-lg btn-app" to={`${url}/settings`}><FontAwesomeIcon icon={faUserCog}/><span>Settings</span></Link>
+              </div>
+              <div className="col-span-full flex items-center justify-center">
+                { userName === "Snappy_Snappy" ? <div className="text-md text-center md:text-xl">CodingStuffs_Yea=Snappy_Snappy idk;what:im.doing</div> : null }
+              </div>
             </div>
-            <Link className="link-button link-button--medium link-button--app" to={`${url}/settings`}><FontAwesomeIcon icon={faUserCog}/><span>Settings</span></Link>
-            { userName === "Snappy_Snappy" ? <div className="easter-egg">CodingStuffs_Yea=Snappy_Snappy idk;what:im.doing</div> : null }
           </Route>
           <Redirect to={`${url}/home`} />
         </Switch>

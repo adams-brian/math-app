@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Mode } from '../../modes';
-import './multipleChoice.css';
+import { Mode, getBtn } from '../../modes';
 
 const randomize: (values: number[]) => number[] = values => {
   const result = values.map(v => [v, Math.random()]);
@@ -88,20 +87,20 @@ const MultipleChoice: FunctionComponent<{
   }
 
   return (
-    <div className="multiple-choice__grid">
+    <div className="border-2 border-white gap-6 grid grid-cols-2 grid-rows-2 p-6 rounded-xl md:gap-8 md:p-8 md:rounded-3xl xl:gap-10 xl:p-10">
     {
       answers.map((a, index) => (
-        <div key={index} className="multiple-choice__answer-wrapper">
+        <div key={index} className="relative text-3xl md:text-5xl xl:text-7xl">
           { correctIndex === index ?
-              <span className="multiple-choice__answer-correct"
+              <span className="absolute animate-fade h-full left-0 opacity-0 rounded-2xl shadow-correct top-0 w-full"
                 onAnimationEnd={e => {
                   setCorrectIndex(undefined);
                 }}>
               </span>
             : <></>
           }
-          <button className={`multiple-choice__answer background--${mode}${ incorrectResponses.indexOf(a) === -1 ? '' : ' multiple-choice__answer--incorrect' }`} onClick={() => answerSelected(a, index)}>
-            <span className="multiple-choice__answer-text">{a}</span>
+          <button className={`${getBtn(Mode[mode])} border border-gray-800${ incorrectResponses.indexOf(a) === -1 ? ' shadow-none focus:shadow-none ' : ' shadow-incorrect focus:shadow-incorrect ' }h-16 rounded-2xl w-20 z-50 md:h-24 md:rounded-3xl md:w-28 xl:h-32 xl:w-40`} onClick={() => answerSelected(a, index)}>
+            <span>{a}</span>
           </button>
         </div>
       ))

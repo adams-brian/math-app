@@ -42,3 +42,31 @@ export const getIcon: (mode: Mode) => IconDefinition = mode => {
   }
   return faPlus;
 }
+
+export const getBg: (mode: Mode) => string = mode => {
+  switch (mode) {
+    case Mode.addition:
+      return 'bg-addition-100';
+    case Mode.subtraction:
+      return 'bg-subtraction-100';
+    case Mode.multiplication:
+      return 'bg-multiplication-100';
+    case Mode.division:
+      return 'bg-division-100';
+  }
+  return 'bg-addition-100';
+}
+
+export const getBtn: (mode: Mode) => string = mode => {
+  switch (mode) {
+    case Mode.addition:
+      return 'btn-addition';
+    case Mode.subtraction:
+      return 'btn-subtraction';
+    case Mode.multiplication:
+      return 'btn-multiplication';
+    case Mode.division:
+      return 'btn-division';
+  }
+  return 'btn-addition';
+}

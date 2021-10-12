@@ -2,10 +2,9 @@ import React, { useContext, useState } from 'react';
 import { Link, useParams, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons'
-import './index.css';
 import { DataStoreContext, IncorrectResponseData } from '../../dataStore';
 import { ConfettiContext } from '../../confetti';
-import { Mode, QuestionSet, formatters, checkers } from '../../modes';
+import { Mode, QuestionSet, formatters, checkers, getBg } from '../../modes';
 import { UserBaseUrlContext } from '..';
 import Text from './text';
 import MultipleChoice from './multipleChoice';
@@ -71,18 +70,20 @@ const Game = () => {
   }
 
   return (
-    <div className={`game background-light--${mode}`}>
-      <Link className={`link-button link-button--app game__home`} to={`${userBaseUrl}/home`}><FontAwesomeIcon icon={faHome}/></Link>
-      <div className="game__question">
-        <span>{ question }<span className="game__question-equals"> =</span></span>
-        { modeSettings.m === 0 ?
-          <Text checkAnswer={checkAnswer} />
-          :
-          <MultipleChoice checkAnswer={checkAnswer} n1={n1} n2={n2} mode={mode} incorrectResponses={incorrectResponses.map(r => r.a)} />
-        }
-      </div>
-      <div className="game__status">
-        <div className="game__progress" style={{ width: (100 * index / inputs.length) + "%"}}></div>
+    <div className="panel relative w-72 md:w-96 xl:w-256">
+      <div className={`${getBg(Mode[mode])} flex flex-col gap-10 p-4 pt-8 md:gap-16 md:p-6 md:pt-14 ${modeSettings.m === 0 ? 'xl:gap-40' : 'xl:gap-20'} xl:p-12 ${modeSettings.m === 0 ? 'xl:pt-40' : 'xl:pt-20'}`}>
+        <Link className={`absolute btn btn-xs-fw btn-app left-2 top-2 md:btn-sm-fw xl:btn-md-fw`} to={`${userBaseUrl}/home`}><FontAwesomeIcon icon={faHome}/></Link>
+        <div className="flex flex-col gap-4 items-center justify-center text-4xl md:gap-8 md:text-6xl xl:flex-row xl:gap-8 xl:text-8xl">
+          <span>{ question }<span className="hidden md:inline"> =</span></span>
+          { modeSettings.m === 0 ?
+            <Text checkAnswer={checkAnswer} />
+            :
+            <MultipleChoice checkAnswer={checkAnswer} n1={n1} n2={n2} mode={mode} incorrectResponses={incorrectResponses.map(r => r.a)} />
+          }
+        </div>
+        <div className="bg-white border border-gray-500 h-4 overflow-hidden rounded-xl w-full md:h-7 xl:h-12 xl:rounded-3xl">
+          <div className="bg-correct ease-out duration-200 h-4 transition-width md:h-7 xl:h-12" style={{ width: (100 * index / inputs.length) + "%"}}></div>
+        </div>
       </div>
     </div>
   );

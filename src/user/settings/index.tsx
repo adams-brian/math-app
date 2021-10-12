@@ -7,7 +7,6 @@ import { DataStoreContext, defaultSettings } from '../../dataStore';
 import { UserBaseUrlContext } from '../';
 import Range from './range';
 import { Mode, formatters } from '../../modes';
-import './index.css';
 
 const Settings = () => {
   const { userId } = useParams<{ userId: string }>();
@@ -43,137 +42,145 @@ const Settings = () => {
   }, [am, an1, an2, sm, sn1, sn2, mm, mn1, mn2, dm, dn1, dn2, userId, setUserSettings])
 
   return (
-    <div className="user-settings">
-      <div className="user-settings__header">
-        <Link className={`link-button link-button--app user-settings__home`} to={`${userBaseUrl}/home`}><FontAwesomeIcon icon={faHome}/></Link>
-        <span className="user-settings__header-title">Settings for {userName}</span>
+    <div className="flex flex-col gap-4 items-center max-w-screen-sm relative w-full md:gap-8">
+      <div className="grid grid-cols-auto-1fr items-start justify-center w-full">
+        <Link className={`btn btn-sm-fw btn-app col-start-1 row-start-1 md:btn-md-fw`} to={`${userBaseUrl}/home`}><FontAwesomeIcon icon={faHome}/></Link>
+        <span className="col-start-1 col-end-3 mx-11 row-start-1 text-center text-3xl md:mx-16">Settings for {userName}</span>
       </div>
-      <div className="user-settings__section background-light--addition">
-        <div className="user-settings__section-header">
+      <div className="panel w-full">
+        <div className="bg-addition-100 p-3 text-4xl text-gray-500 md:p-6 md:text-5xl">
           <FontAwesomeIcon icon={faPlus}/>
         </div>
-        <div className="user-settings__section-body">
-          <div className="user-settings__container">
-            <div className="user-settings__container-header">Response Type</div>
-            <div>
-              <div className="user-settings__mode" onClick={() => setam(0)}>
-                <FontAwesomeIcon icon={am === 0 ? faCheckSquare : faSquare } />
-                <span>Short Answer</span>
-              </div>
-              <div className="user-settings__mode" onClick={() => setam(1)}>
-              <FontAwesomeIcon icon={am === 1 ? faCheckSquare : faSquare } />
-                <span>Multiple Choice</span>
+        <div className="bg-addition-100 flex flex-col gap-4 p-4 md:gap-8 md:p-8">
+          <div className="panel w-full">
+            <div className="bg-addition-100 p-3 text-2xl md:text-3xl">Response Type</div>
+            <div className="bg-addition-100">
+              <div className="inline-flex flex-col gap-2 items-start mx-auto p-3 text-xl md:text-2xl">
+                <div className="flex gap-2 items-center justify-start" onClick={() => setam(0)}>
+                  <FontAwesomeIcon icon={am === 0 ? faCheckSquare : faSquare } />
+                  <span>Short Answer</span>
+                </div>
+                <div className="flex gap-2 items-center justify-start" onClick={() => setam(1)}>
+                  <FontAwesomeIcon icon={am === 1 ? faCheckSquare : faSquare } />
+                  <span>Multiple Choice</span>
+                </div>
               </div>
             </div>
           </div>
-          <div className="user-settings__container">
-            <div className="user-settings__container-header">Question Range</div>
-            <div className="user-settings__range-container">
+          <div className="panel w-full">
+            <div className="bg-addition-100 p-3 text-2xl md:text-3xl">Question Range</div>
+            <div className="bg-addition-100 flex flex-col gap-2 px-10 py-3">
               <Range range={defaultSettings.a.n1} values={an1} setValues={setan1} />
               <Range range={defaultSettings.a.n2} values={an2} setValues={setan2} />
-              <div className="user-settings__question-range">
+              <div className="flex flex-col gap-2 items-center justify-center p-3 text-xl md:flex-row md:gap-11 md:text-2xl">
                 <div>{ formatters[Mode.addition](an1[0], an2[0]) } = { an1[0] + an2[0] }</div>
-                <div className="user-settings__right-arrow"><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
-                <div className="user-settings__down-arrow"><FontAwesomeIcon icon={faLongArrowAltDown} /></div>
+                <div className="hidden md:block"><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
+                <div className="md:hidden"><FontAwesomeIcon icon={faLongArrowAltDown} /></div>
                 <div>{ formatters[Mode.addition](an1[1], an2[1]) } = { an1[1] + an2[1] }</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="user-settings__section background-light--subtraction">
-        <div className="user-settings__section-header">
+      <div className="panel w-full">
+        <div className="bg-subtraction-100 p-3 text-4xl text-gray-500 md:p-6 md:text-5xl">
           <FontAwesomeIcon icon={faMinus}/>
         </div>
-        <div className="user-settings__section-body">
-          <div className="user-settings__container">
-            <div className="user-settings__container-header">Response Type</div>
-            <div>
-              <div className="user-settings__mode" onClick={() => setsm(0)}>
-                <FontAwesomeIcon icon={sm === 0 ? faCheckSquare : faSquare } />
-                <span>Short Answer</span>
-              </div>
-              <div className="user-settings__mode" onClick={() => setsm(1)}>
-              <FontAwesomeIcon icon={sm === 1 ? faCheckSquare : faSquare } />
-                <span>Multiple Choice</span>
+        <div className="bg-subtraction-100 flex flex-col gap-4 p-4 md:gap-8 md:p-8">
+          <div className="panel w-full">
+            <div className="bg-subtraction-100 p-3 text-2xl md:text-3xl">Response Type</div>
+            <div className="bg-subtraction-100">
+              <div className="inline-flex flex-col gap-2 items-start mx-auto p-3 text-xl md:text-2xl">
+                <div className="flex gap-2 items-center justify-start" onClick={() => setsm(0)}>
+                  <FontAwesomeIcon icon={sm === 0 ? faCheckSquare : faSquare } />
+                  <span>Short Answer</span>
+                </div>
+                <div className="flex gap-2 items-center justify-start" onClick={() => setsm(1)}>
+                <FontAwesomeIcon icon={sm === 1 ? faCheckSquare : faSquare } />
+                  <span>Multiple Choice</span>
+                </div>
               </div>
             </div>
           </div>
-          <div className="user-settings__container">
-            <div className="user-settings__container-header">Question Range</div>
-            <div className="user-settings__range-container">
+          <div className="panel w-full">
+            <div className="bg-subtraction-100 p-3 text-2xl md:text-3xl">Question Range</div>
+            <div className="bg-subtraction-100 flex flex-col gap-2 px-10 py-3">
               <Range range={defaultSettings.s.n1} values={sn1} setValues={setsn1} />
               <Range range={defaultSettings.s.n2} values={sn2} setValues={setsn2} />
-              <div className="user-settings__question-range">
+              <div className="flex flex-col gap-2 items-center justify-center p-3 text-xl md:flex-row md:gap-11 md:text-2xl">
                 <div>{ formatters[Mode.subtraction](sn1[0], sn2[0]) } = { sn2[0] }</div>
-                <div className="user-settings__right-arrow"><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
-                <div className="user-settings__down-arrow"><FontAwesomeIcon icon={faLongArrowAltDown} /></div>
+                <div className="hidden md:block"><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
+                <div className="md:hidden"><FontAwesomeIcon icon={faLongArrowAltDown} /></div>
                 <div>{ formatters[Mode.subtraction](sn1[1], sn2[1]) } = { sn2[1] }</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="user-settings__section background-light--multiplication">
-        <div className="user-settings__section-header">
+      <div className="panel w-full">
+        <div className="bg-multiplication-100 p-3 text-4xl text-gray-500 md:p-6 md:text-5xl">
           <FontAwesomeIcon icon={faTimes}/>
         </div>
-        <div className="user-settings__section-body">
-          <div className="user-settings__container">
-            <div className="user-settings__container-header">Response Type</div>
-            <div>
-              <div className="user-settings__mode" onClick={() => setmm(0)}>
-                <FontAwesomeIcon icon={mm === 0 ? faCheckSquare : faSquare } />
-                <span>Short Answer</span>
-              </div>
-              <div className="user-settings__mode" onClick={() => setmm(1)}>
-              <FontAwesomeIcon icon={mm === 1 ? faCheckSquare : faSquare } />
-                <span>Multiple Choice</span>
+        <div className="bg-multiplication-100 flex flex-col gap-4 p-4 md:gap-8 md:p-8">
+          <div className="panel w-full">
+            <div className="bg-multiplication-100 p-3 text-2xl md:text-3xl">Response Type</div>
+            <div className="bg-multiplication-100">
+              <div className="inline-flex flex-col gap-2 items-start mx-auto p-3 text-xl md:text-2xl">
+                <div className="flex gap-2 items-center justify-start" onClick={() => setmm(0)}>
+                  <FontAwesomeIcon icon={mm === 0 ? faCheckSquare : faSquare } />
+                  <span>Short Answer</span>
+                </div>
+                <div className="flex gap-2 items-center justify-start" onClick={() => setmm(1)}>
+                <FontAwesomeIcon icon={mm === 1 ? faCheckSquare : faSquare } />
+                  <span>Multiple Choice</span>
+                </div>
               </div>
             </div>
           </div>
-          <div className="user-settings__container">
-            <div className="user-settings__container-header">Question Range</div>
-            <div className="user-settings__range-container">
+          <div className="panel w-full">
+            <div className="bg-multiplication-100 p-3 text-2xl md:text-3xl">Question Range</div>
+            <div className="bg-multiplication-100 flex flex-col gap-2 px-10 py-3">
               <Range range={defaultSettings.m.n1} values={mn1} setValues={setmn1} />
               <Range range={defaultSettings.m.n2} values={mn2} setValues={setmn2} />
-              <div className="user-settings__question-range">
+              <div className="flex flex-col gap-2 items-center justify-center p-3 text-xl md:flex-row md:gap-11 md:text-2xl">
                 <div>{ formatters[Mode.multiplication](mn1[0], mn2[0]) } = { mn1[0] * mn2[0] }</div>
-                <div className="user-settings__right-arrow"><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
-                <div className="user-settings__down-arrow"><FontAwesomeIcon icon={faLongArrowAltDown} /></div>
+                <div className="hidden md:block"><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
+                <div className="md:hidden"><FontAwesomeIcon icon={faLongArrowAltDown} /></div>
                 <div>{ formatters[Mode.multiplication](mn1[1], mn2[1]) } = { mn1[1] * mn2[1] }</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="user-settings__section background-light--division">
-        <div className="user-settings__section-header">
+      <div className="panel w-full">
+        <div className="bg-division-100 p-3 text-4xl text-gray-500 md:p-6 md:text-5xl">
           <FontAwesomeIcon icon={faDivide}/>
         </div>
-        <div className="user-settings__section-body">
-          <div className="user-settings__container">
-            <div className="user-settings__container-header">Response Type</div>
-            <div>
-              <div className="user-settings__mode" onClick={() => setdm(0)}>
-                <FontAwesomeIcon icon={dm === 0 ? faCheckSquare : faSquare } />
-                <span>Short Answer</span>
-              </div>
-              <div className="user-settings__mode" onClick={() => setdm(1)}>
-              <FontAwesomeIcon icon={dm === 1 ? faCheckSquare : faSquare } />
-                <span>Multiple Choice</span>
+        <div className="bg-division-100 flex flex-col gap-4 p-4 md:gap-8 md:p-8">
+          <div className="panel w-full">
+            <div className="bg-division-100 p-3 text-2xl md:text-3xl">Response Type</div>
+            <div className="bg-division-100">
+              <div className="inline-flex flex-col gap-2 items-start mx-auto p-3 text-xl md:text-2xl">
+                <div className="flex gap-2 items-center justify-start" onClick={() => setdm(0)}>
+                  <FontAwesomeIcon icon={dm === 0 ? faCheckSquare : faSquare } />
+                  <span>Short Answer</span>
+                </div>
+                <div className="flex gap-2 items-center justify-start" onClick={() => setdm(1)}>
+                <FontAwesomeIcon icon={dm === 1 ? faCheckSquare : faSquare } />
+                  <span>Multiple Choice</span>
+                </div>
               </div>
             </div>
           </div>
-          <div className="user-settings__container">
-            <div className="user-settings__container-header">Question Range</div>
-            <div className="user-settings__range-container">
+          <div className="panel w-full">
+            <div className="bg-division-100 p-3 text-2xl md:text-3xl">Question Range</div>
+            <div className="bg-division-100 flex flex-col gap-2 px-10 py-3">
               <Range range={defaultSettings.d.n1} values={dn1} setValues={setdn1} />
               <Range range={defaultSettings.d.n2} values={dn2} setValues={setdn2} />
-              <div className="user-settings__question-range">
+              <div className="flex flex-col gap-2 items-center justify-center p-3 text-xl md:flex-row md:gap-11 md:text-2xl">
                 <div>{ formatters[Mode.division](dn1[0], dn2[0]) } = { dn2[0] }</div>
-                <div className="user-settings__right-arrow"><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
-                <div className="user-settings__down-arrow"><FontAwesomeIcon icon={faLongArrowAltDown} /></div>
+                <div className="hidden md:block"><FontAwesomeIcon icon={faLongArrowAltRight} /></div>
+                <div className="md:hidden"><FontAwesomeIcon icon={faLongArrowAltDown} /></div>
                 <div>{ formatters[Mode.division](dn1[1], dn2[1]) } = { dn2[1] }</div>
               </div>
             </div>

@@ -1,5 +1,4 @@
 import React, { FunctionComponent, useState } from 'react';
-import './text.css';
 
 const Text: FunctionComponent<{ checkAnswer: (a: number) => boolean }> = ({ checkAnswer }) => {
 
@@ -8,9 +7,9 @@ const Text: FunctionComponent<{ checkAnswer: (a: number) => boolean }> = ({ chec
   const [answer, setAnswer] = useState('');
 
   return (
-    <span className="text__wrapper">
+    <span className="relative">
       { !correct ? <></> :
-        <span className="text__answer-correct"
+        <span className="absolute animate-fade h-full left-0 opacity-0 rounded-2xl shadow-correct top-0 w-full md:rounded-3xl"
           onAnimationEnd={e => {
             setCorrect(false);
             setIncorrect(false);
@@ -18,7 +17,7 @@ const Text: FunctionComponent<{ checkAnswer: (a: number) => boolean }> = ({ chec
         </span>
       }
       { !incorrect ? <></> :
-        <span className="text__answer-incorrect"
+        <span className="absolute animate-fade h-full left-0 opacity-0 rounded-2xl shadow-incorrect top-0 w-full md:rounded-3xl"
           onAnimationEnd={e => {
             setCorrect(false);
             setIncorrect(false);
@@ -26,7 +25,7 @@ const Text: FunctionComponent<{ checkAnswer: (a: number) => boolean }> = ({ chec
         </span>
       }
       <input
-        className="text__answer"
+        className="border border-gray-600 px-3 py-2 rounded-2xl text-center w-36 md:rounded-3xl md:w-60 xl:px-5 xl:py-4 xl:text-left xl:w-80 focus:outline-none"
         type="number"
         size={2}
         autoFocus={true}

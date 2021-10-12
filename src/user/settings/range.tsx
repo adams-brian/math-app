@@ -1,10 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { Range } from 'react-range';
-import './range.css';
 
 const RangeComponent: FunctionComponent<{ range: [number, number], values: [number, number], setValues: (values: [number, number]) => void }> = ({ range, values, setValues }) => {
   return (
-    <div className="user-settings-range">
+    <div className="flex flex-col items-center justify-center">
         <Range
           allowOverlap={false}
           values={values}
@@ -17,11 +16,11 @@ const RangeComponent: FunctionComponent<{ range: [number, number], values: [numb
               onMouseDown={props.onMouseDown}
               onTouchStart={props.onTouchStart}
               style={props.style}
-              className="user-settings-range__outer"
+              className="flex h-12 w-full"
             >
               <div
                 ref={props.ref}
-                className="user-settings-range__inner"
+                className="bg-white border border-gray-400 h-2 rounded self-center w-full"
               >
                 {children}
               </div>
@@ -30,7 +29,7 @@ const RangeComponent: FunctionComponent<{ range: [number, number], values: [numb
           renderThumb={({ props, isDragged, index }) => (
             <div
               {...props}
-              className="user-settings-range__thumb"
+              className="bg-white border border-gray-800 flex h-12 items-center justify-center rounded-xl text-2xl w-12"
             >
               {values[index]}
             </div>

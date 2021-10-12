@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import Users from './users';
 import User from './user';
 import Confetti from './confetti';
@@ -14,7 +13,7 @@ import '@fontsource/fredoka-one';
 
 const App = () => {
   return (
-    <div className="App">
+    <div className="font-primary text-gray-900 container mx-auto p-4 md:p-6 lg:p-8">
       <Confetti>
         <DataStore>
           <HashRouter>
